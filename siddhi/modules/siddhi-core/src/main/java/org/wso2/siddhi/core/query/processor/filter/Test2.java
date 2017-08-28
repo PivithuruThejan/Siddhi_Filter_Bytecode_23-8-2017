@@ -17,29 +17,14 @@
 */
 
 package org.wso2.siddhi.core.query.processor.filter;
-//import jdk.internal.org.objectweb.asm.ClassWriter;
-//import jdk.internal.org.objectweb.asm.MethodVisitor;
+
 import org.mvel2.asm.ClassWriter;
 import org.mvel2.asm.MethodVisitor;
 import org.wso2.siddhi.core.event.ComplexEvent;
 import org.wso2.siddhi.core.executor.ExpressionExecutor;
-import sun.misc.IOUtils;
-
-//import java.io.File;
-//import java.io.FileNotFoundException;
-//import java.io.FileOutputStream;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
-
 import static org.mvel2.asm.Opcodes.*;
-
-//import static org.objectweb.asm.Opcodes.*;
-
-//import static jdk.internal.org.objectweb.asm.Opcodes.*;
-
-//import static jdk.internal.org.objectweb.asm.Opcodes.*;
-//import static jdk.internal.org.objectweb.asm.Opcodes.RETURN;
-
 /**
  *consists of method to generate and execute byte code
  */
@@ -52,7 +37,6 @@ public class Test2 {
      */
     public  void start(){
         OptimizedExpressionExecutor.count = false;
-        //System.out.println("start");
         classWriter.visit(52,ACC_PUBLIC+ACC_SUPER,"ByteCode",null,"java/lang/Object",
                 new String[]{"org/wso2/siddhi/core/query/processor/filter/AbstractOptimizedExpressionExecutor"});
         classWriter.visitSource("ByteCode.java",null);
@@ -75,8 +59,6 @@ public class Test2 {
             Test2.methodVisitor.visitInsn(ICONST_0);
             Test2.methodVisitor.visitVarInsn(ISTORE, 3);
         }
-
-
 
     }
 

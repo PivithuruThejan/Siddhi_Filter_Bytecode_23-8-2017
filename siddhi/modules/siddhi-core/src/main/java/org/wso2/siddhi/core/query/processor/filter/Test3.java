@@ -16,8 +16,6 @@
 * under the License.
 */
 package org.wso2.siddhi.core.query.processor.filter;
-//import jdk.internal.org.objectweb.asm.Label;
-//import jdk.internal.org.objectweb.asm.Opcodes;
 
 import org.mvel2.asm.Label;
 import org.wso2.siddhi.core.event.ComplexEvent;
@@ -34,8 +32,6 @@ import org.wso2.siddhi.core.util.SiddhiConstants;
 
 import static org.mvel2.asm.Opcodes.*;
 
-//import static jdk.internal.org.objectweb.asm.Opcodes.*;
-
 /**
  * consists a method that generate bytecode while traversing Siddhi filter tree.
  */
@@ -48,7 +44,8 @@ public class Test3 {
      * @param status
      * @return
      */
-    public boolean execute(ExpressionExecutor conditionExecutor, ComplexEvent complexEvent, int status, int parent, Label specialCase) {
+    public boolean execute(ExpressionExecutor conditionExecutor, ComplexEvent complexEvent, int status, int parent,
+                           Label specialCase, int parentStatus) {
         if (conditionExecutor instanceof AndConditionExpressionExecutor) {
             //System.out.println("AND");
             ExpressionExecutor left = ((AndConditionExpressionExecutor) conditionExecutor).getLeftConditionExecutor();
@@ -58,22 +55,31 @@ public class Test3 {
             Label l0 = new Label();
             Label l1 = new Label();
             Label l2 = new Label();
-            leftResult = execute(left, complexEvent, 1, 1, l1);
+            leftResult = execute(left, complexEvent, 1, 1, l1, status);
             Test2.methodVisitor.visitVarInsn(ILOAD, 2);
-
             Test2.methodVisitor.visitJumpInsn(IFNE, l0);
             Test2.methodVisitor.visitInsn(ICONST_0);
-            if (status == 2) {
-                Test2.methodVisitor.visitVarInsn(ISTORE, 3);
+            if (parent == 1) {
+                if (parentStatus == 2) {
+                    Test2.methodVisitor.visitVarInsn(ISTORE, 3);
+                } else {
+                    Test2.methodVisitor.visitVarInsn(ISTORE, 2);
+                }
+
+                Test2.methodVisitor.visitJumpInsn(GOTO, specialCase);
             } else {
-                Test2.methodVisitor.visitVarInsn(ISTORE, 2);
+                if (status == 2) {
+                    Test2.methodVisitor.visitVarInsn(ISTORE, 3);
+                } else {
+                    Test2.methodVisitor.visitVarInsn(ISTORE, 2);
+                }
+
+                Test2.methodVisitor.visitJumpInsn(GOTO, l1);
             }
 
-            Test2.methodVisitor.visitJumpInsn(GOTO, l1);
             Test2.methodVisitor.visitLabel(l0);
-            rightResult = execute(right, complexEvent, 2, 1, l1);
+            rightResult = execute(right, complexEvent, 2, 1, l1, status);
             Test2.methodVisitor.visitVarInsn(ILOAD, 3);
-
             Test2.methodVisitor.visitJumpInsn(IFNE, l2);
             Test2.methodVisitor.visitInsn(ICONST_0);
             if (status == 2) {
@@ -81,6 +87,7 @@ public class Test3 {
             } else {
                 Test2.methodVisitor.visitVarInsn(ISTORE, 2);
             }
+
             Test2.methodVisitor.visitJumpInsn(GOTO, l1);
             Test2.methodVisitor.visitLabel(l2);
             Test2.methodVisitor.visitInsn(ICONST_1);
@@ -89,6 +96,7 @@ public class Test3 {
             } else {
                 Test2.methodVisitor.visitVarInsn(ISTORE, 2);
             }
+
             Test2.methodVisitor.visitLabel(l1);
             return leftResult && rightResult;
 
@@ -101,22 +109,31 @@ public class Test3 {
             Label l0 = new Label();
             Label l1 = new Label();
             Label l2 = new Label();
-            leftResult = execute(left, complexEvent, 1, 2, l1);
+            leftResult = execute(left, complexEvent, 1, 2, l1, status);
             Test2.methodVisitor.visitVarInsn(ILOAD, 2);
-
             Test2.methodVisitor.visitJumpInsn(IFEQ, l0);
             Test2.methodVisitor.visitInsn(ICONST_1);
-            if (status == 2) {
-                Test2.methodVisitor.visitVarInsn(ISTORE, 3);
+            if (parent == 2) {
+                if (parentStatus == 2) {
+                    Test2.methodVisitor.visitVarInsn(ISTORE, 3);
+                } else {
+                    Test2.methodVisitor.visitVarInsn(ISTORE, 2);
+                }
+
+                Test2.methodVisitor.visitJumpInsn(GOTO, specialCase);
             } else {
-                Test2.methodVisitor.visitVarInsn(ISTORE, 2);
+                if (status == 2) {
+                    Test2.methodVisitor.visitVarInsn(ISTORE, 3);
+                } else {
+                    Test2.methodVisitor.visitVarInsn(ISTORE, 2);
+                }
+
+                Test2.methodVisitor.visitJumpInsn(GOTO, l1);
             }
 
-            Test2.methodVisitor.visitJumpInsn(GOTO, l1);
             Test2.methodVisitor.visitLabel(l0);
-            rightResult = execute(right, complexEvent, 2, 2, l1);
+            rightResult = execute(right, complexEvent, 2, 2, l1, status);
             Test2.methodVisitor.visitVarInsn(ILOAD, 3);
-
             Test2.methodVisitor.visitJumpInsn(IFEQ, l2);
             Test2.methodVisitor.visitInsn(ICONST_1);
             if (status == 2) {
@@ -124,6 +141,7 @@ public class Test3 {
             } else {
                 Test2.methodVisitor.visitVarInsn(ISTORE, 2);
             }
+
             Test2.methodVisitor.visitJumpInsn(GOTO, l1);
             Test2.methodVisitor.visitLabel(l2);
             Test2.methodVisitor.visitInsn(ICONST_0);
@@ -132,6 +150,7 @@ public class Test3 {
             } else {
                 Test2.methodVisitor.visitVarInsn(ISTORE, 2);
             }
+
             Test2.methodVisitor.visitLabel(l1);
             return leftResult || rightResult;
         } else if (conditionExecutor instanceof NotConditionExpressionExecutor) {
@@ -139,21 +158,35 @@ public class Test3 {
             ExpressionExecutor condition = ((NotConditionExpressionExecutor) conditionExecutor).getConditionExecutor();
             Label l0 = new Label();
             Label l1 = new Label();
-            boolean result = execute(condition, complexEvent, 1, 3, l1);
+            boolean result = execute(condition, complexEvent, 1, 3, l1, status);
             Test2.methodVisitor.visitVarInsn(ILOAD, 2);
+            if (parent == 3) {
+                if (parentStatus == 2) {
+                    Test2.methodVisitor.visitVarInsn(ISTORE, 3);
+                } else {
+                    Test2.methodVisitor.visitVarInsn(ISTORE, 2);
+                }
 
-            Test2.methodVisitor.visitJumpInsn(IFNE, l0);
-            Test2.methodVisitor.visitInsn(ICONST_1);
-
-            Test2.methodVisitor.visitJumpInsn(GOTO, l1);
-            Test2.methodVisitor.visitLabel(l0);
-            Test2.methodVisitor.visitInsn(ICONST_0);
-            Test2.methodVisitor.visitLabel(l1);
-            if (status == 2) {
-                Test2.methodVisitor.visitVarInsn(ISTORE, 3);
+                Test2.methodVisitor.visitJumpInsn(GOTO, specialCase);
             } else {
-                Test2.methodVisitor.visitVarInsn(ISTORE, 2);
+                Test2.methodVisitor.visitJumpInsn(IFNE, l0);
+                Test2.methodVisitor.visitInsn(ICONST_1);
+                if (status == 2) {
+                    Test2.methodVisitor.visitVarInsn(ISTORE, 3);
+                } else {
+                    Test2.methodVisitor.visitVarInsn(ISTORE, 2);
+                }
+                Test2.methodVisitor.visitJumpInsn(GOTO, l1);
+                Test2.methodVisitor.visitLabel(l0);
+                Test2.methodVisitor.visitInsn(ICONST_0);
+                if (status == 2) {
+                    Test2.methodVisitor.visitVarInsn(ISTORE, 3);
+                } else {
+                    Test2.methodVisitor.visitVarInsn(ISTORE, 2);
+                }
+                Test2.methodVisitor.visitLabel(l1);
             }
+
             return !result;
 
         } else if (conditionExecutor instanceof GreaterThanCompareConditionExpressionExecutorFloatDouble) {
@@ -234,6 +267,7 @@ public class Test3 {
             } else {
                 Test2.methodVisitor.visitVarInsn(ISTORE, 2);
             }
+
             return leftVariable > rightVariable;
 
         } else if (conditionExecutor instanceof LessThanCompareConditionExpressionExecutorFloatDouble) {
@@ -248,7 +282,6 @@ public class Test3 {
             int[] rightPosition = null;
             int beforeWindowIndexLeft = 0;
             int beforeWindowIndexRight = 0;
-
             if (left instanceof VariableExpressionExecutor) {
                 leftPosition = ((VariableExpressionExecutor) left).getPosition();
                 leftVariable = (Float) complexEvent.getAttribute(((VariableExpressionExecutor) left).getPosition());
@@ -313,6 +346,7 @@ public class Test3 {
             } else {
                 Test2.methodVisitor.visitVarInsn(ISTORE, 2);
             }
+
             return leftVariable < rightVariable;
 
         } else {

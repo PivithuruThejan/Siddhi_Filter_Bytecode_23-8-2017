@@ -59,7 +59,8 @@ public class FilterProcessor implements Processor {
     }
 
     @Override
-    public void process(ComplexEventChunk complexEventChunk) throws IllegalAccessException, InstantiationException, InvocationTargetException, IOException {
+    public void process(ComplexEventChunk complexEventChunk) throws IllegalAccessException, InstantiationException,
+            InvocationTargetException, IOException {
         complexEventChunk.reset();
 
         while (complexEventChunk.hasNext()) {
@@ -71,7 +72,8 @@ public class FilterProcessor implements Processor {
 
             if(OptimizedExpressionExecutor.count ){
                 test2.start();
-                if(!(Boolean)test3.execute(conditionExecutor, complexEvent, 0, 0, null)){
+                if(!(Boolean)test3.execute(conditionExecutor, complexEvent, 0, 0, null,
+                        0)){
                     complexEventChunk.remove();
                 }
                 test2.end();
