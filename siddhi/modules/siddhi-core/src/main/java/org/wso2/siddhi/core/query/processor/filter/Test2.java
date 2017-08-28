@@ -53,7 +53,8 @@ public class Test2 {
     public  void start(){
         OptimizedExpressionExecutor.count = false;
         //System.out.println("start");
-        classWriter.visit(52,ACC_PUBLIC+ACC_SUPER,"ByteCode",null,"java/lang/Object",new String[]{"org/wso2/siddhi/core/query/processor/filter/AbstractOptimizedExpressionExecutor"});
+        classWriter.visit(52,ACC_PUBLIC+ACC_SUPER,"ByteCode",null,"java/lang/Object",
+                new String[]{"org/wso2/siddhi/core/query/processor/filter/AbstractOptimizedExpressionExecutor"});
         classWriter.visitSource("ByteCode.java",null);
         {
             methodVisitor = classWriter.visitMethod(ACC_PUBLIC,"<init>","()V",null,null);
@@ -65,12 +66,14 @@ public class Test2 {
             methodVisitor.visitEnd();
         }
         {
-            Test2.methodVisitor = Test2.classWriter.visitMethod(ACC_PUBLIC, "optimizedExecuteWithByteCode", "(Lorg/wso2/siddhi/core/executor/ExpressionExecutor;Lorg/wso2/siddhi/core/event/ComplexEvent;)Z", null, null);
+            Test2.methodVisitor = Test2.classWriter.visitMethod(ACC_PUBLIC, "optimizedExecuteWithByteCode",
+                    "(Lorg/wso2/siddhi/core/event/ComplexEvent;)Z",
+                    null, null);
             Test2.methodVisitor.visitInsn(ICONST_0);
-            Test2.methodVisitor.visitVarInsn(ISTORE, 3);
+            Test2.methodVisitor.visitVarInsn(ISTORE, 2);
 
             Test2.methodVisitor.visitInsn(ICONST_0);
-            Test2.methodVisitor.visitVarInsn(ISTORE, 4);
+            Test2.methodVisitor.visitVarInsn(ISTORE, 3);
         }
 
 
@@ -85,15 +88,18 @@ public class Test2 {
 
     public  void end() throws IllegalAccessException, InstantiationException, IOException {
         //System.out.println("end");
-        Test2.methodVisitor.visitVarInsn(ILOAD, 3);
+        Test2.methodVisitor.visitVarInsn(ILOAD, 2);
         Test2.methodVisitor.visitInsn(IRETURN);
         Test2.methodVisitor.visitMaxs(4, 8);
         Test2.methodVisitor.visitEnd();
         classWriter.visitEnd();
         OptimizedExpressionExecutor.byteArray = classWriter.toByteArray();
-        OptimizedExpressionExecutorClassLoader optimizedExpressionExecutorClassLoader = new OptimizedExpressionExecutorClassLoader();
-        Class regeneratedClass = optimizedExpressionExecutorClassLoader.defineClass("ByteCode",OptimizedExpressionExecutor.byteArray);
-        OptimizedExpressionExecutor.abstractOptimizedExpressionExecutor = (AbstractOptimizedExpressionExecutor) regeneratedClass.newInstance();
+        OptimizedExpressionExecutorClassLoader optimizedExpressionExecutorClassLoader = new
+                OptimizedExpressionExecutorClassLoader();
+        Class regeneratedClass = optimizedExpressionExecutorClassLoader
+                .defineClass("ByteCode",OptimizedExpressionExecutor.byteArray);
+        OptimizedExpressionExecutor.abstractOptimizedExpressionExecutor = (AbstractOptimizedExpressionExecutor)
+                regeneratedClass.newInstance();
         /*FileOutputStream output = new FileOutputStream(new File("SimpleByteCode.class"));
         output.write(OptimizedExpressionExecutor.byteArray);
         output.flush();*/
@@ -110,8 +116,11 @@ public class Test2 {
      * @throws InstantiationException
      */
 
-    public boolean execute(ExpressionExecutor expressionExecutor , ComplexEvent complexEvent) throws IllegalAccessException, InvocationTargetException, InstantiationException {
-        boolean result = OptimizedExpressionExecutor.abstractOptimizedExpressionExecutor.optimizedExecuteWithByteCode(expressionExecutor, complexEvent);
+    public boolean execute(ExpressionExecutor expressionExecutor , ComplexEvent complexEvent) throws
+            IllegalAccessException,
+            InvocationTargetException, InstantiationException {
+        boolean result = OptimizedExpressionExecutor.abstractOptimizedExpressionExecutor.
+                optimizedExecuteWithByteCode( complexEvent);
         return result;
 
     }

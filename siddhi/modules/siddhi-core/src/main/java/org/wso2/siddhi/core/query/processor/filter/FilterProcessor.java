@@ -71,7 +71,7 @@ public class FilterProcessor implements Processor {
 
             if(OptimizedExpressionExecutor.count ){
                 test2.start();
-                if(!(Boolean)test3.execute(conditionExecutor, complexEvent, 0)){
+                if(!(Boolean)test3.execute(conditionExecutor, complexEvent, 0, 0, null)){
                     complexEventChunk.remove();
                 }
                 test2.end();

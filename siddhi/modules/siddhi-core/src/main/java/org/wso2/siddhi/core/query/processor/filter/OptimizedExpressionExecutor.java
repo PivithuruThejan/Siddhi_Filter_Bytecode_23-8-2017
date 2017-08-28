@@ -53,14 +53,14 @@ public class OptimizedExpressionExecutor {
      static  byte[] byteArray;
      static AbstractOptimizedExpressionExecutor abstractOptimizedExpressionExecutor;
 
-     public static boolean test(ExpressionExecutor expressionExecutor , ComplexEvent complexEvent) throws IllegalAccessException, InstantiationException, InvocationTargetException {
+     /*public static boolean test(ExpressionExecutor expressionExecutor , ComplexEvent complexEvent) throws IllegalAccessException, InstantiationException, InvocationTargetException {
          OptimizedExpressionExecutorClassLoader optimizedExpressionExecutorClassLoader = new OptimizedExpressionExecutorClassLoader();
          Class regeneratedClass = optimizedExpressionExecutorClassLoader.defineClass("ByteCode",byteArray);
          AbstractOptimizedExpressionExecutor object = (AbstractOptimizedExpressionExecutor) regeneratedClass.newInstance();
          boolean result = object.optimizedExecuteWithByteCode(expressionExecutor, complexEvent);
          //System.out.println("Byte code executor");
          return result;
-     }
+     }*/
 
 
 
