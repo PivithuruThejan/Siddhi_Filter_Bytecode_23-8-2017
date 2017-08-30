@@ -108,7 +108,7 @@ public class MaximumFunctionExtensionTestCase {
     }
 
     @Test(expected = SiddhiAppValidationException.class)
-    public void testMaxFunctionExtension2() throws InterruptedException {
+    public void testMaxFunctionExtension2() throws InterruptedException, InstantiationException, IllegalAccessException {
         log.info("MaximumFunctionExecutor TestCase 2");
         SiddhiManager siddhiManager = new SiddhiManager();
 

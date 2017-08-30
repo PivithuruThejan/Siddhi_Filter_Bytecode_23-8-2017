@@ -49,7 +49,7 @@ public class TriggerTestCase {
     }
 
     @Test
-    public void testQuery1() throws InterruptedException {
+    public void testQuery1() throws InterruptedException, IllegalAccessException, InstantiationException {
         log.info("testTrigger1 - OUT 0");
 
         SiddhiManager siddhiManager = new SiddhiManager();
@@ -64,7 +64,7 @@ public class TriggerTestCase {
     }
 
     @Test(expected = SiddhiAppValidationException.class)
-    public void testQuery2() throws InterruptedException {
+    public void testQuery2() throws InterruptedException, IllegalAccessException, InstantiationException {
         log.info("testTrigger2 - OUT 0");
 
         SiddhiManager siddhiManager = new SiddhiManager();

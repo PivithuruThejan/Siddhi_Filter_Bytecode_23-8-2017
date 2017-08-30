@@ -69,7 +69,7 @@ public class SingleStreamRuntime implements StreamRuntime {
     }
 
     @Override
-    public StreamRuntime clone(String key) {
+    public StreamRuntime clone(String key) throws InstantiationException, IllegalAccessException {
         ProcessStreamReceiver clonedProcessStreamReceiver = this.processStreamReceiver.clone(key);
         EntryValveProcessor entryValveProcessor = null;
         SchedulingProcessor schedulingProcessor;

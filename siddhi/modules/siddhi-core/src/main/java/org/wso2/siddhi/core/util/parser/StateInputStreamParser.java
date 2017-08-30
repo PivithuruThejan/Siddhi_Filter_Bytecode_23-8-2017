@@ -76,7 +76,7 @@ public class StateInputStreamParser {
                                                       Map<String, AbstractDefinition> aggregationDefinitionMap,
                                                       Map<String, Table> tableMap,
                                                       List<VariableExpressionExecutor> variableExpressionExecutors,
-                                                      LatencyTracker latencyTracker, String queryName) {
+                                                      LatencyTracker latencyTracker, String queryName) throws InstantiationException, IllegalAccessException {
 
         Map<String, ProcessStreamReceiver> processStreamReceiverMap = new HashMap<String, ProcessStreamReceiver>();
 
@@ -134,7 +134,7 @@ public class StateInputStreamParser {
                                            StreamPostStateProcessor streamPostStateProcessor,
                                            StateInputStream.Type stateType,
                                            ArrayList<Map.Entry<Long, Set<Integer>>> withinStates,
-                                           LatencyTracker latencyTracker, String queryName) {
+                                           LatencyTracker latencyTracker, String queryName) throws IllegalAccessException, InstantiationException {
 
 
         if (stateElement instanceof StreamStateElement) {

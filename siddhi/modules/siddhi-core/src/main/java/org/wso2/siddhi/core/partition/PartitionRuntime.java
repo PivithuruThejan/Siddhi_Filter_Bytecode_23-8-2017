@@ -217,13 +217,13 @@ public class PartitionRuntime implements Snapshotable {
      *
      * @param key partition key
      */
-    public void cloneIfNotExist(String key) {
+    public void cloneIfNotExist(String key) throws IllegalAccessException, InstantiationException {
         if (!partitionInstanceRuntimeMap.containsKey(key)) {
             clonePartition(key);
         }
     }
 
-    private synchronized void clonePartition(String key) {
+    private synchronized void clonePartition(String key) throws InstantiationException, IllegalAccessException {
         PartitionInstanceRuntime partitionInstance = this.partitionInstanceRuntimeMap.get(key);
 
         if (partitionInstance == null) {
@@ -306,7 +306,7 @@ public class PartitionRuntime implements Snapshotable {
     }
 
     @Override
-    public void restoreState(Map<String, Object> state) {
+    public void restoreState(Map<String, Object> state) throws IllegalAccessException, InstantiationException {
         List<String> partitionKeys = (List<String>) state.get("PartitionKeys");
         for (String key : partitionKeys) {
             clonePartition(key);

@@ -51,5 +51,5 @@ public interface InnerStateRuntime {
 
     void update();
 
-    InnerStateRuntime clone(String key);
+    InnerStateRuntime clone(String key) throws IllegalAccessException, InstantiationException;
 }

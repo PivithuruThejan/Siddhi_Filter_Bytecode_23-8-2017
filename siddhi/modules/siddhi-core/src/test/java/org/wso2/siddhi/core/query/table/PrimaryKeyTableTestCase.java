@@ -2064,6 +2064,10 @@ public class PrimaryKeyTableTestCase {
         try {
             siddhiAppRuntime = siddhiManager.createSiddhiAppRuntime(streams + query);
 
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
         } finally {
             if (siddhiAppRuntime != null) {
                 siddhiAppRuntime.shutdown();
@@ -2090,6 +2094,10 @@ public class PrimaryKeyTableTestCase {
         try {
             siddhiAppRuntime = siddhiManager.createSiddhiAppRuntime(streams + query);
 
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
         } finally {
             if (siddhiAppRuntime != null) {
                 siddhiAppRuntime.shutdown();
@@ -2116,6 +2124,10 @@ public class PrimaryKeyTableTestCase {
         try {
             siddhiAppRuntime = siddhiManager.createSiddhiAppRuntime(streams + query);
 
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
         } finally {
             if (siddhiAppRuntime != null) {
                 siddhiAppRuntime.shutdown();
@@ -2142,6 +2154,10 @@ public class PrimaryKeyTableTestCase {
         try {
             siddhiAppRuntime = siddhiManager.createSiddhiAppRuntime(streams + query);
 
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
         } finally {
             if (siddhiAppRuntime != null) {
                 siddhiAppRuntime.shutdown();
@@ -2168,6 +2184,10 @@ public class PrimaryKeyTableTestCase {
         try {
             siddhiAppRuntime = siddhiManager.createSiddhiAppRuntime(streams + query);
 
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
         } finally {
             if (siddhiAppRuntime != null) {
                 siddhiAppRuntime.shutdown();
@@ -2194,6 +2214,10 @@ public class PrimaryKeyTableTestCase {
         try {
             siddhiAppRuntime = siddhiManager.createSiddhiAppRuntime(streams + query);
 
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
         } finally {
             if (siddhiAppRuntime != null) {
                 siddhiAppRuntime.shutdown();

@@ -22,31 +22,35 @@ import org.mvel2.asm.ClassWriter;
 import org.mvel2.asm.MethodVisitor;
 import org.wso2.siddhi.core.event.ComplexEvent;
 import org.wso2.siddhi.core.executor.ExpressionExecutor;
+
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+
 import static org.mvel2.asm.Opcodes.*;
+
 /**
- *consists of method to generate and execute byte code
+ * consists of method to generate and execute byte code
  */
 public class Test2 {
-    public static ClassWriter classWriter = new ClassWriter(ClassWriter.COMPUTE_FRAMES);;
-    public  static MethodVisitor methodVisitor;
+    public static ClassWriter classWriter = new ClassWriter(ClassWriter.COMPUTE_FRAMES);
+    ;
+    public static MethodVisitor methodVisitor;
 
     /**
      * creates a class called "Bytecode" which has an overridden method "optimizedExecuteWithByteCode".
      */
-    public  void start(){
+    public void start() {
         OptimizedExpressionExecutor.count = false;
-        classWriter.visit(52,ACC_PUBLIC+ACC_SUPER,"ByteCode",null,"java/lang/Object",
+        classWriter.visit(52, ACC_PUBLIC + ACC_SUPER, "ByteCode", null, "java/lang/Object",
                 new String[]{"org/wso2/siddhi/core/query/processor/filter/AbstractOptimizedExpressionExecutor"});
-        classWriter.visitSource("ByteCode.java",null);
+        classWriter.visitSource("ByteCode.java", null);
         {
-            methodVisitor = classWriter.visitMethod(ACC_PUBLIC,"<init>","()V",null,null);
+            methodVisitor = classWriter.visitMethod(ACC_PUBLIC, "<init>", "()V", null, null);
             methodVisitor.visitCode();
-            methodVisitor.visitVarInsn(ALOAD,0);
-            methodVisitor.visitMethodInsn(INVOKESPECIAL,"java/lang/Object","<init>","()V",false);
+            methodVisitor.visitVarInsn(ALOAD, 0);
+            methodVisitor.visitMethodInsn(INVOKESPECIAL, "java/lang/Object", "<init>", "()V", false);
             methodVisitor.visitInsn(RETURN);
-            methodVisitor.visitMaxs(1,1);
+            methodVisitor.visitMaxs(1, 1);
             methodVisitor.visitEnd();
         }
         {
@@ -64,11 +68,12 @@ public class Test2 {
 
     /**
      * generates byte array from classWriter
+     *
      * @throws IllegalAccessException
      * @throws InstantiationException
      */
 
-    public  void end() throws IllegalAccessException, InstantiationException, IOException {
+    public void end() throws IllegalAccessException, InstantiationException, IOException {
         //System.out.println("end");
         Test2.methodVisitor.visitVarInsn(ILOAD, 2);
         Test2.methodVisitor.visitInsn(IRETURN);
@@ -79,7 +84,7 @@ public class Test2 {
         OptimizedExpressionExecutorClassLoader optimizedExpressionExecutorClassLoader = new
                 OptimizedExpressionExecutorClassLoader();
         Class regeneratedClass = optimizedExpressionExecutorClassLoader
-                .defineClass("ByteCode",OptimizedExpressionExecutor.byteArray);
+                .defineClass("ByteCode", OptimizedExpressionExecutor.byteArray);
         OptimizedExpressionExecutor.abstractOptimizedExpressionExecutor = (AbstractOptimizedExpressionExecutor)
                 regeneratedClass.newInstance();
         /*FileOutputStream output = new FileOutputStream(new File("SimpleByteCode.class"));
@@ -90,6 +95,7 @@ public class Test2 {
 
     /**
      * method that executes bytecode
+     *
      * @param expressionExecutor
      * @param complexEvent
      * @return
@@ -98,11 +104,11 @@ public class Test2 {
      * @throws InstantiationException
      */
 
-    public boolean execute(ExpressionExecutor expressionExecutor , ComplexEvent complexEvent) throws
+    public boolean execute(ExpressionExecutor expressionExecutor, ComplexEvent complexEvent) throws
             IllegalAccessException,
             InvocationTargetException, InstantiationException {
         boolean result = OptimizedExpressionExecutor.abstractOptimizedExpressionExecutor.
-                optimizedExecuteWithByteCode( complexEvent);
+                optimizedExecuteWithByteCode(complexEvent);
         return result;
 
     }

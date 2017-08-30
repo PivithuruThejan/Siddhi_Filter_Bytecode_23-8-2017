@@ -102,7 +102,7 @@ public class CallbackTestCase {
     }
 
     @Test(expected = QueryNotExistException.class)
-    public void callbackTest2() throws InterruptedException {
+    public void callbackTest2() throws InterruptedException, InstantiationException, IllegalAccessException {
         log.info("callback test2");
         SiddhiManager siddhiManager = new SiddhiManager();
 
@@ -131,7 +131,7 @@ public class CallbackTestCase {
     }
 
     @Test(expected = DefinitionNotExistException.class)
-    public void callbackTest3() throws InterruptedException {
+    public void callbackTest3() throws InterruptedException, InstantiationException, IllegalAccessException {
         log.info("callback test3");
         SiddhiManager siddhiManager = new SiddhiManager();
 

@@ -78,7 +78,7 @@ public class AggregationParser {
                                            Map<String, Table> tableMap,
                                            Map<String, Window> windowMap,
                                            Map<String, AggregationRuntime> aggregationMap,
-                                           SiddhiAppRuntimeBuilder siddhiAppRuntimeBuilder) {
+                                           SiddhiAppRuntimeBuilder siddhiAppRuntimeBuilder) throws InstantiationException, IllegalAccessException {
 
         if (aggregationDefinition == null) {
             throw new SiddhiAppCreationException(

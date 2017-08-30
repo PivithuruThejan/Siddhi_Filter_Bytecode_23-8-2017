@@ -70,7 +70,7 @@ public class SiddhiAppParser {
      * @param siddhiContext SiddhiContext
      * @return SiddhiAppRuntime
      */
-    public static SiddhiAppRuntimeBuilder parse(SiddhiApp siddhiApp, SiddhiContext siddhiContext) {
+    public static SiddhiAppRuntimeBuilder parse(SiddhiApp siddhiApp, SiddhiContext siddhiContext) throws IllegalAccessException, InstantiationException {
 
         SiddhiAppContext siddhiAppContext = new SiddhiAppContext();
         siddhiAppContext.setSiddhiContext(siddhiContext);
@@ -289,7 +289,7 @@ public class SiddhiAppParser {
     }
 
     private static void defineAggregationDefinitions(SiddhiAppRuntimeBuilder siddhiAppRuntimeBuilder,
-                                                     Map<String, AggregationDefinition> aggregationDefinitionMap) {
+                                                     Map<String, AggregationDefinition> aggregationDefinitionMap) throws InstantiationException, IllegalAccessException {
         for (AggregationDefinition definition : aggregationDefinitionMap.values()) {
             siddhiAppRuntimeBuilder.defineAggregation(definition);
         }

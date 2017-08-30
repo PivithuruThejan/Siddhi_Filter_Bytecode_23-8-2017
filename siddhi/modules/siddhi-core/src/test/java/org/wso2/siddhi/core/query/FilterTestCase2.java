@@ -1064,7 +1064,7 @@ public class FilterTestCase2 {
     }
 
     @Test(expected = SiddhiAppValidationException.class)
-    public void testFilterQuery108() throws InterruptedException {
+    public void testFilterQuery108() throws InterruptedException, IllegalAccessException, InstantiationException {
         log.info("Filter test108");
 
         SiddhiManager siddhiManager = new SiddhiManager();

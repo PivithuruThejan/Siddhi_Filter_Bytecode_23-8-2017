@@ -763,7 +763,7 @@ public class ExternalTimeBatchWindowTestCase {
     }
 
     @Test
-    public void testExternalTimeBatchWindow12() throws InterruptedException {
+    public void testExternalTimeBatchWindow12() throws InterruptedException, InstantiationException, IllegalAccessException {
         log.info("ExternalTimeBatchWindow test12");
 
         SiddhiManager siddhiManager = new SiddhiManager();
@@ -831,7 +831,7 @@ public class ExternalTimeBatchWindowTestCase {
     }
 
     @Test
-    public void testExternalTimeBatchWindow13() throws InterruptedException {
+    public void testExternalTimeBatchWindow13() throws InterruptedException, InstantiationException, IllegalAccessException {
         log.info("ExternalTimeBatchWindow test13");
 
         SiddhiManager siddhiManager = new SiddhiManager();

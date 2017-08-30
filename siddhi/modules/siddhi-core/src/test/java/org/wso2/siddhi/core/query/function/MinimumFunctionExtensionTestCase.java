@@ -107,7 +107,7 @@ public class MinimumFunctionExtensionTestCase {
     }
 
     @Test(expected = SiddhiAppValidationException.class)
-    public void testMinFunctionExtension2() throws InterruptedException {
+    public void testMinFunctionExtension2() throws InterruptedException, InstantiationException, IllegalAccessException {
         log.info("MinimumFunctionExecutor TestCase 2");
         SiddhiManager siddhiManager = new SiddhiManager();
 

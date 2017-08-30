@@ -144,7 +144,7 @@ public class SiddhiAppRuntimeBuilder {
                 siddhiAppContext);
     }
 
-    public void defineAggregation(AggregationDefinition aggregationDefinition) {
+    public void defineAggregation(AggregationDefinition aggregationDefinition) throws IllegalAccessException, InstantiationException {
         AggregationRuntime aggregationRuntime = AggregationParser.parse(aggregationDefinition, siddhiAppContext,
                 streamDefinitionMap, tableDefinitionMap, windowDefinitionMap, aggregationDefinitionMap, tableMap,
                 windowMap, aggregationMap, this);

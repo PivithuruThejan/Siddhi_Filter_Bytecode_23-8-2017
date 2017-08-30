@@ -103,7 +103,7 @@ public class StreamInnerStateRuntime implements InnerStateRuntime {
     }
 
     @Override
-    public InnerStateRuntime clone(String key) {
+    public InnerStateRuntime clone(String key) throws IllegalAccessException, InstantiationException {
         StreamInnerStateRuntime streamInnerStateRuntime = new StreamInnerStateRuntime(stateType);
         for (SingleStreamRuntime singleStreamRuntime : singleStreamRuntimeList) {
             streamInnerStateRuntime.singleStreamRuntimeList.add((SingleStreamRuntime) singleStreamRuntime.clone(key));

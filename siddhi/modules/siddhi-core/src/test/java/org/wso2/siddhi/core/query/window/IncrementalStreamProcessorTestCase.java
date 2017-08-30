@@ -9,7 +9,7 @@ public class IncrementalStreamProcessorTestCase {
     private static final Logger log = Logger.getLogger(IncrementalStreamProcessorTestCase.class);
 
     @Test
-    public void incrementalStreamProcessorTest1() {
+    public void incrementalStreamProcessorTest1() throws InstantiationException, IllegalAccessException {
         SiddhiManager siddhiManager = new SiddhiManager();
 
         String cseEventStream = "" +
@@ -26,7 +26,7 @@ public class IncrementalStreamProcessorTestCase {
     }
 
     @Test
-    public void incrementalStreamProcessorTest2() {
+    public void incrementalStreamProcessorTest2() throws InstantiationException, IllegalAccessException {
         SiddhiManager siddhiManager = new SiddhiManager();
 
         String cseEventStream = "" +
@@ -43,7 +43,7 @@ public class IncrementalStreamProcessorTestCase {
     }
 
     @Test
-    public void incrementalStreamProcessorTest3() {
+    public void incrementalStreamProcessorTest3() throws InstantiationException, IllegalAccessException {
         SiddhiManager siddhiManager = new SiddhiManager();
 
         String cseEventStream = "" +

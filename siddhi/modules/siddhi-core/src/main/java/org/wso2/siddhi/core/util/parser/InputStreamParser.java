@@ -69,7 +69,7 @@ public class InputStreamParser {
                                       Map<String, AggregationRuntime> aggregationMap,
                                       List<VariableExpressionExecutor> executors,
                                       LatencyTracker latencyTracker, boolean outputExpectsExpiredEvents,
-                                      String queryName) {
+                                      String queryName) throws IllegalAccessException, InstantiationException {
 
         if (inputStream instanceof BasicSingleInputStream || inputStream instanceof SingleInputStream) {
             SingleInputStream singleInputStream = (SingleInputStream) inputStream;

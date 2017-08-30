@@ -49,7 +49,7 @@ public class LenghtBatchWindowTestCase {
     }
 
     @Test
-    public void testLengthBatchWindow0() throws InterruptedException {
+    public void testLengthBatchWindow0() throws InterruptedException, InstantiationException, IllegalAccessException {
         log.info("Testing length batch window definition");
         SiddhiManager siddhiManager = new SiddhiManager();
         String window = "define window Window(symbol string, price int, volume float) lengthBatch(5)";

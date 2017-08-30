@@ -41,7 +41,7 @@ public class AggregationTestCase {
     }
 
     @Test
-    public void incrementalStreamProcessorTest1() {
+    public void incrementalStreamProcessorTest1() throws InstantiationException, IllegalAccessException {
         SiddhiManager siddhiManager = new SiddhiManager();
 
         String cseEventStream = "" +
@@ -58,7 +58,7 @@ public class AggregationTestCase {
     }
 
     @Test
-    public void incrementalStreamProcessorTest2() {
+    public void incrementalStreamProcessorTest2() throws InstantiationException, IllegalAccessException {
         SiddhiManager siddhiManager = new SiddhiManager();
 
         String cseEventStream = "" +
@@ -75,7 +75,7 @@ public class AggregationTestCase {
     }
 
     @Test
-    public void incrementalStreamProcessorTest3() {
+    public void incrementalStreamProcessorTest3() throws InstantiationException, IllegalAccessException {
         SiddhiManager siddhiManager = new SiddhiManager();
 
         String cseEventStream = "" +
@@ -384,7 +384,7 @@ public class AggregationTestCase {
     }
 
     @Test
-    public void incrementalAggregationTest1() {
+    public void incrementalAggregationTest1() throws InstantiationException, IllegalAccessException {
         SiddhiManager siddhiManager = new SiddhiManager();
 
         String app = "" +

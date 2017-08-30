@@ -75,7 +75,7 @@ public class JoinInputStreamParser {
                                                  List<VariableExpressionExecutor> executors,
                                                  LatencyTracker latencyTracker,
                                                  boolean outputExpectsExpiredEvents,
-                                                 String queryName) {
+                                                 String queryName) throws IllegalAccessException, InstantiationException {
 
         ProcessStreamReceiver leftProcessStreamReceiver;
         ProcessStreamReceiver rightProcessStreamReceiver;

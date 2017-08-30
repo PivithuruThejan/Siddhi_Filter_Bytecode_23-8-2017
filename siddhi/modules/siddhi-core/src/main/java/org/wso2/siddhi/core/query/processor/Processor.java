@@ -64,6 +64,6 @@ public interface Processor {
      * @param key partition key
      * @return cloned processor
      */
-    Processor cloneProcessor(String key);
+    Processor cloneProcessor(String key) throws IllegalAccessException, InstantiationException;
 
 }

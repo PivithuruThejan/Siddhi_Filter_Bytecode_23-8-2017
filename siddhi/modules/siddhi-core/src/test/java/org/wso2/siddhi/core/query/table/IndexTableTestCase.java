@@ -400,7 +400,7 @@ public class IndexTableTestCase {
     }
 
     @Test
-    public void indexTableTest6() throws InterruptedException {
+    public void indexTableTest6() throws InterruptedException, InstantiationException, IllegalAccessException {
         log.info("indexTableTest6");
 
         SiddhiManager siddhiManager = new SiddhiManager();
@@ -2209,6 +2209,10 @@ public class IndexTableTestCase {
         try {
             siddhiAppRuntime = siddhiManager.createSiddhiAppRuntime(streams + query);
 
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
         } finally {
             if (siddhiAppRuntime != null) {
                 siddhiAppRuntime.shutdown();
@@ -2235,6 +2239,10 @@ public class IndexTableTestCase {
         try {
             siddhiAppRuntime = siddhiManager.createSiddhiAppRuntime(streams + query);
 
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
         } finally {
             if (siddhiAppRuntime != null) {
                 siddhiAppRuntime.shutdown();
@@ -2262,6 +2270,10 @@ public class IndexTableTestCase {
         try {
             siddhiAppRuntime = siddhiManager.createSiddhiAppRuntime(streams + query);
 
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
         } finally {
             if (siddhiAppRuntime != null) {
                 siddhiAppRuntime.shutdown();
@@ -2288,6 +2300,10 @@ public class IndexTableTestCase {
         try {
             siddhiAppRuntime = siddhiManager.createSiddhiAppRuntime(streams + query);
 
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
         } finally {
             if (siddhiAppRuntime != null) {
                 siddhiAppRuntime.shutdown();

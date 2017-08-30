@@ -30,7 +30,7 @@ public interface StreamRuntime {
 
     List<SingleStreamRuntime> getSingleStreamRuntimes();
 
-    StreamRuntime clone(String key);
+    StreamRuntime clone(String key) throws InstantiationException, IllegalAccessException;
 
     void setCommonProcessor(Processor commonProcessor);
 

@@ -124,7 +124,7 @@ public class Window implements FindableProcessor, Snapshotable {
      * @param queryName name of the query window belongs to.
      */
     public void init(Map<String, Table> tableMap, Map<String, Window> eventWindowMap, LatencyTracker
-            latencyTracker, String queryName) {
+            latencyTracker, String queryName) throws InstantiationException, IllegalAccessException {
         if (this.windowProcessor != null) {
             return;
         }

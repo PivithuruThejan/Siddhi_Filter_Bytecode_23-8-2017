@@ -86,7 +86,7 @@ public class ExternalTimeBatchWindowTestCase {
         runtime.shutdown();
     }
 
-    private SiddhiAppRuntime simpleQueryRuntime() {
+    private SiddhiAppRuntime simpleQueryRuntime() throws InstantiationException, IllegalAccessException {
         String query = "define stream jmxMetric(cpu int, timestamp long); "
                 + "@info(name='query')"
                 + "from jmxMetric#window.externalTimeBatch(timestamp, 10 sec) "
@@ -1077,7 +1077,7 @@ public class ExternalTimeBatchWindowTestCase {
     }
 
     @Test
-    public void externalTimeBatchWindowTest12() throws InterruptedException {
+    public void externalTimeBatchWindowTest12() throws InterruptedException, InstantiationException, IllegalAccessException {
         log.info("externalTimeBatchWindow Test12");
 
         SiddhiManager siddhiManager = new SiddhiManager();
@@ -1133,7 +1133,7 @@ public class ExternalTimeBatchWindowTestCase {
     }
 
     @Test
-    public void externalTimeBatchWindowTest13() throws InterruptedException {
+    public void externalTimeBatchWindowTest13() throws InterruptedException, InstantiationException, IllegalAccessException {
         log.info("externalTimeBatchWindow Test13");
 
         SiddhiManager siddhiManager = new SiddhiManager();

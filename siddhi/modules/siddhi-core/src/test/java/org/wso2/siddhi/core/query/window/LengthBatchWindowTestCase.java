@@ -373,7 +373,7 @@ public class LengthBatchWindowTestCase {
     }
 
     @Test
-    public void lengthBatchWindowTest8() throws InterruptedException {
+    public void lengthBatchWindowTest8() throws InterruptedException, InstantiationException, IllegalAccessException {
         log.info("LengthBatchWindow Test8");
 
         SiddhiManager siddhiManager = new SiddhiManager();
@@ -430,7 +430,7 @@ public class LengthBatchWindowTestCase {
     }
 
     @Test
-    public void lengthBatchWindowTest9() throws InterruptedException {
+    public void lengthBatchWindowTest9() throws InterruptedException, InstantiationException, IllegalAccessException {
         log.info("LengthBatchWindow Test9");
 
         SiddhiManager siddhiManager = new SiddhiManager();

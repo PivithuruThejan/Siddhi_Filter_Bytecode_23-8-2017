@@ -54,7 +54,7 @@ public class JoinStreamRuntime implements StreamRuntime {
     }
 
     @Override
-    public StreamRuntime clone(String key) {
+    public StreamRuntime clone(String key) throws IllegalAccessException, InstantiationException {
 
         JoinStreamRuntime joinStreamRuntime = new JoinStreamRuntime(siddhiAppContext, metaStateEvent);
         for (SingleStreamRuntime singleStreamRuntime : singleStreamRuntimeList) {

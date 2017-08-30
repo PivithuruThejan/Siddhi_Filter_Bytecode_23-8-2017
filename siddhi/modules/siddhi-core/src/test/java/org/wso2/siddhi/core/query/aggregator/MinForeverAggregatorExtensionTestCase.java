@@ -272,7 +272,7 @@ public class MinForeverAggregatorExtensionTestCase {
 
 
     @Test(expected = SiddhiAppValidationException.class)
-    public void testMinForeverAggregatorExtension5() throws InterruptedException {
+    public void testMinForeverAggregatorExtension5() throws InterruptedException, InstantiationException, IllegalAccessException {
         log.info("minForeverAggregator TestCase 5");
         SiddhiManager siddhiManager = new SiddhiManager();
 

@@ -32,7 +32,7 @@ public class WindowDefinitionTestCase {
     private static final Logger log = Logger.getLogger(WindowDefinitionTestCase.class);
 
     @Test
-    public void testEventWindow1() throws InterruptedException {
+    public void testEventWindow1() throws InterruptedException, InstantiationException, IllegalAccessException {
         log.info("WindowDefinitionTestCase Test1");
 
         SiddhiManager siddhiManager = new SiddhiManager();
@@ -45,7 +45,7 @@ public class WindowDefinitionTestCase {
     }
 
     @Test
-    public void testEventWindow2() throws InterruptedException {
+    public void testEventWindow2() throws InterruptedException, InstantiationException, IllegalAccessException {
         log.info("WindowDefinitionTestCase Test2");
 
         SiddhiManager siddhiManager = new SiddhiManager();
@@ -58,7 +58,7 @@ public class WindowDefinitionTestCase {
     }
 
     @Test
-    public void testEventWindow3() throws InterruptedException {
+    public void testEventWindow3() throws InterruptedException, InstantiationException, IllegalAccessException {
         log.info("WindowDefinitionTestCase Test3");
 
         SiddhiManager siddhiManager = new SiddhiManager();
@@ -71,7 +71,7 @@ public class WindowDefinitionTestCase {
     }
 
     @Test
-    public void testEventWindow4() throws InterruptedException {
+    public void testEventWindow4() throws InterruptedException, InstantiationException, IllegalAccessException {
         log.info("WindowDefinitionTestCase Test4");
 
         SiddhiManager siddhiManager = new SiddhiManager();
@@ -84,7 +84,7 @@ public class WindowDefinitionTestCase {
     }
 
     @Test(expected = SiddhiParserException.class)
-    public void testEventWindow5() throws InterruptedException {
+    public void testEventWindow5() throws InterruptedException, InstantiationException, IllegalAccessException {
         log.info("WindowDefinitionTestCase Test5");
 
         SiddhiManager siddhiManager = new SiddhiManager();
@@ -96,7 +96,7 @@ public class WindowDefinitionTestCase {
     }
 
     @Test(expected = SiddhiAppCreationException.class)
-    public void testEventWindow6() throws InterruptedException {
+    public void testEventWindow6() throws InterruptedException, InstantiationException, IllegalAccessException {
         log.info("WindowDefinitionTestCase Test6");
 
         SiddhiManager siddhiManager = new SiddhiManager();
@@ -108,7 +108,7 @@ public class WindowDefinitionTestCase {
     }
 
     @Test(expected = SiddhiParserException.class)
-    public void testEventWindow7() throws InterruptedException {
+    public void testEventWindow7() throws InterruptedException, InstantiationException, IllegalAccessException {
         log.info("WindowDefinitionTestCase Test7");
 
         SiddhiManager siddhiManager = new SiddhiManager();
@@ -120,7 +120,7 @@ public class WindowDefinitionTestCase {
     }
 
     @Test(expected = DuplicateDefinitionException.class)
-    public void testEventWindow8() throws InterruptedException {
+    public void testEventWindow8() throws InterruptedException, InstantiationException, IllegalAccessException {
         log.info("WindowDefinitionTestCase Test8");
 
         SiddhiManager siddhiManager = new SiddhiManager();

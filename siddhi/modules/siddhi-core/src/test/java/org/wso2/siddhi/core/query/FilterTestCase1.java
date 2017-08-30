@@ -1595,7 +1595,7 @@ public class FilterTestCase1 {
     }
 
     @Test(expected = SiddhiAppValidationException.class)
-    public void testFilterQuery44() throws InterruptedException {
+    public void testFilterQuery44() throws InterruptedException, InstantiationException, IllegalAccessException {
         log.info("Filter test44");
 
         SiddhiManager siddhiManager = new SiddhiManager();
@@ -1608,7 +1608,7 @@ public class FilterTestCase1 {
     }
 
     @Test(expected = SiddhiAppValidationException.class)
-    public void testFilterQuery45() throws InterruptedException {
+    public void testFilterQuery45() throws InterruptedException, InstantiationException, IllegalAccessException {
         log.info("Filter test45");
 
         SiddhiManager siddhiManager = new SiddhiManager();
@@ -1621,7 +1621,7 @@ public class FilterTestCase1 {
     }
 
     @Test(expected = SiddhiAppValidationException.class)
-    public void testFilterQuery46() throws InterruptedException {
+    public void testFilterQuery46() throws InterruptedException, InstantiationException, IllegalAccessException {
         log.info("Filter test46");
 
         SiddhiManager siddhiManager = new SiddhiManager();
@@ -1634,7 +1634,7 @@ public class FilterTestCase1 {
     }
 
     @Test(expected = SiddhiAppValidationException.class)
-    public void testFilterQuery47() throws InterruptedException {
+    public void testFilterQuery47() throws InterruptedException, InstantiationException, IllegalAccessException {
         log.info("Filter test47");
 
         SiddhiManager siddhiManager = new SiddhiManager();
@@ -1647,7 +1647,7 @@ public class FilterTestCase1 {
     }
 
     @Test(expected = SiddhiAppValidationException.class)
-    public void testFilterQuery48() throws InterruptedException {
+    public void testFilterQuery48() throws InterruptedException, IllegalAccessException, InstantiationException {
         log.info("Filter test48");
 
         SiddhiManager siddhiManager = new SiddhiManager();
@@ -1674,7 +1674,7 @@ public class FilterTestCase1 {
     }
 
     @Test(expected = SiddhiAppValidationException.class)
-    public void testFilterQuery49() throws InterruptedException {
+    public void testFilterQuery49() throws InterruptedException, IllegalAccessException, InstantiationException {
         log.info("Filter test49");
 
         SiddhiManager siddhiManager = new SiddhiManager();
@@ -1701,7 +1701,7 @@ public class FilterTestCase1 {
     }
 
     @Test(expected = SiddhiAppValidationException.class)
-    public void testFilterQuery50() throws InterruptedException {
+    public void testFilterQuery50() throws InterruptedException, InstantiationException, IllegalAccessException {
         log.info("Filter test50");
 
         SiddhiManager siddhiManager = new SiddhiManager();

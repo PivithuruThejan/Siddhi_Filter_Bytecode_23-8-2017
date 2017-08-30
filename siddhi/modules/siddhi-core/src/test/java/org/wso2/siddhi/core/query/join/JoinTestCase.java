@@ -49,7 +49,7 @@ public class JoinTestCase {
     }
 
     @Test
-    public void joinTest1() throws InterruptedException {
+    public void joinTest1() throws InterruptedException, InstantiationException, IllegalAccessException {
         log.info("Join test1");
 
         SiddhiManager siddhiManager = new SiddhiManager();
@@ -106,7 +106,7 @@ public class JoinTestCase {
     }
 
     @Test
-    public void joinTest2() throws InterruptedException {
+    public void joinTest2() throws InterruptedException, InstantiationException, IllegalAccessException {
         log.info("Join test2");
 
         SiddhiManager siddhiManager = new SiddhiManager();
@@ -164,7 +164,7 @@ public class JoinTestCase {
     }
 
     @Test
-    public void joinTest3() throws InterruptedException {
+    public void joinTest3() throws InterruptedException, InstantiationException, IllegalAccessException {
         log.info("Join test3");
 
         SiddhiManager siddhiManager = new SiddhiManager();
@@ -218,7 +218,7 @@ public class JoinTestCase {
     }
 
     @Test
-    public void joinTest4() throws InterruptedException {
+    public void joinTest4() throws InterruptedException, InstantiationException, IllegalAccessException {
         log.info("Join test4");
 
         SiddhiManager siddhiManager = new SiddhiManager();
@@ -284,7 +284,7 @@ public class JoinTestCase {
     }
 
     @Test
-    public void joinTest5() throws InterruptedException {
+    public void joinTest5() throws InterruptedException, InstantiationException, IllegalAccessException {
         log.info("Join test5");
 
         SiddhiManager siddhiManager = new SiddhiManager();
@@ -329,7 +329,7 @@ public class JoinTestCase {
     }
 
     @Test(expected = SiddhiAppValidationException.class)
-    public void joinTest6() throws InterruptedException {
+    public void joinTest6() throws InterruptedException, InstantiationException, IllegalAccessException {
         log.info("Join test6");
 
         SiddhiManager siddhiManager = new SiddhiManager();
@@ -346,7 +346,7 @@ public class JoinTestCase {
     }
 
     @Test(expected = SiddhiAppValidationException.class)
-    public void joinTest7() throws InterruptedException {
+    public void joinTest7() throws InterruptedException, InstantiationException, IllegalAccessException {
         log.info("Join test7");
 
         SiddhiManager siddhiManager = new SiddhiManager();
@@ -402,7 +402,7 @@ public class JoinTestCase {
     }
 
     @Test
-    public void joinTest9() throws InterruptedException {
+    public void joinTest9() throws InterruptedException, InstantiationException, IllegalAccessException {
         log.info("Join test9");
 
         SiddhiManager siddhiManager = new SiddhiManager();
@@ -447,7 +447,7 @@ public class JoinTestCase {
     }
 
     @Test
-    public void joinTest10() throws InterruptedException {
+    public void joinTest10() throws InterruptedException, InstantiationException, IllegalAccessException {
         log.info("Join test10");
 
         SiddhiManager siddhiManager = new SiddhiManager();
@@ -501,7 +501,7 @@ public class JoinTestCase {
     }
 
     @Test
-    public void joinTest11() throws InterruptedException {
+    public void joinTest11() throws InterruptedException, InstantiationException, IllegalAccessException {
         log.info("Join test11");
 
         SiddhiManager siddhiManager = new SiddhiManager();
@@ -556,7 +556,7 @@ public class JoinTestCase {
     }
 
     @Test
-    public void joinTest12() throws InterruptedException {
+    public void joinTest12() throws InterruptedException, InstantiationException, IllegalAccessException {
         log.info("Join test12");
 
         SiddhiManager siddhiManager = new SiddhiManager();
@@ -609,7 +609,7 @@ public class JoinTestCase {
     }
 
     @Test(expected = SiddhiAppValidationException.class)
-    public void joinTest13() throws InterruptedException {
+    public void joinTest13() throws InterruptedException, InstantiationException, IllegalAccessException {
         log.info("Join test13");
 
         SiddhiManager siddhiManager = new SiddhiManager();
@@ -638,7 +638,7 @@ public class JoinTestCase {
     }
 
     @Test
-    public void joinTest14() throws InterruptedException {
+    public void joinTest14() throws InterruptedException, InstantiationException, IllegalAccessException {
         log.info("Join test14");
 
         SiddhiManager siddhiManager = new SiddhiManager();
@@ -691,7 +691,7 @@ public class JoinTestCase {
     }
 
     @Test
-    public void joinTest15() throws InterruptedException {
+    public void joinTest15() throws InterruptedException, InstantiationException, IllegalAccessException {
         log.info("Join test15");
 
         SiddhiManager siddhiManager = new SiddhiManager();
@@ -745,7 +745,7 @@ public class JoinTestCase {
     }
 
     @Test
-    public void joinTest16() throws InterruptedException {
+    public void joinTest16() throws InterruptedException, InstantiationException, IllegalAccessException {
         log.info("Join test16");
 
         SiddhiManager siddhiManager = new SiddhiManager();
@@ -847,7 +847,7 @@ public class JoinTestCase {
     }
 
     @Test
-    public void joinTest18() throws InterruptedException {
+    public void joinTest18() throws InterruptedException, InstantiationException, IllegalAccessException {
         log.info("Join test18");
 
         SiddhiManager siddhiManager = new SiddhiManager();
@@ -937,7 +937,7 @@ public class JoinTestCase {
     }
 
     @Test
-    public void joinTest19() throws InterruptedException {
+    public void joinTest19() throws InterruptedException, InstantiationException, IllegalAccessException {
         log.info("Join test19");
 
         SiddhiManager siddhiManager = new SiddhiManager();
@@ -1001,7 +1001,7 @@ public class JoinTestCase {
     }
 
     @Test
-    public void joinTest20() throws InterruptedException {
+    public void joinTest20() throws InterruptedException, InstantiationException, IllegalAccessException {
         log.info("Join test20");
 
         SiddhiManager siddhiManager = new SiddhiManager();

@@ -87,7 +87,7 @@ public class SingleInputStreamParser {
                                                        MetaComplexEvent metaComplexEvent,
                                                        ProcessStreamReceiver processStreamReceiver,
                                                        boolean supportsBatchProcessing,
-                                                       boolean outputExpectsExpiredEvents, String queryName) {
+                                                       boolean outputExpectsExpiredEvents, String queryName) throws InstantiationException, IllegalAccessException {
         Processor processor = null;
         EntryValveProcessor entryValveProcessor = null;
         boolean first = true;
@@ -153,7 +153,7 @@ public class SingleInputStreamParser {
                                               List<VariableExpressionExecutor> variableExpressionExecutors,
                                               SiddhiAppContext siddhiAppContext, Map<String, Table> tableMap,
                                               boolean supportsBatchProcessing, boolean outputExpectsExpiredEvents,
-                                              String queryName) {
+                                              String queryName) throws IllegalAccessException, InstantiationException {
         Expression[] parameters = streamHandler.getParameters();
         MetaStreamEvent metaStreamEvent;
         int stateIndex = SiddhiConstants.UNKNOWN_STATE;

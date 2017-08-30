@@ -3,6 +3,7 @@ package org.wso2.siddhi.core.query.processor.filter;
 //import jdk.internal.org.objectweb.asm.ClassWriter;
 //import jdk.internal.org.objectweb.asm.Label;
 //import jdk.internal.org.objectweb.asm.MethodVisitor;
+
 import org.mvel2.asm.ClassWriter;
 import org.mvel2.asm.Label;
 import org.mvel2.asm.MethodVisitor;
@@ -21,20 +22,23 @@ public class OptimizedExpressionExecutorWithByteCode {
     public static void main(String args[]) throws IllegalAccessException, InstantiationException, InvocationTargetException {
         ClassWriter classWriter = new ClassWriter(ClassWriter.COMPUTE_FRAMES);
         MethodVisitor methodVisitor;
-        classWriter.visit(52,ACC_PUBLIC+ACC_SUPER,"ByteCode",null,"java/lang/Object",null);
-        classWriter.visitSource("ByteCode.java",null);
+        classWriter.visit(52, ACC_PUBLIC + ACC_SUPER, "ByteCode", null, "java/lang/Object",
+                null);
+        classWriter.visitSource("ByteCode.java", null);
         {
-            methodVisitor = classWriter.visitMethod(ACC_PUBLIC,"<init>","()V",null,null);
+            methodVisitor = classWriter.visitMethod(ACC_PUBLIC, "<init>", "()V", null, null);
             methodVisitor.visitCode();
-            methodVisitor.visitVarInsn(ALOAD,0);
-            methodVisitor.visitMethodInsn(INVOKESPECIAL,"java/lang/Object","<init>","()V",false);
+            methodVisitor.visitVarInsn(ALOAD, 0);
+            methodVisitor.visitMethodInsn(INVOKESPECIAL, "java/lang/Object", "<init>", "()V", false);
             methodVisitor.visitInsn(RETURN);
-            methodVisitor.visitMaxs(1,1);
+            methodVisitor.visitMaxs(1, 1);
             methodVisitor.visitEnd();
         }
         {
 
-            methodVisitor = classWriter.visitMethod(ACC_PUBLIC, "optimizedExecute", "(Lorg/wso2/siddhi/core/executor/ExpressionExecutor;Lorg/wso2/siddhi/core/event/ComplexEvent;)Z", null, null);
+            methodVisitor = classWriter.visitMethod(ACC_PUBLIC, "optimizedExecute",
+                    "(Lorg/wso2/siddhi/core/executor/ExpressionExecutor;Lorg/wso2/siddhi/core/event/ComplexEvent;)Z",
+                    null, null);
             methodVisitor.visitCode();
             methodVisitor.visitInsn(ICONST_0);
             methodVisitor.visitVarInsn(ISTORE, 1);
@@ -58,13 +62,15 @@ public class OptimizedExpressionExecutorWithByteCode {
         }
 
         byte[] byteCode = classWriter.toByteArray();
-        OptimizedExpressionExecutorClassLoader optimizedExpressionExecutorClassLoader = new OptimizedExpressionExecutorClassLoader();
-        Class regeneratedClass = optimizedExpressionExecutorClassLoader.defineClass("ByteCode",byteCode);
+        OptimizedExpressionExecutorClassLoader optimizedExpressionExecutorClassLoader = new
+                OptimizedExpressionExecutorClassLoader();
+        Class regeneratedClass = optimizedExpressionExecutorClassLoader.defineClass("ByteCode", byteCode);
         Object object = regeneratedClass.newInstance();
         Method[] methods = regeneratedClass.getMethods();
         ExpressionExecutor expressionExecutor = new ExpressionExecutor() {
             @Override
-            public Object execute(ComplexEvent event) throws IllegalAccessException, InstantiationException, InvocationTargetException {
+            public Object execute(ComplexEvent event) throws IllegalAccessException, InstantiationException,
+                    InvocationTargetException {
                 return null;
             }
 
@@ -125,11 +131,8 @@ public class OptimizedExpressionExecutorWithByteCode {
             }
         };
 
-        boolean result = (boolean) methods[0].invoke(object,expressionExecutor,complexEvent);
+        boolean result = (boolean) methods[0].invoke(object, expressionExecutor, complexEvent);
         System.out.println(result);
-
-
-
 
 
     }

@@ -37,7 +37,7 @@ public class CountInnerStateRuntime extends StreamInnerStateRuntime {
     }
 
     @Override
-    public InnerStateRuntime clone(String key) {
+    public InnerStateRuntime clone(String key) throws InstantiationException, IllegalAccessException {
         StreamInnerStateRuntime clonedStreamInnerStateRuntime = (StreamInnerStateRuntime) streamInnerStateRuntime
                 .clone(key);
         CountPreStateProcessor countPreStateProcessor = (CountPreStateProcessor) clonedStreamInnerStateRuntime

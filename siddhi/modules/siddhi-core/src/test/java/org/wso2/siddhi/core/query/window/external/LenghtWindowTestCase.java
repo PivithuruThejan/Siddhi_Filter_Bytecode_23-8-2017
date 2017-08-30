@@ -49,7 +49,7 @@ public class LenghtWindowTestCase {
     }
 
     @Test
-    public void testLengthWindow0() throws InterruptedException {
+    public void testLengthWindow0() throws InterruptedException, InstantiationException, IllegalAccessException {
         log.info("Testing length window definition");
         SiddhiManager siddhiManager = new SiddhiManager();
         String window = "define window EventWindow1(symbol string, price int, volume float) length(5) output all " +

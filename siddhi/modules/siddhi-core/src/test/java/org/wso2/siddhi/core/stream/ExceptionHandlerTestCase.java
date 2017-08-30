@@ -50,7 +50,7 @@ public class ExceptionHandlerTestCase {
         failedCaught = false;
     }
 
-    private SiddhiAppRuntime createTestExecutionRuntime() {
+    private SiddhiAppRuntime createTestExecutionRuntime() throws InstantiationException, IllegalAccessException {
         siddhiManager = new SiddhiManager();
         String siddhiApp = "" +
                 "@app:name('callbackTest1') " +

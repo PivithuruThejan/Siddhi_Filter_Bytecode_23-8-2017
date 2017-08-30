@@ -6,5 +6,6 @@ import org.wso2.siddhi.core.executor.ExpressionExecutor;
 import java.lang.reflect.InvocationTargetException;
 
 public interface AbstractOptimizedExpressionExecutor {
-    public  boolean optimizedExecuteWithByteCode( ComplexEvent complexEvent) throws IllegalAccessException, InstantiationException, InvocationTargetException;
+    public  boolean optimizedExecuteWithByteCode( ComplexEvent complexEvent) throws IllegalAccessException,
+            InstantiationException, InvocationTargetException;
 }

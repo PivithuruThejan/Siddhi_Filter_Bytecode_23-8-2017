@@ -69,7 +69,7 @@ public class LogicalInnerStateRuntime extends StreamInnerStateRuntime {
     }
 
     @Override
-    public InnerStateRuntime clone(String key) {
+    public InnerStateRuntime clone(String key) throws InstantiationException, IllegalAccessException {
         InnerStateRuntime clonedInnerStateRuntime1 = innerStateRuntime1.clone(key);
         InnerStateRuntime clonedInnerStateRuntime2 = innerStateRuntime2.clone(key);
 

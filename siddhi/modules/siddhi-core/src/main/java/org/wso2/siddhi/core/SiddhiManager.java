@@ -53,7 +53,7 @@ public class SiddhiManager {
         siddhiContext = new SiddhiContext();
     }
 
-    public SiddhiAppRuntime createSiddhiAppRuntime(SiddhiApp siddhiApp) {
+    public SiddhiAppRuntime createSiddhiAppRuntime(SiddhiApp siddhiApp) throws InstantiationException, IllegalAccessException {
         SiddhiAppRuntimeBuilder siddhiAppRuntimeBuilder = SiddhiAppParser.parse(siddhiApp,
                 siddhiContext);
         siddhiAppRuntimeBuilder.setSiddhiAppRuntimeMap(siddhiAppRuntimeMap);
@@ -62,7 +62,7 @@ public class SiddhiManager {
         return siddhiAppRuntime;
     }
 
-    public SiddhiAppRuntime createSiddhiAppRuntime(String siddhiApp) {
+    public SiddhiAppRuntime createSiddhiAppRuntime(String siddhiApp) throws IllegalAccessException, InstantiationException {
         return createSiddhiAppRuntime(SiddhiCompiler.parse(siddhiApp));
     }
 

@@ -8,7 +8,7 @@ import org.wso2.siddhi.core.executor.condition.OrConditionExpressionExecutor;
 
 
 public class Test {
-    public boolean execute(ExpressionExecutor conditionExecutor, ComplexEvent complexEvent, int status){
+    public boolean execute(ExpressionExecutor conditionExecutor, ComplexEvent complexEvent, int status) {
 
 
         ExpressionExecutor left = ((OrConditionExpressionExecutor) conditionExecutor).getLeftConditionExecutor();
@@ -17,18 +17,15 @@ public class Test {
         boolean rightResult = true;
         leftResult = execute(left, complexEvent, 1);
 
-        if(leftResult){
+        if (leftResult) {
 
-        }else {
+        } else {
 
             rightResult = execute(right, complexEvent, 2);
 
         }
 
         return leftResult || rightResult;
-
-
-
 
 
     }

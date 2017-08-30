@@ -36,7 +36,7 @@ public class DefineTableTestCase {
     private static final Logger log = Logger.getLogger(DefineTableTestCase.class);
 
     @Test
-    public void testQuery1() throws InterruptedException {
+    public void testQuery1() throws InterruptedException, IllegalAccessException, InstantiationException {
         log.info("testTableDefinition1 - OUT 0");
 
         SiddhiManager siddhiManager = new SiddhiManager();
@@ -52,7 +52,7 @@ public class DefineTableTestCase {
     }
 
     @Test
-    public void testQuery2() throws InterruptedException {
+    public void testQuery2() throws InterruptedException, InstantiationException, IllegalAccessException {
         log.info("testTableDefinition2 - OUT 0");
 
         SiddhiManager siddhiManager = new SiddhiManager();
@@ -62,7 +62,7 @@ public class DefineTableTestCase {
     }
 
     @Test(expected = DuplicateDefinitionException.class)
-    public void testQuery3() throws InterruptedException {
+    public void testQuery3() throws InterruptedException, InstantiationException, IllegalAccessException {
         log.info("testTableDefinition3 - OUT 0");
 
         SiddhiManager siddhiManager = new SiddhiManager();
@@ -73,7 +73,7 @@ public class DefineTableTestCase {
     }
 
     @Test(expected = DuplicateDefinitionException.class)
-    public void testQuery4() throws InterruptedException {
+    public void testQuery4() throws InterruptedException, InstantiationException, IllegalAccessException {
         log.info("testTableDefinition4 - OUT 0");
 
         SiddhiManager siddhiManager = new SiddhiManager();
@@ -84,7 +84,7 @@ public class DefineTableTestCase {
     }
 
     @Test
-    public void testQuery5() throws InterruptedException {
+    public void testQuery5() throws InterruptedException, InstantiationException, IllegalAccessException {
         log.info("testTableDefinition5 - OUT 0");
 
         SiddhiManager siddhiManager = new SiddhiManager();
@@ -95,7 +95,7 @@ public class DefineTableTestCase {
     }
 
     @Test(expected = DuplicateDefinitionException.class)
-    public void testQuery6() throws InterruptedException {
+    public void testQuery6() throws InterruptedException, InstantiationException, IllegalAccessException {
         log.info("testTableDefinition6 - OUT 0");
 
         SiddhiManager siddhiManager = new SiddhiManager();
@@ -106,7 +106,7 @@ public class DefineTableTestCase {
     }
 
     @Test(expected = DuplicateDefinitionException.class)
-    public void testQuery7() throws InterruptedException {
+    public void testQuery7() throws InterruptedException, InstantiationException, IllegalAccessException {
         log.info("testTableDefinition7 - OUT 0");
 
         SiddhiManager siddhiManager = new SiddhiManager();
@@ -117,7 +117,7 @@ public class DefineTableTestCase {
     }
 
     @Test(expected = SiddhiParserException.class)
-    public void testQuery8() throws InterruptedException {
+    public void testQuery8() throws InterruptedException, InstantiationException, IllegalAccessException {
         log.info("testTableDefinition8 - OUT 0");
 
         SiddhiManager siddhiManager = new SiddhiManager();
@@ -135,7 +135,7 @@ public class DefineTableTestCase {
 
 
     @Test(expected = DuplicateDefinitionException.class)
-    public void testQuery9() throws InterruptedException {
+    public void testQuery9() throws InterruptedException, InstantiationException, IllegalAccessException {
         log.info("testTableDefinition9 - OUT 0");
 
         SiddhiManager siddhiManager = new SiddhiManager();
@@ -151,7 +151,7 @@ public class DefineTableTestCase {
     }
 
     @Test(expected = DuplicateDefinitionException.class)
-    public void testQuery10() throws InterruptedException {
+    public void testQuery10() throws InterruptedException, InstantiationException, IllegalAccessException {
         log.info("testTableDefinition10 - OUT 0");
 
         SiddhiManager siddhiManager = new SiddhiManager();
@@ -167,7 +167,7 @@ public class DefineTableTestCase {
     }
 
     @Test
-    public void testQuery11() throws InterruptedException {
+    public void testQuery11() throws InterruptedException, InstantiationException, IllegalAccessException {
         log.info("testTableDefinition11 - OUT 0");
 
         SiddhiManager siddhiManager = new SiddhiManager();
@@ -183,7 +183,7 @@ public class DefineTableTestCase {
     }
 
     @Test
-    public void testQuery12() throws InterruptedException {
+    public void testQuery12() throws InterruptedException, InstantiationException, IllegalAccessException {
         log.info("testTableDefinition12 - OUT 0");
 
         SiddhiManager siddhiManager = new SiddhiManager();
@@ -199,7 +199,7 @@ public class DefineTableTestCase {
     }
 
     @Test(expected = DuplicateDefinitionException.class)
-    public void testQuery13() throws InterruptedException {
+    public void testQuery13() throws InterruptedException, InstantiationException, IllegalAccessException {
         log.info("testTableDefinition13 - OUT 0");
 
         SiddhiManager siddhiManager = new SiddhiManager();
@@ -215,7 +215,7 @@ public class DefineTableTestCase {
     }
 
     @Test(expected = DuplicateDefinitionException.class)
-    public void testQuery14() throws InterruptedException {
+    public void testQuery14() throws InterruptedException, InstantiationException, IllegalAccessException {
         log.info("testTableDefinition14 - OUT 0");
 
         SiddhiManager siddhiManager = new SiddhiManager();
@@ -231,7 +231,7 @@ public class DefineTableTestCase {
     }
 
     @Test(expected = SiddhiAppValidationException.class)
-    public void testQuery15() throws InterruptedException {
+    public void testQuery15() throws InterruptedException, InstantiationException, IllegalAccessException {
         log.info("testTableDefinition15 - OUT 0");
 
         SiddhiManager siddhiManager = new SiddhiManager();

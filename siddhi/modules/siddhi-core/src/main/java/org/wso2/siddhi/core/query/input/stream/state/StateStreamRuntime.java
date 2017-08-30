@@ -50,7 +50,7 @@ public class StateStreamRuntime implements StreamRuntime {
     }
 
     @Override
-    public StreamRuntime clone(String key) {
+    public StreamRuntime clone(String key) throws InstantiationException, IllegalAccessException {
         StateStreamRuntime stateStreamRuntime = new StateStreamRuntime(siddhiAppContext, metaStateEvent);
         stateStreamRuntime.innerStateRuntime = this.innerStateRuntime.clone(key);
         for (SingleStreamRuntime singleStreamRuntime : stateStreamRuntime.getSingleStreamRuntimes()) {

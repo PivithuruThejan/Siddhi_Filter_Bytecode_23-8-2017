@@ -118,7 +118,7 @@ public class QueryRuntime {
         return false;
     }
 
-    public QueryRuntime clone(String key, ConcurrentMap<String, StreamJunction> localStreamJunctionMap) {
+    public QueryRuntime clone(String key, ConcurrentMap<String, StreamJunction> localStreamJunctionMap) throws IllegalAccessException, InstantiationException {
 
         LockWrapper lockWrapper = null;
         if (synchronised) {

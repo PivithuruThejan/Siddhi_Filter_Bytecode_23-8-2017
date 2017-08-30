@@ -468,7 +468,7 @@ public class PlaybackTestCase {
     }
 
     @Test(expected = SiddhiParserException.class)
-    public void playbackTest9() throws InterruptedException {
+    public void playbackTest9() throws InterruptedException, InstantiationException, IllegalAccessException {
         log.info("Playback Test 9: Testing playback with invalid increment time constant");
 
         SiddhiManager siddhiManager = new SiddhiManager();
@@ -486,7 +486,7 @@ public class PlaybackTestCase {
     }
 
     @Test(expected = SiddhiParserException.class)
-    public void playbackTest10() throws InterruptedException {
+    public void playbackTest10() throws InterruptedException, InstantiationException, IllegalAccessException {
         log.info("Playback Test 10: Testing playback with invalid idle.time time constant");
 
         SiddhiManager siddhiManager = new SiddhiManager();

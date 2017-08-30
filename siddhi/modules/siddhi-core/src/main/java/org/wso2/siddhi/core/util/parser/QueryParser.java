@@ -87,7 +87,7 @@ public class QueryParser {
                                      LockSynchronizer lockSynchronizer,
                                      String queryIndex) {
         List<VariableExpressionExecutor> executors = new ArrayList<VariableExpressionExecutor>();
-        QueryRuntime queryRuntime;
+        QueryRuntime queryRuntime = null;
         Element nameElement = null;
         LatencyTracker latencyTracker = null;
         LockWrapper lockWrapper = null;
@@ -225,6 +225,10 @@ public class QueryParser {
             } else {
                 throw new SiddhiAppCreationException(e.getMessage(), e);
             }
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
         }
         return queryRuntime;
     }

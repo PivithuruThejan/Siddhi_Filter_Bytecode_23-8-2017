@@ -273,7 +273,7 @@ public class MaxForeverAggregatorExtensionTestCase {
 
 
     @Test(expected = SiddhiAppValidationException.class)
-    public void testMaxForeverAggregatorExtension5() throws InterruptedException {
+    public void testMaxForeverAggregatorExtension5() throws InterruptedException, InstantiationException, IllegalAccessException {
         log.info("MaxForeverAggregator TestCase 5");
         SiddhiManager siddhiManager = new SiddhiManager();
 

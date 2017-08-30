@@ -156,7 +156,7 @@ public class QuerySyncTestCase {
     }
 
     @Test
-    public void querySyncTest3() throws InterruptedException {
+    public void querySyncTest3() throws InterruptedException, InstantiationException, IllegalAccessException {
         log.info("querySync test3");
 
         SiddhiManager siddhiManager = new SiddhiManager();

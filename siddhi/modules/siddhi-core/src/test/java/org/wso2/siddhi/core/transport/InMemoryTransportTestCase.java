@@ -356,7 +356,7 @@ public class InMemoryTransportTestCase {
     }
 
     @Test(expected = SiddhiAppCreationException.class)
-    public void inMemoryTestCase3() throws InterruptedException {
+    public void inMemoryTestCase3() throws InterruptedException, InstantiationException, IllegalAccessException {
         log.info("Test inMemory 3");
 
         String streams = "" +
@@ -377,7 +377,7 @@ public class InMemoryTransportTestCase {
     }
 
     @Test(expected = SiddhiAppCreationException.class)
-    public void inMemoryTestCase4() throws InterruptedException {
+    public void inMemoryTestCase4() throws InterruptedException, InstantiationException, IllegalAccessException {
         log.info("Test inMemory 4");
 
         String streams = "" +
@@ -398,7 +398,7 @@ public class InMemoryTransportTestCase {
     }
 
     @Test
-    public void inMemoryTestCase5() throws InterruptedException {
+    public void inMemoryTestCase5() throws InterruptedException, InstantiationException, IllegalAccessException {
         log.info("Test inMemory 5");
 
         String streams = "" +
@@ -618,7 +618,7 @@ public class InMemoryTransportTestCase {
     }
 
     @Test(expected = SiddhiAppCreationException.class)
-    public void inMemoryTestCase8() throws InterruptedException {
+    public void inMemoryTestCase8() throws InterruptedException, InstantiationException, IllegalAccessException {
         log.info("Test inMemory 8");
 
         String streams = "" +
@@ -640,7 +640,7 @@ public class InMemoryTransportTestCase {
     }
 
     @Test(expected = SiddhiAppCreationException.class)
-    public void inMemoryTestCase9() throws InterruptedException {
+    public void inMemoryTestCase9() throws InterruptedException, InstantiationException, IllegalAccessException {
         log.info("Test inMemory 9");
 
         String streams = "" +
