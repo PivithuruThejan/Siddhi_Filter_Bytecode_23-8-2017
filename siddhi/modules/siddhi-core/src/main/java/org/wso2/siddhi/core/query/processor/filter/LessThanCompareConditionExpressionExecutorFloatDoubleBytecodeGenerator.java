@@ -8,10 +8,6 @@ import org.wso2.siddhi.core.executor.ConstantExpressionExecutor;
 import org.wso2.siddhi.core.executor.ExpressionExecutor;
 import org.wso2.siddhi.core.executor.VariableExpressionExecutor;
 import org.wso2.siddhi.core.executor.condition.compare.lessthan.LessThanCompareConditionExpressionExecutorFloatDouble;
-import org.wso2.siddhi.core.util.SiddhiConstants;
-
-import static jdk.internal.org.objectweb.asm.Opcodes.GETSTATIC;
-import static jdk.internal.org.objectweb.asm.Opcodes.INVOKEVIRTUAL;
 import static org.mvel2.asm.Opcodes.*;
 import static org.mvel2.asm.Opcodes.ISTORE;
 
