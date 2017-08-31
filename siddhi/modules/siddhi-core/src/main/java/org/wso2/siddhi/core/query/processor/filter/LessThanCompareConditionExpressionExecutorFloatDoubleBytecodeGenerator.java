@@ -2,6 +2,8 @@ package org.wso2.siddhi.core.query.processor.filter;
 
 import org.mvel2.asm.Label;
 import org.mvel2.asm.MethodVisitor;
+import org.mvel2.asm.Opcodes;
+import org.wso2.siddhi.core.event.ComplexEvent;
 import org.wso2.siddhi.core.executor.ConstantExpressionExecutor;
 import org.wso2.siddhi.core.executor.ExpressionExecutor;
 import org.wso2.siddhi.core.executor.VariableExpressionExecutor;
@@ -16,80 +18,94 @@ import static org.mvel2.asm.Opcodes.ISTORE;
 public class LessThanCompareConditionExpressionExecutorFloatDoubleBytecodeGenerator implements ByteCodeGenerator {
 
     @Override
-    public void generate(ExpressionExecutor conditionExecutor, int status, int parent, Label specialCase, int parentStatus,
-                         MethodVisitor methodVisitor, FilterProcessor filterProcessor) {
-
-        /*methodVisitor.visitFieldInsn(GETSTATIC, "java/lang/System", "out", "Ljava/io/PrintStream;");
-        methodVisitor.visitLdcInsn("less than");
-        methodVisitor.visitMethodInsn(INVOKEVIRTUAL, "java/io/PrintStream", "println",
-                "(Ljava/lang/String;)V", false);*/
-
+    public boolean generate(ExpressionExecutor conditionExecutor, ComplexEvent complexEvent, int status, int parent,
+                            Label specialCase, int parentStatus, MethodVisitor methodVisitor,
+                            FilterProcessor filterProcessor) {
         ExpressionExecutor left = ((LessThanCompareConditionExpressionExecutorFloatDouble) conditionExecutor)
                 .getLeftExpressionExecutor();
         ExpressionExecutor right = ((LessThanCompareConditionExpressionExecutorFloatDouble) conditionExecutor)
                 .getRightExpressionExecutor();
+        Float leftVariable = null;
+        Double rightVariable = null;
         int[] leftPosition = null;
         int[] rightPosition = null;
-        int beforeWindowIndexLeft = 0;
-        int beforeWindowIndexRight = 0;
         if (left instanceof VariableExpressionExecutor) {
             leftPosition = ((VariableExpressionExecutor) left).getPosition();
-            beforeWindowIndexLeft = leftPosition[SiddhiConstants.STREAM_ATTRIBUTE_INDEX_IN_TYPE];
-            //methodVisitor.visitVarInsn(ALOAD, 1);
-            //methodVisitor.visitTypeInsn(CHECKCAST, "org/wso2/siddhi/core/event/stream/StreamEvent");
-            //methodVisitor.visitVarInsn(ASTORE, 2);
-            //methodVisitor.visitVarInsn(ALOAD, 2);
-            //methodVisitor.visitMethodInsn(INVOKEVIRTUAL, "org/wso2/siddhi/core/event/stream/StreamEvent","getBeforeWindowData", "()[Ljava/lang/Object;", false);
-            //methodVisitor.visitVarInsn(ASTORE, 2);
-            //methodVisitor.visitVarInsn(ALOAD, 2);
-            //methodVisitor.visitIntInsn(BIPUSH, beforeWindowIndexLeft);
-            //methodVisitor.visitInsn(AALOAD);
-            //methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Float");
-            // methodVisitor.visitMethodInsn(INVOKEVIRTUAL, "java/lang/Float", "floatValue", "()F",false);
-            //methodVisitor.visitVarInsn(FSTORE, 2);
+            leftVariable = (Float) complexEvent.getAttribute(((VariableExpressionExecutor) left).getPosition());
+            methodVisitor.visitInsn(ICONST_4);
+            methodVisitor.visitIntInsn(NEWARRAY, T_INT);
+            for(int i = 0 ; i < 4 ; i++){
+                methodVisitor.visitInsn(DUP);
+                methodVisitor.visitIntInsn(BIPUSH, i);
+                methodVisitor.visitIntInsn(BIPUSH, leftPosition[i]);
+                methodVisitor.visitInsn(IASTORE);
+            }
+
+            methodVisitor.visitVarInsn(ASTORE, 2);
+            methodVisitor.visitVarInsn(ALOAD, 1);
+            methodVisitor.visitVarInsn(ALOAD, 2);
+            methodVisitor.visitMethodInsn(INVOKEINTERFACE, "org/wso2/siddhi/core/event/ComplexEvent",
+                    "getAttribute", "([I)Ljava/lang/Object;", true);
+            methodVisitor.visitVarInsn(ASTORE, 2);
+            methodVisitor.visitVarInsn(ALOAD, 2);
+            methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Float");
+            methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Float", "floatValue", "()F",
+                    false);
+            methodVisitor.visitVarInsn(FSTORE, 2);
         } else if (left instanceof ConstantExpressionExecutor) {
-            Float leftVariable = (Float) ((ConstantExpressionExecutor) left).getValue();
+            leftVariable = (Float) ((ConstantExpressionExecutor) left).getValue();
             methodVisitor.visitLdcInsn(new Float(leftVariable));
-            //methodVisitor.visitVarInsn(FSTORE, 2);
+            methodVisitor.visitVarInsn(FSTORE, 2);
         }
+
         if (right instanceof VariableExpressionExecutor) {
             rightPosition = ((VariableExpressionExecutor) right).getPosition();
-            beforeWindowIndexRight = rightPosition[SiddhiConstants.STREAM_ATTRIBUTE_INDEX_IN_TYPE];
-            //methodVisitor.visitVarInsn(ALOAD, 1);
-            //methodVisitor.visitTypeInsn(CHECKCAST, "org/wso2/siddhi/core/event/stream/StreamEvent");
-            //methodVisitor.visitVarInsn(ASTORE, 3);
-            //methodVisitor.visitVarInsn(ALOAD, 3);
-            //methodVisitor.visitMethodInsn(INVOKEVIRTUAL, "org/wso2/siddhi/core/event/stream/StreamEvent","getBeforeWindowData", "()[Ljava/lang/Object;", false);
-            //methodVisitor.visitVarInsn(ASTORE, 3);
-            //methodVisitor.visitVarInsn(ALOAD, 3);
-            //methodVisitor.visitIntInsn(BIPUSH, beforeWindowIndexRight);
-            //methodVisitor.visitInsn(AALOAD);
-            //methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Double");
-            //methodVisitor.visitMethodInsn(INVOKEVIRTUAL, "java/lang/Double", "doubleValue", "()D",false);
-            //methodVisitor.visitVarInsn(DSTORE, 3);
+            rightVariable = (Double) complexEvent.getAttribute(((VariableExpressionExecutor) right).getPosition());
+            methodVisitor.visitInsn(ICONST_4);
+            methodVisitor.visitIntInsn(NEWARRAY, T_INT);
+            for(int i = 0 ; i < 4 ; i++){
+                methodVisitor.visitInsn(DUP);
+                methodVisitor.visitIntInsn(BIPUSH, i);
+                methodVisitor.visitIntInsn(BIPUSH, rightPosition[i]);
+                methodVisitor.visitInsn(IASTORE);
+            }
 
+            methodVisitor.visitVarInsn(ASTORE, 3);
+            methodVisitor.visitVarInsn(ALOAD, 1);
+            methodVisitor.visitVarInsn(ALOAD, 3);
+            methodVisitor.visitMethodInsn(INVOKEINTERFACE, "org/wso2/siddhi/core/event/ComplexEvent",
+                    "getAttribute", "([I)Ljava/lang/Object;", true);
+            methodVisitor.visitVarInsn(ASTORE, 3);
+            methodVisitor.visitVarInsn(ALOAD, 3);
+            methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Double");
+            methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Double", "doubleValue", "()D",
+                    false);
+            methodVisitor.visitVarInsn(DSTORE, 3);
         } else if (right instanceof ConstantExpressionExecutor) {
-            Double rightVariable = (Double) ((ConstantExpressionExecutor) right).getValue();
+            rightVariable = (Double) ((ConstantExpressionExecutor) right).getValue();
             methodVisitor.visitLdcInsn(new Double(rightVariable));
             methodVisitor.visitVarInsn(DSTORE, 3);
         }
-        //methodVisitor.visitVarInsn(FLOAD, 2);
-        //methodVisitor.visitInsn(F2D);
-        //methodVisitor.visitVarInsn(DLOAD, 3);
-        //methodVisitor.visitInsn(DCMPG);
-        //Label l0 = new Label();
-        //methodVisitor.visitJumpInsn(IFGE, l0);
-        //methodVisitor.visitInsn(ICONST_1);
-        //Label l1 = new Label();
-        //methodVisitor.visitJumpInsn(GOTO, l1);
-        //methodVisitor.visitLabel(l0);
+
+        methodVisitor.visitVarInsn(FLOAD, 2);
+        methodVisitor.visitInsn(F2D);
+        methodVisitor.visitVarInsn(DLOAD, 3);
+        methodVisitor.visitInsn(DCMPG);
+        Label l0 = new Label();
+        methodVisitor.visitJumpInsn(IFGE, l0);
         methodVisitor.visitInsn(ICONST_1);
-        //methodVisitor.visitLabel(l1);
+        Label l1 = new Label();
+        methodVisitor.visitJumpInsn(GOTO, l1);
+        methodVisitor.visitLabel(l0);
+        methodVisitor.visitInsn(ICONST_0);
+        methodVisitor.visitLabel(l1);
         if (status == 2) {
             methodVisitor.visitVarInsn(ISTORE, 3);
         } else {
             methodVisitor.visitVarInsn(ISTORE, 2);
         }
+
+        return leftVariable < rightVariable;
 
     }
 }

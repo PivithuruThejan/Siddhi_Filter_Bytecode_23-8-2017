@@ -45,39 +45,30 @@ public class OptimizedExpressionExecutor {
 
     public static boolean byteCode(ExpressionExecutor expressionExecutor, ComplexEvent complexEvent) throws
             IllegalAccessException, InvocationTargetException, InstantiationException {
-
         System.out.println("From Byte Code");
         return true;
-
     }
 
     public boolean optimizedExecute(ExpressionExecutor conditionExecutor, ComplexEvent complexEvent) {
-
         if (conditionExecutor instanceof AndConditionExpressionExecutor) {
-            //System.out.println("AND");
             ExpressionExecutor left = ((AndConditionExpressionExecutor) conditionExecutor).getLeftConditionExecutor();
             ExpressionExecutor right = ((AndConditionExpressionExecutor) conditionExecutor).getRightConditionExecutor();
             return optimizedExecute(left, complexEvent) && optimizedExecute(right, complexEvent);
-
         } else if (conditionExecutor instanceof OrConditionExpressionExecutor) {
-            //System.out.println("OR");
             ExpressionExecutor left = ((OrConditionExpressionExecutor) conditionExecutor).getLeftConditionExecutor();
             ExpressionExecutor right = ((OrConditionExpressionExecutor) conditionExecutor).getRightConditionExecutor();
             return optimizedExecute(left, complexEvent) || optimizedExecute(right, complexEvent);
         } else if (conditionExecutor instanceof NotConditionExpressionExecutor) {
-            //System.out.println("NOT");
             ExpressionExecutor condition = ((NotConditionExpressionExecutor) conditionExecutor).getConditionExecutor();
             return !optimizedExecute(condition, complexEvent);
 
         } else if (conditionExecutor instanceof GreaterThanCompareConditionExpressionExecutorFloatDouble) {
-            //System.out.println(">");
             ExpressionExecutor left = ((GreaterThanCompareConditionExpressionExecutorFloatDouble) conditionExecutor)
                     .getLeftExpressionExecutor();
             ExpressionExecutor right = ((GreaterThanCompareConditionExpressionExecutorFloatDouble) conditionExecutor)
                     .getRightExpressionExecutor();
             Float leftVariable = null;
             Double rightVariable = null;
-
             if (left instanceof VariableExpressionExecutor) {
                 leftVariable = (Float) complexEvent.getAttribute(((VariableExpressionExecutor) left).getPosition());
             } else if (left instanceof ConstantExpressionExecutor) {
@@ -89,17 +80,15 @@ public class OptimizedExpressionExecutor {
             } else if (right instanceof ConstantExpressionExecutor) {
                 rightVariable = (Double) ((ConstantExpressionExecutor) right).getValue();
             }
-            return leftVariable > rightVariable;
 
+            return leftVariable > rightVariable;
         } else if (conditionExecutor instanceof LessThanCompareConditionExpressionExecutorFloatDouble) {
-            //System.out.println("<");
             ExpressionExecutor left = ((LessThanCompareConditionExpressionExecutorFloatDouble) conditionExecutor)
                     .getLeftExpressionExecutor();
             ExpressionExecutor right = ((LessThanCompareConditionExpressionExecutorFloatDouble) conditionExecutor)
                     .getRightExpressionExecutor();
             Float leftVariable = null;
             Double rightVariable = null;
-
             if (left instanceof VariableExpressionExecutor) {
                 leftVariable = (Float) complexEvent.getAttribute(((VariableExpressionExecutor) left).getPosition());
             } else if (left instanceof ConstantExpressionExecutor) {
@@ -111,14 +100,11 @@ public class OptimizedExpressionExecutor {
             } else if (right instanceof ConstantExpressionExecutor) {
                 rightVariable = (Double) ((ConstantExpressionExecutor) right).getValue();
             }
+
             return leftVariable < rightVariable;
 
         } else {
             return true;
         }
-
-        //return true;
     }
-
-
 }

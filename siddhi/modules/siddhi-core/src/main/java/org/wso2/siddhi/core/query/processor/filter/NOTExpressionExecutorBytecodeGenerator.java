@@ -2,6 +2,7 @@ package org.wso2.siddhi.core.query.processor.filter;
 
 import org.mvel2.asm.Label;
 import org.mvel2.asm.MethodVisitor;
+import org.wso2.siddhi.core.event.ComplexEvent;
 import org.wso2.siddhi.core.executor.ExpressionExecutor;
 import org.wso2.siddhi.core.executor.condition.NotConditionExpressionExecutor;
 
@@ -12,13 +13,12 @@ import static org.mvel2.asm.Opcodes.ISTORE;
 public class NOTExpressionExecutorBytecodeGenerator implements ByteCodeGenerator {
 
     @Override
-    public void generate(ExpressionExecutor conditionExecutor, int status, int parent, Label specialCase, int parentStatus,
-                         MethodVisitor methodVisitor, FilterProcessor filterProcessor) {
+    public boolean generate(ExpressionExecutor conditionExecutor, ComplexEvent complexEvent, int status, int parent, Label specialCase, int parentStatus,
+                            MethodVisitor methodVisitor, FilterProcessor filterProcessor) {
         ExpressionExecutor condition = ((NotConditionExpressionExecutor) conditionExecutor).getConditionExecutor();
         Label l0 = new Label();
         Label l1 = new Label();
-        filterProcessor.execute(condition, 1, 3, l1, status, methodVisitor, filterProcessor);
-        //boolean result = execute(condition, complexEvent, 1, 3, l1, status);
+        boolean result = filterProcessor.execute(condition, complexEvent,1, 3, l1, status, methodVisitor, filterProcessor);
         methodVisitor.visitVarInsn(ILOAD, 2);
         if (parent == 3) {
             if (parentStatus == 2) {
@@ -36,6 +36,7 @@ public class NOTExpressionExecutorBytecodeGenerator implements ByteCodeGenerator
             } else {
                 methodVisitor.visitVarInsn(ISTORE, 2);
             }
+
             methodVisitor.visitJumpInsn(GOTO, l1);
             methodVisitor.visitLabel(l0);
             methodVisitor.visitInsn(ICONST_0);
@@ -46,6 +47,6 @@ public class NOTExpressionExecutorBytecodeGenerator implements ByteCodeGenerator
             }
             methodVisitor.visitLabel(l1);
         }
-
+        return  !result;
     }
 }

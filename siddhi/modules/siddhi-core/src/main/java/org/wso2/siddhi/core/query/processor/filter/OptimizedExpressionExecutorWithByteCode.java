@@ -1,22 +1,14 @@
 package org.wso2.siddhi.core.query.processor.filter;
 
-//import jdk.internal.org.objectweb.asm.ClassWriter;
-//import jdk.internal.org.objectweb.asm.Label;
-//import jdk.internal.org.objectweb.asm.MethodVisitor;
-
 import org.mvel2.asm.ClassWriter;
 import org.mvel2.asm.Label;
 import org.mvel2.asm.MethodVisitor;
 import org.wso2.siddhi.core.event.ComplexEvent;
 import org.wso2.siddhi.core.executor.ExpressionExecutor;
 import org.wso2.siddhi.query.api.definition.Attribute;
-
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-
 import static org.mvel2.asm.Opcodes.*;
-
-//import static jdk.internal.org.objectweb.asm.Opcodes.*;
 
 public class OptimizedExpressionExecutorWithByteCode {
     public static void main(String args[]) throws IllegalAccessException, InstantiationException, InvocationTargetException {
@@ -34,8 +26,8 @@ public class OptimizedExpressionExecutorWithByteCode {
             methodVisitor.visitMaxs(1, 1);
             methodVisitor.visitEnd();
         }
-        {
 
+        {
             methodVisitor = classWriter.visitMethod(ACC_PUBLIC, "optimizedExecute",
                     "(Lorg/wso2/siddhi/core/executor/ExpressionExecutor;Lorg/wso2/siddhi/core/event/ComplexEvent;)Z",
                     null, null);
@@ -58,7 +50,6 @@ public class OptimizedExpressionExecutorWithByteCode {
             methodVisitor.visitInsn(IRETURN);
             methodVisitor.visitMaxs(1, 3);
             methodVisitor.visitEnd();
-
         }
 
         byte[] byteCode = classWriter.toByteArray();
@@ -84,6 +75,7 @@ public class OptimizedExpressionExecutorWithByteCode {
                 return null;
             }
         };
+
         ComplexEvent complexEvent = new ComplexEvent() {
             @Override
             public ComplexEvent getNext() {
@@ -133,8 +125,5 @@ public class OptimizedExpressionExecutorWithByteCode {
 
         boolean result = (boolean) methods[0].invoke(object, expressionExecutor, complexEvent);
         System.out.println(result);
-
-
     }
-
 }
