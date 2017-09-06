@@ -19,7 +19,6 @@
 package org.wso2.siddhi.core.executor;
 
 import org.wso2.siddhi.core.event.ComplexEvent;
-import org.wso2.siddhi.core.query.processor.filter.OptimizedExpressionExecutor;
 import org.wso2.siddhi.query.api.definition.Attribute;
 
 /**

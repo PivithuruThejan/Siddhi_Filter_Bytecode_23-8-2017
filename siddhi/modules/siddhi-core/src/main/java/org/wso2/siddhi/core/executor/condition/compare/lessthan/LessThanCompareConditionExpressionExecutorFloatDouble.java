@@ -18,7 +18,6 @@
 package org.wso2.siddhi.core.executor.condition.compare.lessthan;
 
 import org.wso2.siddhi.core.executor.ExpressionExecutor;
-import org.wso2.siddhi.core.query.processor.filter.OptimizedExpressionExecutor;
 
 /**
  * Executor class for Float-Double Less Than condition. Condition evaluation logic is implemented within

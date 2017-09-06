@@ -11,6 +11,9 @@ import org.wso2.siddhi.core.util.EventPrinter;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 
+/**
+ * Tests written for JIT Compilation.
+ */
 public class FilterOptimizingTestCase2 {
 
     private static final int COUNT = 1;

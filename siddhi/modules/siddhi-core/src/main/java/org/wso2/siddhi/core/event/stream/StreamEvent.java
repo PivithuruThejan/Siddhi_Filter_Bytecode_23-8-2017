@@ -18,7 +18,6 @@
 package org.wso2.siddhi.core.event.stream;
 
 import org.wso2.siddhi.core.event.ComplexEvent;
-import org.wso2.siddhi.core.query.processor.filter.OptimizedExpressionExecutor;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;

@@ -63,9 +63,6 @@ public class FilterProcessor implements Processor {
     private ExpressionExecutor conditionExecutor;
     private ClassWriter classWriter;
     private ByteCodeHelper byteCodeHelper;
-    private OptimizedExpressionExecutor optimizedExpressionExecutor = new OptimizedExpressionExecutor();
-    private Test2 test2 = new Test2();
-    private Test3 test3 = new Test3();
 
     public FilterProcessor(ExpressionExecutor conditionExecutor) throws InstantiationException, IllegalAccessException {
         if (Attribute.Type.BOOL.equals(conditionExecutor.getReturnType())) {
@@ -78,9 +75,6 @@ public class FilterProcessor implements Processor {
 
         byteCodeHelper = new ByteCodeHelper();
         classWriter = new ClassWriter(ClassWriter.COMPUTE_FRAMES);
-        /*MethodVisitor methodVisitor = byteCodeHelper.start(classWriter);
-        this.execute(conditionExecutor, 0, 0, null, 0, methodVisitor, this);
-        byteCodeHelper.end(classWriter, methodVisitor);*/
     }
 
     public FilterProcessor cloneProcessor(String key) throws IllegalAccessException, InstantiationException {
@@ -93,35 +87,14 @@ public class FilterProcessor implements Processor {
         complexEventChunk.reset();
         while (complexEventChunk.hasNext()) {
             ComplexEvent complexEvent = complexEventChunk.next();
-            /*if(!(Boolean)byteCodeHelper.execute(complexEvent)){
-                complexEventChunk.remove();
-            }*/
-
-            /*if(!(Boolean)optimizedExpressionExecutor.newWay(conditionExecutor , complexEvent)){
-                complexEventChunk.remove();
-            }*/
-
-            /*if(OptimizedExpressionExecutor.count ){
-                test2.start();
-                if(!(Boolean)test3.execute(conditionExecutor, complexEvent, 0, 0, null,
-                        0)){
-                    complexEventChunk.remove();
-                }
-
-                test2.end();
-            }else{
-                if (!(Boolean) test2.execute(conditionExecutor,complexEvent)){
-                    complexEventChunk.remove();
-                }
-            }*/
-
             if (FilterProcessor.count) {
                 MethodVisitor methodVisitor = byteCodeHelper.start(classWriter);
-                if (!(Boolean) this.execute(conditionExecutor, complexEvent, 0, 0, null,
-                        0, methodVisitor, this)) {
+                this.execute(conditionExecutor, 0, 0, null, 0, methodVisitor,
+                        this);
+                byteCodeHelper.end(classWriter, methodVisitor);
+                if (!(Boolean) byteCodeHelper.execute(complexEvent)) {
                     complexEventChunk.remove();
                 }
-                byteCodeHelper.end(classWriter, methodVisitor);
             } else {
                 if (!(Boolean) byteCodeHelper.execute(complexEvent)) {
                     complexEventChunk.remove();
@@ -153,10 +126,10 @@ public class FilterProcessor implements Processor {
         }
     }
 
-    public boolean execute(ExpressionExecutor conditionExecutor, ComplexEvent complexEvent, int status, int parent,
-                           Label specialCase, int parentStatus, MethodVisitor methodVisitor,
-                           FilterProcessor filterProcessor) {
-        return FilterProcessor.byteCodegenerators.get(conditionExecutor.getClass()).generate(conditionExecutor,
-                complexEvent, status, parent, specialCase, parentStatus, methodVisitor, filterProcessor);
+    public void execute(ExpressionExecutor conditionExecutor, int status, int parent,
+                        Label specialCase, int parentStatus, MethodVisitor methodVisitor,
+                        FilterProcessor filterProcessor) {
+        FilterProcessor.byteCodegenerators.get(conditionExecutor.getClass()).generate(conditionExecutor, status, parent,
+                specialCase, parentStatus, methodVisitor, filterProcessor);
     }
 }
