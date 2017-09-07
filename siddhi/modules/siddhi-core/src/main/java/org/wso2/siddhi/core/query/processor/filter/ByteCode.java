@@ -16,13 +16,13 @@ import static org.mvel2.asm.Opcodes.*;
 import static org.mvel2.asm.Opcodes.ISTORE;
 
 /**
- * This is an outer class that consists of classes that has  implemented interface "ByteCodeGenerator".
+ * This is an outer class that consists of classes that has  implemented interface "ByteCodeEmitter".
  */
 public class ByteCode {
     /**
      * This class generates byte code for "AND" operator.
      */
-    class PrivateANDExpressionExecutorBytecodeGenerator implements ByteCodeGenerator {
+    class PrivateANDExpressionExecutorBytecodeEmitter implements ByteCodeEmitter {
 
         /**
          * This method overrides the interface method.
@@ -33,18 +33,18 @@ public class ByteCode {
          * @param specialCase
          * @param parentStatus
          * @param methodVisitor
-         * @param filterProcessor
+         * @param byteCodeGenarator
          */
         @Override
         public void generate(ExpressionExecutor conditionExecutor, int status, int parent,
                              Label specialCase, int parentStatus, MethodVisitor methodVisitor,
-                             FilterProcessor filterProcessor) {
+                             ByteCodeGenarator byteCodeGenarator) {
             ExpressionExecutor left = ((AndConditionExpressionExecutor) conditionExecutor).getLeftConditionExecutor();
             ExpressionExecutor right = ((AndConditionExpressionExecutor) conditionExecutor).getRightConditionExecutor();
             Label l0 = new Label();
             Label l1 = new Label();
             Label l2 = new Label();
-            filterProcessor.execute(left, 1, 1, l1, status, methodVisitor, filterProcessor);
+            byteCodeGenarator.execute(left, 1, 1, l1, status, methodVisitor, byteCodeGenarator);
             methodVisitor.visitVarInsn(ILOAD, 2);
             methodVisitor.visitJumpInsn(IFNE, l0);
             methodVisitor.visitInsn(ICONST_0);
@@ -67,8 +67,8 @@ public class ByteCode {
             }
 
             methodVisitor.visitLabel(l0);
-            filterProcessor.execute(right, 2, 1, l1, status, methodVisitor,
-                    filterProcessor);
+            byteCodeGenarator.execute(right, 2, 1, l1, status, methodVisitor,
+                    byteCodeGenarator);
             methodVisitor.visitVarInsn(ILOAD, 3);
             methodVisitor.visitJumpInsn(IFNE, l2);
             methodVisitor.visitInsn(ICONST_0);
@@ -94,7 +94,7 @@ public class ByteCode {
     /**
      * This class generates byte code for "OR" operator.
      */
-    class PrivateORExpressionExecutorBytecodeGenerator implements ByteCodeGenerator {
+    class PrivateORExpressionExecutorBytecodeEmitter implements ByteCodeEmitter {
 
         /**
          * This method overrides the interface method.
@@ -105,19 +105,19 @@ public class ByteCode {
          * @param specialCase
          * @param parentStatus
          * @param methodVisitor
-         * @param filterProcessor
+         * @param byteCodeGenarator
          */
         @Override
         public void generate(ExpressionExecutor conditionExecutor, int status, int parent,
                              Label specialCase, int parentStatus, MethodVisitor methodVisitor,
-                             FilterProcessor filterProcessor) {
+                             ByteCodeGenarator byteCodeGenarator) {
             ExpressionExecutor left = ((OrConditionExpressionExecutor) conditionExecutor).getLeftConditionExecutor();
             ExpressionExecutor right = ((OrConditionExpressionExecutor) conditionExecutor).getRightConditionExecutor();
             Label l0 = new Label();
             Label l1 = new Label();
             Label l2 = new Label();
-            filterProcessor.execute(left, 1, 2, l1, status, methodVisitor,
-                    filterProcessor);
+            byteCodeGenarator.execute(left, 1, 2, l1, status, methodVisitor,
+                    byteCodeGenarator);
             methodVisitor.visitVarInsn(ILOAD, 2);
             methodVisitor.visitJumpInsn(IFEQ, l0);
             methodVisitor.visitInsn(ICONST_1);
@@ -140,8 +140,8 @@ public class ByteCode {
             }
 
             methodVisitor.visitLabel(l0);
-            filterProcessor.execute(right, 2, 2, l1, status, methodVisitor,
-                    filterProcessor);
+            byteCodeGenarator.execute(right, 2, 2, l1, status, methodVisitor,
+                    byteCodeGenarator);
             methodVisitor.visitVarInsn(ILOAD, 3);
             methodVisitor.visitJumpInsn(IFEQ, l2);
             methodVisitor.visitInsn(ICONST_1);
@@ -167,7 +167,7 @@ public class ByteCode {
     /**
      * This class generates byte code for "NOT" operator.
      */
-    class PrivateNOTExpressionExecutorBytecodeGenerator implements ByteCodeGenerator {
+    class PrivateNOTExpressionExecutorBytecodeEmitter implements ByteCodeEmitter {
 
         /**
          * This method overrides the interface method.
@@ -178,17 +178,17 @@ public class ByteCode {
          * @param specialCase
          * @param parentStatus
          * @param methodVisitor
-         * @param filterProcessor
+         * @param byteCodeGenarator
          */
         @Override
         public void generate(ExpressionExecutor conditionExecutor, int status, int parent,
                              Label specialCase, int parentStatus,
-                             MethodVisitor methodVisitor, FilterProcessor filterProcessor) {
+                             MethodVisitor methodVisitor, ByteCodeGenarator byteCodeGenarator) {
             ExpressionExecutor condition = ((NotConditionExpressionExecutor) conditionExecutor).getConditionExecutor();
             Label l0 = new Label();
             Label l1 = new Label();
-            filterProcessor.execute(condition, 1, 3, l1, status, methodVisitor,
-                    filterProcessor);
+            byteCodeGenarator.execute(condition, 1, 3, l1, status, methodVisitor,
+                    byteCodeGenarator);
             methodVisitor.visitVarInsn(ILOAD, 2);
             if (parent == 3) {//Checks for consecutive "NOT" operators.
                 if (parentStatus == 2) {
@@ -223,7 +223,7 @@ public class ByteCode {
     /**
      * This class generates byte code for ">" operator with float on left and double on right.
      */
-    class PrivateGreaterThanCompareConditionExpressionExecutorFloatDoubleBytecodeGenerator implements ByteCodeGenerator {
+    class PrivateGreaterThanCompareConditionExpressionExecutorFloatDoubleBytecodeEmitter implements ByteCodeEmitter {
 
         /**
          * This method overrides the interface method.
@@ -234,12 +234,12 @@ public class ByteCode {
          * @param specialCase
          * @param parentStatus
          * @param methodVisitor
-         * @param filterProcessor
+         * @param byteCodeGenarator
          */
         @Override
         public void generate(ExpressionExecutor conditionExecutor, int status, int parent,
                              Label specialCase, int parentStatus, MethodVisitor methodVisitor,
-                             FilterProcessor filterProcessor) {
+                             ByteCodeGenarator byteCodeGenarator) {
             ExpressionExecutor left = ((GreaterThanCompareConditionExpressionExecutorFloatDouble) conditionExecutor)
                     .getLeftExpressionExecutor();
             ExpressionExecutor right = ((GreaterThanCompareConditionExpressionExecutorFloatDouble) conditionExecutor)
@@ -328,7 +328,7 @@ public class ByteCode {
     /**
      * This class generates byte code for "<" operator with float on left and double on right.
      */
-    class PrivateLessThanCompareConditionExpressionExecutorFloatDoubleBytecodeGenerator implements ByteCodeGenerator {
+    class PrivateLessThanCompareConditionExpressionExecutorFloatDoubleBytecodeEmitter implements ByteCodeEmitter {
 
         /**
          * This method overrides the interface method.
@@ -339,12 +339,12 @@ public class ByteCode {
          * @param specialCase
          * @param parentStatus
          * @param methodVisitor
-         * @param filterProcessor
+         * @param byteCodeGenarator
          */
         @Override
         public void generate(ExpressionExecutor conditionExecutor, int status, int parent,
                              Label specialCase, int parentStatus, MethodVisitor methodVisitor,
-                             FilterProcessor filterProcessor) {
+                             ByteCodeGenarator byteCodeGenarator) {
             ExpressionExecutor left = ((LessThanCompareConditionExpressionExecutorFloatDouble) conditionExecutor)
                     .getLeftExpressionExecutor();
             ExpressionExecutor right = ((LessThanCompareConditionExpressionExecutorFloatDouble) conditionExecutor)

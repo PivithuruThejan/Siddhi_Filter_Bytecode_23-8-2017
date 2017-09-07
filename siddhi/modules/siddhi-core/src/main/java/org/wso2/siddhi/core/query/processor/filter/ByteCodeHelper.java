@@ -2,7 +2,7 @@ package org.wso2.siddhi.core.query.processor.filter;
 
 import org.mvel2.asm.ClassWriter;
 import org.mvel2.asm.MethodVisitor;
-import org.wso2.siddhi.core.event.ComplexEvent;
+import org.wso2.siddhi.core.executor.ExpressionExecutor;
 
 import java.lang.reflect.InvocationTargetException;
 
@@ -22,11 +22,10 @@ public class ByteCodeHelper {
      * @return
      */
     public MethodVisitor start(ClassWriter classWriter) {
-        FilterProcessor.count = false;
         MethodVisitor methodVisitor;
         classWriter.visit(52, ACC_PUBLIC + ACC_SUPER, "ByteCode", null,
                 "java/lang/Object", new String[]
-                        {"org/wso2/siddhi/core/query/processor/filter/AbstractOptimizedExpressionExecutor"});
+                        {"org/wso2/siddhi/core/executor/ExpressionExecutor"});
         classWriter.visitSource("ByteCode.java", null);
         {
             methodVisitor = classWriter.visitMethod(ACC_PUBLIC, "<init>", "()V", null, null);
@@ -39,8 +38,8 @@ public class ByteCodeHelper {
         }
 
         {
-            methodVisitor = classWriter.visitMethod(ACC_PUBLIC, "optimizedExecuteWithByteCode",
-                    "(Lorg/wso2/siddhi/core/event/ComplexEvent;)Z",
+            methodVisitor = classWriter.visitMethod(ACC_PUBLIC, "execute",
+                    "(Lorg/wso2/siddhi/core/event/ComplexEvent;)Ljava/lang/Object;",
                     null, null);
             methodVisitor.visitInsn(ICONST_0);
             methodVisitor.visitVarInsn(ISTORE, 2);
@@ -49,21 +48,6 @@ public class ByteCodeHelper {
         }
 
         return methodVisitor;
-    }
-
-    /**
-     * This method executes the method in "ByteCode" class.
-     *
-     * @param complexEvent
-     * @return
-     * @throws IllegalAccessException
-     * @throws InvocationTargetException
-     * @throws InstantiationException
-     */
-    public boolean execute(ComplexEvent complexEvent) throws IllegalAccessException, InvocationTargetException,
-            InstantiationException {
-        boolean result = FilterProcessor.abstractOptimizedExpressionExecutor.optimizedExecuteWithByteCode(complexEvent);
-        return result;
     }
 
     /**
@@ -77,16 +61,17 @@ public class ByteCodeHelper {
     public void end(ClassWriter classWriter, MethodVisitor methodVisitor) throws IllegalAccessException,
             InstantiationException {
         methodVisitor.visitVarInsn(ILOAD, 2);
-        methodVisitor.visitInsn(IRETURN);
+        methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Boolean", "valueOf",
+                "(Z)Ljava/lang/Boolean;", false);
+        methodVisitor.visitInsn(ARETURN);
         methodVisitor.visitMaxs(4, 8);
         methodVisitor.visitEnd();
         classWriter.visitEnd();
-        FilterProcessor.byteArray = classWriter.toByteArray();
+        ByteCodeGenarator.byteArray = classWriter.toByteArray();
         OptimizedExpressionExecutorClassLoader optimizedExpressionExecutorClassLoader = new
                 OptimizedExpressionExecutorClassLoader();//Instantiates the ClassLoader
         Class regeneratedClass = optimizedExpressionExecutorClassLoader
-                .defineClass("ByteCode", FilterProcessor.byteArray);
-        FilterProcessor.abstractOptimizedExpressionExecutor = (AbstractOptimizedExpressionExecutor)
-                regeneratedClass.newInstance();
+                .defineClass("ByteCode", ByteCodeGenarator.byteArray);
+        ByteCodeGenarator.expressionExecutor = (ExpressionExecutor) regeneratedClass.newInstance();
     }
 }

@@ -17,52 +17,25 @@
  */
 package org.wso2.siddhi.core.query.processor.filter;
 
-import org.mvel2.asm.ClassWriter;
-import org.mvel2.asm.Label;
-import org.mvel2.asm.MethodVisitor;
+
 import org.wso2.siddhi.core.event.ComplexEvent;
 import org.wso2.siddhi.core.event.ComplexEventChunk;
 import org.wso2.siddhi.core.exception.OperationNotSupportedException;
 import org.wso2.siddhi.core.executor.ExpressionExecutor;
-import org.wso2.siddhi.core.executor.condition.AndConditionExpressionExecutor;
-import org.wso2.siddhi.core.executor.condition.NotConditionExpressionExecutor;
-import org.wso2.siddhi.core.executor.condition.OrConditionExpressionExecutor;
-import org.wso2.siddhi.core.executor.condition.compare.greaterthan.GreaterThanCompareConditionExpressionExecutorFloatDouble;
-import org.wso2.siddhi.core.executor.condition.compare.lessthan.LessThanCompareConditionExpressionExecutorFloatDouble;
 import org.wso2.siddhi.core.query.processor.Processor;
 import org.wso2.siddhi.query.api.definition.Attribute;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Implementation of {@link Processor} which handles Filter expressions in Siddhi.
  */
 public class FilterProcessor implements Processor {
-    static Map<Class<? extends ExpressionExecutor>, ByteCodeGenerator> byteCodegenerators;
-
-    static boolean count = true;
-    static byte[] byteArray;
-    static AbstractOptimizedExpressionExecutor abstractOptimizedExpressionExecutor;
-
-    static {
-        byteCodegenerators = new HashMap<Class<? extends ExpressionExecutor>, ByteCodeGenerator>();
-        ByteCode byteCode = new ByteCode();
-        byteCodegenerators.put(AndConditionExpressionExecutor.class, byteCode.new PrivateANDExpressionExecutorBytecodeGenerator());
-        byteCodegenerators.put(OrConditionExpressionExecutor.class, byteCode.new PrivateORExpressionExecutorBytecodeGenerator());
-        byteCodegenerators.put(NotConditionExpressionExecutor.class, byteCode.new PrivateNOTExpressionExecutorBytecodeGenerator());
-        byteCodegenerators.put(GreaterThanCompareConditionExpressionExecutorFloatDouble.class,
-                byteCode.new PrivateGreaterThanCompareConditionExpressionExecutorFloatDoubleBytecodeGenerator());
-        byteCodegenerators.put(LessThanCompareConditionExpressionExecutorFloatDouble.class,
-                byteCode.new PrivateLessThanCompareConditionExpressionExecutorFloatDoubleBytecodeGenerator());
-    }
 
     protected Processor next;
+    private boolean initialized;
     private ExpressionExecutor conditionExecutor;
-    private ClassWriter classWriter;
-    private ByteCodeHelper byteCodeHelper;
 
     public FilterProcessor(ExpressionExecutor conditionExecutor) throws InstantiationException, IllegalAccessException {
         if (Attribute.Type.BOOL.equals(conditionExecutor.getReturnType())) {
@@ -72,9 +45,6 @@ public class FilterProcessor implements Processor {
                     "of type BOOL. " +
                     "Actual type: " + conditionExecutor.getReturnType().toString());
         }
-
-        byteCodeHelper = new ByteCodeHelper();
-        classWriter = new ClassWriter(ClassWriter.COMPUTE_FRAMES);
     }
 
     public FilterProcessor cloneProcessor(String key) throws IllegalAccessException, InstantiationException {
@@ -87,18 +57,12 @@ public class FilterProcessor implements Processor {
         complexEventChunk.reset();
         while (complexEventChunk.hasNext()) {
             ComplexEvent complexEvent = complexEventChunk.next();
-            if (FilterProcessor.count) {
-                MethodVisitor methodVisitor = byteCodeHelper.start(classWriter);
-                this.execute(conditionExecutor, 0, 0, null, 0, methodVisitor,
-                        this);
-                byteCodeHelper.end(classWriter, methodVisitor);
-                if (!(Boolean) byteCodeHelper.execute(complexEvent)) {
-                    complexEventChunk.remove();
-                }
-            } else {
-                if (!(Boolean) byteCodeHelper.execute(complexEvent)) {
-                    complexEventChunk.remove();
-                }
+            if (!this.initialized) {
+                this.conditionExecutor = new ByteCodeGenarator().build(this.conditionExecutor);
+                this.initialized = true;
+            }
+            if (!(Boolean) this.conditionExecutor.execute(complexEvent)) {
+                complexEventChunk.remove();
             }
         }
 
@@ -124,12 +88,5 @@ public class FilterProcessor implements Processor {
         } else {
             this.next.setToLast(processor);
         }
-    }
-
-    public void execute(ExpressionExecutor conditionExecutor, int status, int parent,
-                        Label specialCase, int parentStatus, MethodVisitor methodVisitor,
-                        FilterProcessor filterProcessor) {
-        FilterProcessor.byteCodegenerators.get(conditionExecutor.getClass()).generate(conditionExecutor, status, parent,
-                specialCase, parentStatus, methodVisitor, filterProcessor);
     }
 }

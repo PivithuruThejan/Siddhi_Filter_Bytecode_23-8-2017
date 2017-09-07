@@ -7,7 +7,7 @@ import org.wso2.siddhi.core.executor.ExpressionExecutor;
 /**
  * Interface to generate byte code.
  */
-public interface ByteCodeGenerator {
+public interface ByteCodeEmitter {
     /**
      * Abstract method to generate byte code.
      *
@@ -17,9 +17,8 @@ public interface ByteCodeGenerator {
      * @param specialCase
      * @param parentStatus
      * @param methodVisitor
-     * @param filterProcessor
      */
     public void generate(ExpressionExecutor conditionExecutor, int status, int parent,
                          Label specialCase, int parentStatus,
-                         MethodVisitor methodVisitor, FilterProcessor filterProcessor);
+                         MethodVisitor methodVisitor, ByteCodeGenarator byteCodeGenarator);
 }
