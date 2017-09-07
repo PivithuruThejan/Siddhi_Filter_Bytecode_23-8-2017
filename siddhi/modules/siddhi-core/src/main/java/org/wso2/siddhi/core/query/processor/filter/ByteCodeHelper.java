@@ -16,17 +16,17 @@ import static org.mvel2.asm.Opcodes.ISTORE;
 public class ByteCodeHelper {
 
     /**
-     * This method creates a class called "ByteCode" using byte code.
+     * This method creates a class called "ByteCodeRegistry" using byte code.
      *
      * @param classWriter
      * @return
      */
     public MethodVisitor start(ClassWriter classWriter) {
         MethodVisitor methodVisitor;
-        classWriter.visit(52, ACC_PUBLIC + ACC_SUPER, "ByteCode", null,
+        classWriter.visit(52, ACC_PUBLIC + ACC_SUPER, "ByteCodeRegistry", null,
                 "java/lang/Object", new String[]
                         {"org/wso2/siddhi/core/executor/ExpressionExecutor"});
-        classWriter.visitSource("ByteCode.java", null);
+        classWriter.visitSource("ByteCodeRegistry.java", null);
         {
             methodVisitor = classWriter.visitMethod(ACC_PUBLIC, "<init>", "()V", null, null);
             methodVisitor.visitCode();
@@ -51,7 +51,7 @@ public class ByteCodeHelper {
     }
 
     /**
-     * This method finishes byte code generation and creates an instance of "ByteCode" class.
+     * This method finishes byte code generation and creates an instance of "ByteCodeRegistry" class.
      *
      * @param classWriter
      * @param methodVisitor
@@ -71,7 +71,7 @@ public class ByteCodeHelper {
         OptimizedExpressionExecutorClassLoader optimizedExpressionExecutorClassLoader = new
                 OptimizedExpressionExecutorClassLoader();//Instantiates the ClassLoader
         Class regeneratedClass = optimizedExpressionExecutorClassLoader
-                .defineClass("ByteCode", ByteCodeGenarator.byteArray);
+                .defineClass("ByteCodeRegistry", ByteCodeGenarator.byteArray);
         ByteCodeGenarator.expressionExecutor = (ExpressionExecutor) regeneratedClass.newInstance();
     }
 }

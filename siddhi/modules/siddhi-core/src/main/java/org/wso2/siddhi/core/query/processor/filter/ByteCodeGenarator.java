@@ -24,7 +24,7 @@ public class ByteCodeGenarator {
 
     static {
         byteCodegenerators = new HashMap<Class<? extends ExpressionExecutor>, ByteCodeEmitter>();
-        ByteCode byteCode = new ByteCode();
+        ByteCodeRegistry byteCode = new ByteCodeRegistry();
         byteCodegenerators.put(AndConditionExpressionExecutor.class, byteCode.
                 new PrivateANDExpressionExecutorBytecodeEmitter());
         byteCodegenerators.put(OrConditionExpressionExecutor.class, byteCode.
@@ -50,12 +50,12 @@ public class ByteCodeGenarator {
      */
     public ExpressionExecutor build(ExpressionExecutor conditionExecutor) throws InstantiationException,
             IllegalAccessException {
-        byteCodeHelper = new ByteCodeHelper();
-        classWriter = new ClassWriter(ClassWriter.COMPUTE_FRAMES);
+        this.byteCodeHelper = new ByteCodeHelper();
+        this.classWriter = new ClassWriter(ClassWriter.COMPUTE_FRAMES);
         MethodVisitor methodVisitor = byteCodeHelper.start(classWriter);
         this.execute(conditionExecutor, 0, 0, null, 0, methodVisitor,
                 this);
-        byteCodeHelper.end(classWriter, methodVisitor);
+        this.byteCodeHelper.end(classWriter, methodVisitor);
         return ByteCodeGenarator.expressionExecutor;
     }
 

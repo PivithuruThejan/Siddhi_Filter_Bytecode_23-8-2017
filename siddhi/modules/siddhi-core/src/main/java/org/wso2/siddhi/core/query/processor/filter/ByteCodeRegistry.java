@@ -18,7 +18,7 @@ import static org.mvel2.asm.Opcodes.ISTORE;
 /**
  * This is an outer class that consists of classes that has  implemented interface "ByteCodeEmitter".
  */
-public class ByteCode {
+public class ByteCodeRegistry {
     /**
      * This class generates byte code for "AND" operator.
      */
