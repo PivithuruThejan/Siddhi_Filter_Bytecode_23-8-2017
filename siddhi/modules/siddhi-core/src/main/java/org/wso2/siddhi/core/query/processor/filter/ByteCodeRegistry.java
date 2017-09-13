@@ -1,3 +1,20 @@
+/*
+ * Copyright (c) 2016, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ *
+ * WSO2 Inc. licenses this file to you under the Apache License,
+ * Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied. See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
 package org.wso2.siddhi.core.query.processor.filter;
 
 import org.mvel2.asm.Label;
@@ -221,10 +238,82 @@ public class ByteCodeRegistry {
     }
 
     /**
+     * This class generates byte code to take data from an event.
+     */
+    class PrivateVariableExpressionExecutorBytecodeEmitter implements ByteCodeEmitter {
+        /**
+         * This method overrides interface  method.
+         *
+         * @param conditionExecutor
+         * @param status
+         * @param parent
+         * @param specialCase
+         * @param parentStatus
+         * @param methodVisitor
+         * @param byteCodeGenarator
+         */
+        @Override
+        public void generate(ExpressionExecutor conditionExecutor, int status, int parent,
+                             Label specialCase, int parentStatus,
+                             MethodVisitor methodVisitor, ByteCodeGenarator byteCodeGenarator) {
+            VariableExpressionExecutor variableExpressionExecutor = (VariableExpressionExecutor) conditionExecutor;
+            int[] variablePosition = variableExpressionExecutor.getPosition();
+            methodVisitor.visitInsn(ICONST_4);
+            methodVisitor.visitIntInsn(NEWARRAY, T_INT);
+            for (int i = 0; i < 4; i++) {
+                methodVisitor.visitInsn(DUP);
+                methodVisitor.visitIntInsn(BIPUSH, i);
+                methodVisitor.visitIntInsn(BIPUSH, variablePosition[i]);
+                methodVisitor.visitInsn(IASTORE);
+            }
+
+            if (status == 2) {
+                methodVisitor.visitVarInsn(ASTORE, 3);
+                methodVisitor.visitVarInsn(ALOAD, 1);
+                methodVisitor.visitVarInsn(ALOAD, 3);
+                methodVisitor.visitMethodInsn(INVOKEINTERFACE, "org/wso2/siddhi/core/event/ComplexEvent",
+                        "getAttribute", "([I)Ljava/lang/Object;", true);
+                methodVisitor.visitVarInsn(ASTORE, 3);
+            } else {
+                methodVisitor.visitVarInsn(ASTORE, 2);
+                methodVisitor.visitVarInsn(ALOAD, 1);
+                methodVisitor.visitVarInsn(ALOAD, 2);
+                methodVisitor.visitMethodInsn(INVOKEINTERFACE, "org/wso2/siddhi/core/event/ComplexEvent",
+                        "getAttribute", "([I)Ljava/lang/Object;", true);
+                methodVisitor.visitVarInsn(ASTORE, 2);
+            }
+        }
+    }
+
+    /**
+     * This class generates byte code to take value from an expression
+     */
+    class PrivateConstantExpressionExecutorBytecodeEmitter implements ByteCodeEmitter {
+        /**
+         * This method overrides interface method.
+         *
+         * @param conditionExecutor
+         * @param status
+         * @param parent
+         * @param specialCase
+         * @param parentStatus
+         * @param methodVisitor
+         * @param byteCodeGenarator
+         */
+        @Override
+        public void generate(ExpressionExecutor conditionExecutor, int status, int parent,
+                             Label specialCase, int parentStatus,
+                             MethodVisitor methodVisitor, ByteCodeGenarator byteCodeGenarator) {
+            ConstantExpressionExecutor constantExpressionExecutor = (ConstantExpressionExecutor) conditionExecutor;
+            Object constantVariable = constantExpressionExecutor.getValue();
+            methodVisitor.visitLdcInsn(constantVariable);
+        }
+    }
+
+    /**
      * This class generates byte code for ">" operator with float on left and double on right.
      */
     class PrivateGreaterThanCompareConditionExpressionExecutorFloatDoubleBytecodeEmitter implements ByteCodeEmitter {
-
         /**
          * This method overrides the interface method.
          *
@@ -244,67 +333,25 @@ public class ByteCodeRegistry {
                     .getLeftExpressionExecutor();
             ExpressionExecutor right = ((GreaterThanCompareConditionExpressionExecutorFloatDouble) conditionExecutor)
                     .getRightExpressionExecutor();
-            Float leftVariable = null;
-            Double rightVariable = null;
-            int[] leftPosition = null;
-            int[] rightPosition = null;
             methodVisitor.visitCode();
+            byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             if (left instanceof VariableExpressionExecutor) {
-                leftPosition = ((VariableExpressionExecutor) left).getPosition();
-                methodVisitor.visitInsn(ICONST_4);
-                methodVisitor.visitIntInsn(NEWARRAY, T_INT);
-                for (int i = 0; i < 4; i++) {
-                    methodVisitor.visitInsn(DUP);
-                    methodVisitor.visitIntInsn(BIPUSH, i);
-                    methodVisitor.visitIntInsn(BIPUSH, leftPosition[i]);
-                    methodVisitor.visitInsn(IASTORE);
-                }
-
-                methodVisitor.visitVarInsn(ASTORE, 2);
-                methodVisitor.visitVarInsn(ALOAD, 1);
-                methodVisitor.visitVarInsn(ALOAD, 2);
-                methodVisitor.visitMethodInsn(INVOKEINTERFACE, "org/wso2/siddhi/core/event/ComplexEvent",
-                        "getAttribute", "([I)Ljava/lang/Object;", true);
-                methodVisitor.visitVarInsn(ASTORE, 2);
                 methodVisitor.visitVarInsn(ALOAD, 2);
                 methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Float");
                 methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Float", "floatValue", "()F",
                         false);
-                methodVisitor.visitVarInsn(FSTORE, 2);
-            } else if (left instanceof ConstantExpressionExecutor) {
-                leftVariable = (Float) ((ConstantExpressionExecutor) left).getValue();
-                methodVisitor.visitLdcInsn(new Float(leftVariable));
-                methodVisitor.visitVarInsn(FSTORE, 2);
             }
 
+            methodVisitor.visitVarInsn(FSTORE, 2);
+            byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
             if (right instanceof VariableExpressionExecutor) {
-                rightPosition = ((VariableExpressionExecutor) right).getPosition();
-                methodVisitor.visitInsn(ICONST_4);
-                methodVisitor.visitIntInsn(NEWARRAY, T_INT);
-                for (int i = 0; i < 4; i++) {
-                    methodVisitor.visitInsn(DUP);
-                    methodVisitor.visitIntInsn(BIPUSH, i);
-                    methodVisitor.visitIntInsn(BIPUSH, rightPosition[i]);
-                    methodVisitor.visitInsn(IASTORE);
-                }
-
-                methodVisitor.visitVarInsn(ASTORE, 3);
-                methodVisitor.visitVarInsn(ALOAD, 1);
-                methodVisitor.visitVarInsn(ALOAD, 3);
-                methodVisitor.visitMethodInsn(INVOKEINTERFACE, "org/wso2/siddhi/core/event/ComplexEvent",
-                        "getAttribute", "([I)Ljava/lang/Object;", true);
-                methodVisitor.visitVarInsn(ASTORE, 3);
                 methodVisitor.visitVarInsn(ALOAD, 3);
                 methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Double");
                 methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Double", "doubleValue", "()D",
                         false);
-                methodVisitor.visitVarInsn(DSTORE, 3);
-            } else if (right instanceof ConstantExpressionExecutor) {
-                rightVariable = (Double) ((ConstantExpressionExecutor) right).getValue();
-                methodVisitor.visitLdcInsn(new Double(rightVariable));
-                methodVisitor.visitVarInsn(DSTORE, 3);
             }
 
+            methodVisitor.visitVarInsn(DSTORE, 3);
             methodVisitor.visitVarInsn(FLOAD, 2);
             methodVisitor.visitInsn(F2D);
             methodVisitor.visitVarInsn(DLOAD, 3);
@@ -349,66 +396,24 @@ public class ByteCodeRegistry {
                     .getLeftExpressionExecutor();
             ExpressionExecutor right = ((LessThanCompareConditionExpressionExecutorFloatDouble) conditionExecutor)
                     .getRightExpressionExecutor();
-            Float leftVariable = null;
-            Double rightVariable = null;
-            int[] leftPosition = null;
-            int[] rightPosition = null;
+            byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             if (left instanceof VariableExpressionExecutor) {
-                leftPosition = ((VariableExpressionExecutor) left).getPosition();
-                methodVisitor.visitInsn(ICONST_4);
-                methodVisitor.visitIntInsn(NEWARRAY, T_INT);
-                for (int i = 0; i < 4; i++) {
-                    methodVisitor.visitInsn(DUP);
-                    methodVisitor.visitIntInsn(BIPUSH, i);
-                    methodVisitor.visitIntInsn(BIPUSH, leftPosition[i]);
-                    methodVisitor.visitInsn(IASTORE);
-                }
-
-                methodVisitor.visitVarInsn(ASTORE, 2);
-                methodVisitor.visitVarInsn(ALOAD, 1);
-                methodVisitor.visitVarInsn(ALOAD, 2);
-                methodVisitor.visitMethodInsn(INVOKEINTERFACE, "org/wso2/siddhi/core/event/ComplexEvent",
-                        "getAttribute", "([I)Ljava/lang/Object;", true);
-                methodVisitor.visitVarInsn(ASTORE, 2);
                 methodVisitor.visitVarInsn(ALOAD, 2);
                 methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Float");
                 methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Float", "floatValue", "()F",
                         false);
-                methodVisitor.visitVarInsn(FSTORE, 2);
-            } else if (left instanceof ConstantExpressionExecutor) {
-                leftVariable = (Float) ((ConstantExpressionExecutor) left).getValue();
-                methodVisitor.visitLdcInsn(new Float(leftVariable));
-                methodVisitor.visitVarInsn(FSTORE, 2);
             }
 
+            methodVisitor.visitVarInsn(FSTORE, 2);
+            byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
             if (right instanceof VariableExpressionExecutor) {
-                rightPosition = ((VariableExpressionExecutor) right).getPosition();
-                methodVisitor.visitInsn(ICONST_4);
-                methodVisitor.visitIntInsn(NEWARRAY, T_INT);
-                for (int i = 0; i < 4; i++) {
-                    methodVisitor.visitInsn(DUP);
-                    methodVisitor.visitIntInsn(BIPUSH, i);
-                    methodVisitor.visitIntInsn(BIPUSH, rightPosition[i]);
-                    methodVisitor.visitInsn(IASTORE);
-                }
-
-                methodVisitor.visitVarInsn(ASTORE, 3);
-                methodVisitor.visitVarInsn(ALOAD, 1);
-                methodVisitor.visitVarInsn(ALOAD, 3);
-                methodVisitor.visitMethodInsn(INVOKEINTERFACE, "org/wso2/siddhi/core/event/ComplexEvent",
-                        "getAttribute", "([I)Ljava/lang/Object;", true);
-                methodVisitor.visitVarInsn(ASTORE, 3);
                 methodVisitor.visitVarInsn(ALOAD, 3);
                 methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Double");
                 methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Double", "doubleValue", "()D",
                         false);
-                methodVisitor.visitVarInsn(DSTORE, 3);
-            } else if (right instanceof ConstantExpressionExecutor) {
-                rightVariable = (Double) ((ConstantExpressionExecutor) right).getValue();
-                methodVisitor.visitLdcInsn(new Double(rightVariable));
-                methodVisitor.visitVarInsn(DSTORE, 3);
             }
 
+            methodVisitor.visitVarInsn(DSTORE, 3);
             methodVisitor.visitVarInsn(FLOAD, 2);
             methodVisitor.visitInsn(F2D);
             methodVisitor.visitVarInsn(DLOAD, 3);
