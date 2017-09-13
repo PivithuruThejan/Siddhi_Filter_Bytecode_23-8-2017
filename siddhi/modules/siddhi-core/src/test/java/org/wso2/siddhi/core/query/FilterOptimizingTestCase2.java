@@ -1,5 +1,6 @@
 package org.wso2.siddhi.core.query;
 
+import org.junit.Assert;
 import org.junit.Test;
 import org.wso2.siddhi.core.SiddhiAppRuntime;
 import org.wso2.siddhi.core.SiddhiManager;
@@ -17,11 +18,14 @@ import java.lang.reflect.InvocationTargetException;
 public class FilterOptimizingTestCase2 {
 
     private static final int COUNT = 1;
+    private static int CHECK = 1;
 
     @Test
     public void testGreaterthanOperatorFloatDoubleRightSideVariableExpressionExecutorLeftSideConstantExpressionExecutor()
             throws InstantiationException, IllegalAccessException, InvocationTargetException, IOException,
             InterruptedException {
+
+        CHECK = 1;
         String definition = "@config(async = 'true') define stream players(playerName string,country string,TestAverage" +
                 " float,TestStrikeRate float,ODIAverage double,ODIStrikeRate float,T20Average float,T20StrikeRate float," +
                 "BattingStyle string);";
@@ -33,6 +37,13 @@ public class FilterOptimizingTestCase2 {
             @Override
             public void receive(long timeStamp, Event[] inEvents, Event[] removeEvents) {
                 EventPrinter.print(timeStamp, inEvents, removeEvents);
+                if (CHECK == 1) {
+                    Assert.assertEquals("Upul Tharanga", inEvents[0].getData()[0]);
+                    CHECK++;
+                } else if (CHECK == 2) {
+                    Assert.assertEquals("Asela Gunaratne", inEvents[0].getData()[0]);
+                    CHECK++;
+                }
             }
 
         });
@@ -73,6 +84,8 @@ public class FilterOptimizingTestCase2 {
     public void testLessthanOperatorFloatDoubleRightSideVariableExpressionExecutorLeftSideConstantExpressionExecutor()
             throws InstantiationException, IllegalAccessException, InvocationTargetException, IOException,
             InterruptedException {
+
+        CHECK = 2;
         String definition = "@config(async = 'true') define stream players(playerName string,country string,TestAverage" +
                 " float,TestStrikeRate float,ODIAverage double,ODIStrikeRate float,T20Average float,T20StrikeRate float," +
                 "BattingStyle string);";
@@ -84,6 +97,35 @@ public class FilterOptimizingTestCase2 {
             @Override
             public void receive(long timeStamp, Event[] inEvents, Event[] removeEvents) {
                 EventPrinter.print(timeStamp, inEvents, removeEvents);
+                if (CHECK == 2) {
+                    Assert.assertEquals("Anjelo Mathews", inEvents[0].getData()[0]);
+                    CHECK++;
+                    CHECK++;
+                } else if (CHECK == 4) {
+                    Assert.assertEquals("Joe Root", inEvents[0].getData()[0]);
+                    CHECK++;
+                } else if (CHECK == 5) {
+                    Assert.assertEquals("Ben Stokes", inEvents[0].getData()[0]);
+                    CHECK++;
+                } else if (CHECK == 6) {
+                    Assert.assertEquals("Kane Williamson", inEvents[0].getData()[0]);
+                    CHECK++;
+                } else if (CHECK == 7) {
+                    Assert.assertEquals("Steve Smith", inEvents[0].getData()[0]);
+                    CHECK++;
+                } else if (CHECK == 8) {
+                    Assert.assertEquals("AB de Villiers", inEvents[0].getData()[0]);
+                    CHECK++;
+                } else if (CHECK == 9) {
+                    Assert.assertEquals("Hashim Amla", inEvents[0].getData()[0]);
+                    CHECK++;
+                } else if (CHECK == 10) {
+                    Assert.assertEquals("Virat Kholi", inEvents[0].getData()[0]);
+                    CHECK++;
+                } else if (CHECK == 11) {
+                    Assert.assertEquals("Rohit Sharma", inEvents[0].getData()[0]);
+                    CHECK++;
+                }
             }
 
         });
