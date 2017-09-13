@@ -340,7 +340,7 @@ public class FilterOptimizingTestCase1 {
     @Test
     public void testForConsecutiveOperatorsOR() throws InterruptedException, IllegalAccessException, InvocationTargetException,
             InstantiationException, IOException {
-        CHECK = 2;
+        CHECK = 1;
         String definition = "@config(async = 'true') define stream players(playerName string,country string,TestAverage" +
                 " float,TestStrikeRate float,ODIAverage float,ODIStrikeRate float,T20Average float,T20StrikeRate float," +
                 "BattingStyle string);";
@@ -352,34 +352,34 @@ public class FilterOptimizingTestCase1 {
             @Override
             public void receive(long timeStamp, Event[] inEvents, Event[] removeEvents) {
                 EventPrinter.print(timeStamp, inEvents, removeEvents);
-                if (CHECK == 2) {
+                if (CHECK == 1) {
                     Assert.assertEquals("Anjelo Mathews", inEvents[0].getData()[0]);
                     CHECK++;
-                } else if (CHECK == 3) {
+                } else if (CHECK == 2) {
                     Assert.assertEquals("Asela Gunaratne", inEvents[0].getData()[0]);
                     CHECK++;
-                } else if (CHECK == 4) {
+                } else if (CHECK == 3) {
                     Assert.assertEquals("Joe Root", inEvents[0].getData()[0]);
                     CHECK++;
-                } else if (CHECK == 5) {
+                } else if (CHECK == 4) {
                     Assert.assertEquals("Ben Stokes", inEvents[0].getData()[0]);
                     CHECK++;
-                } else if (CHECK == 6) {
+                } else if (CHECK == 5) {
                     Assert.assertEquals("Kane Williamson", inEvents[0].getData()[0]);
                     CHECK++;
-                } else if (CHECK == 7) {
+                } else if (CHECK == 6) {
                     Assert.assertEquals("Steve Smith", inEvents[0].getData()[0]);
                     CHECK++;
-                } else if (CHECK == 8) {
+                } else if (CHECK == 7) {
                     Assert.assertEquals("AB de Villiers", inEvents[0].getData()[0]);
                     CHECK++;
-                } else if (CHECK == 9) {
+                } else if (CHECK == 8) {
                     Assert.assertEquals("Hashim Amla", inEvents[0].getData()[0]);
                     CHECK++;
-                } else if (CHECK == 10) {
+                } else if (CHECK == 9) {
                     Assert.assertEquals("Virat Kholi", inEvents[0].getData()[0]);
                     CHECK++;
-                } else if (CHECK == 11) {
+                } else if (CHECK == 10) {
                     Assert.assertEquals("Rohit Sharma", inEvents[0].getData()[0]);
                     CHECK++;
                 }
@@ -422,7 +422,7 @@ public class FilterOptimizingTestCase1 {
     @Test
     public void testForConsecutiveOperatorsNOT() throws InterruptedException, IllegalAccessException, InvocationTargetException,
             InstantiationException, IOException {
-        CHECK = 2;
+        CHECK = 1;
         String definition = "@config(async = 'true') define stream players(playerName string,country string,TestAverage" +
                 " float,TestStrikeRate float,ODIAverage float,ODIStrikeRate float,T20Average float,T20StrikeRate float," +
                 "BattingStyle string);";
@@ -434,34 +434,34 @@ public class FilterOptimizingTestCase1 {
             @Override
             public void receive(long timeStamp, Event[] inEvents, Event[] removeEvents) {
                 EventPrinter.print(timeStamp, inEvents, removeEvents);
-                if (CHECK == 2) {
+                if (CHECK == 1) {
                     Assert.assertEquals("Anjelo Mathews", inEvents[0].getData()[0]);
                     CHECK++;
-                } else if (CHECK == 3) {
+                } else if (CHECK == 2) {
                     Assert.assertEquals("Asela Gunaratne", inEvents[0].getData()[0]);
                     CHECK++;
-                } else if (CHECK == 4) {
+                } else if (CHECK == 3) {
                     Assert.assertEquals("Joe Root", inEvents[0].getData()[0]);
                     CHECK++;
-                } else if (CHECK == 5) {
+                } else if (CHECK == 4) {
                     Assert.assertEquals("Ben Stokes", inEvents[0].getData()[0]);
                     CHECK++;
-                } else if (CHECK == 6) {
+                } else if (CHECK == 5) {
                     Assert.assertEquals("Kane Williamson", inEvents[0].getData()[0]);
                     CHECK++;
-                } else if (CHECK == 7) {
+                } else if (CHECK == 6) {
                     Assert.assertEquals("Steve Smith", inEvents[0].getData()[0]);
                     CHECK++;
-                } else if (CHECK == 8) {
+                } else if (CHECK == 7) {
                     Assert.assertEquals("AB de Villiers", inEvents[0].getData()[0]);
                     CHECK++;
-                } else if (CHECK == 9) {
+                } else if (CHECK == 8) {
                     Assert.assertEquals("Hashim Amla", inEvents[0].getData()[0]);
                     CHECK++;
-                } else if (CHECK == 10) {
+                } else if (CHECK == 9) {
                     Assert.assertEquals("Virat Kholi", inEvents[0].getData()[0]);
                     CHECK++;
-                } else if (CHECK == 11) {
+                } else if (CHECK == 10) {
                     Assert.assertEquals("Rohit Sharma", inEvents[0].getData()[0]);
                     CHECK++;
                 }
@@ -506,7 +506,7 @@ public class FilterOptimizingTestCase1 {
             throws InterruptedException, IllegalAccessException, InvocationTargetException,
             InstantiationException, IOException {
 
-        CHECK = 2;
+        CHECK = 1;
         String definition = "@config(async = 'true') define stream players(playerName string,country string,TestAverage" +
                 " float,TestStrikeRate float,ODIAverage float,ODIStrikeRate float,T20Average float,T20StrikeRate float," +
                 "BattingStyle string);";
@@ -518,30 +518,29 @@ public class FilterOptimizingTestCase1 {
             @Override
             public void receive(long timeStamp, Event[] inEvents, Event[] removeEvents) {
                 EventPrinter.print(timeStamp, inEvents, removeEvents);
-                if (CHECK == 2) {
+                if (CHECK == 1) {
                     Assert.assertEquals("Anjelo Mathews", inEvents[0].getData()[0]);
                     CHECK++;
-                } else if (CHECK == 3) {
+                } else if (CHECK == 2) {
                     Assert.assertEquals("Asela Gunaratne", inEvents[0].getData()[0]);
                     CHECK++;
-                } else if (CHECK == 4) {
+                } else if (CHECK == 3) {
                     Assert.assertEquals("Joe Root", inEvents[0].getData()[0]);
                     CHECK++;
-                    CHECK++;
 
-                } else if (CHECK == 6) {
+                } else if (CHECK == 4) {
                     Assert.assertEquals("Kane Williamson", inEvents[0].getData()[0]);
                     CHECK++;
-                } else if (CHECK == 7) {
+                } else if (CHECK == 5) {
                     Assert.assertEquals("Steve Smith", inEvents[0].getData()[0]);
                     CHECK++;
-                } else if (CHECK == 8) {
+                } else if (CHECK == 6) {
                     Assert.assertEquals("AB de Villiers", inEvents[0].getData()[0]);
                     CHECK++;
-                } else if (CHECK == 9) {
+                } else if (CHECK == 7) {
                     Assert.assertEquals("Hashim Amla", inEvents[0].getData()[0]);
                     CHECK++;
-                } else if (CHECK == 10) {
+                } else if (CHECK == 8) {
                     Assert.assertEquals("Virat Kholi", inEvents[0].getData()[0]);
                     CHECK++;
                 }
