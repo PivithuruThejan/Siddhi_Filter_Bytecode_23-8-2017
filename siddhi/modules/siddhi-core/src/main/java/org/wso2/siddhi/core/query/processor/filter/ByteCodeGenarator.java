@@ -31,6 +31,7 @@ import org.wso2.siddhi.core.executor.condition.compare.greaterthan.GreaterThanCo
 import org.wso2.siddhi.core.executor.condition.compare.greaterthan.GreaterThanCompareConditionExpressionExecutorFloatDouble;
 import org.wso2.siddhi.core.executor.condition.compare.greaterthan.GreaterThanCompareConditionExpressionExecutorFloatFloat;
 import org.wso2.siddhi.core.executor.condition.compare.lessthan.LessThanCompareConditionExpressionExecutorFloatDouble;
+import org.wso2.siddhi.core.executor.condition.compare.lessthan.LessThanCompareConditionExpressionExecutorFloatFloat;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -63,6 +64,8 @@ public class ByteCodeGenarator {
                 byteCode.new PrivateGreaterThanCompareConditionExpressionExecutorFloatFloatBytecodeEmitter());
         byteCodegenerators.put(LessThanCompareConditionExpressionExecutorFloatDouble.class,
                 byteCode.new PrivateLessThanCompareConditionExpressionExecutorFloatDoubleBytecodeEmitter());
+        byteCodegenerators.put(LessThanCompareConditionExpressionExecutorFloatFloat.class,
+                byteCode.new PrivateLessThanCompareConditionExpressionExecutorFloatFloatBytecodeEmitter());
     }
 
     private ClassWriter classWriter;
