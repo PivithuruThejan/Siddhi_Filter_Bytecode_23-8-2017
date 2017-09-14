@@ -62,6 +62,8 @@ public class ByteCodeGenarator {
                 byteCode.new PrivateGreaterThanCompareConditionExpressionExecutorFloatDoubleBytecodeEmitter());
         byteCodegenerators.put(GreaterThanCompareConditionExpressionExecutorFloatFloat.class,
                 byteCode.new PrivateGreaterThanCompareConditionExpressionExecutorFloatFloatBytecodeEmitter());
+        byteCodegenerators.put(GreaterThanCompareConditionExpressionExecutorDoubleDouble.class,
+                byteCode.new PrivateGreaterThanCompareConditionExpressionExecutorDoubleDoubleBytecodeEmitter());
         byteCodegenerators.put(LessThanCompareConditionExpressionExecutorFloatDouble.class,
                 byteCode.new PrivateLessThanCompareConditionExpressionExecutorFloatDoubleBytecodeEmitter());
         byteCodegenerators.put(LessThanCompareConditionExpressionExecutorFloatFloat.class,
