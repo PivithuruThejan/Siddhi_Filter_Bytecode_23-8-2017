@@ -3463,7 +3463,6 @@ public class FilterOptimizingTestCase2 {
         siddhiAppRuntime.shutdown();
     }
 
-
     @Test
     public void testLessthanOperatorDoubleLongRightSideVariableExpressionExecutorLeftSideConstantExpressionExecutor()
             throws InstantiationException, IllegalAccessException, InvocationTargetException, IOException,
@@ -4274,7 +4273,6 @@ public class FilterOptimizingTestCase2 {
         siddhiAppRuntime.shutdown();
     }
 
-
     @Test
     public void testLessthanOperatorFloatIntegerRightSideVariableExpressionExecutorLeftSideConstantExpressionExecutor()
             throws InstantiationException, IllegalAccessException, InvocationTargetException, IOException,
@@ -4601,6 +4599,7 @@ public class FilterOptimizingTestCase2 {
             throws InterruptedException, IllegalAccessException, InvocationTargetException,
             InstantiationException, IOException {
 
+        CHECK = 1;
         String definition = "@config(async = 'true') define stream players(playerName string,country string,TestAverage" +
                 " double,TestStrikeRate float,ODIAverage float,ODIStrikeRate float,T20Average float,T20StrikeRate float," +
                 "BattingStyle string, AggresiveBattingStyle bool, Allrounder bool);";
@@ -4612,6 +4611,1099 @@ public class FilterOptimizingTestCase2 {
             @Override
             public void receive(long timeStamp, Event[] inEvents, Event[] removeEvents) {
                 EventPrinter.print(timeStamp, inEvents, removeEvents);
+                if (CHECK == 1) {
+                    Assert.assertEquals("Upul Tharanga", inEvents[0].getData()[0]);
+                    CHECK++;
+                } else if (CHECK == 2) {
+                    Assert.assertEquals("Anjelo Mathews", inEvents[0].getData()[0]);
+                    CHECK++;
+                } else if (CHECK == 3) {
+                    Assert.assertEquals("Asela Gunaratne", inEvents[0].getData()[0]);
+                    CHECK++;
+                } else if (CHECK == 4) {
+                    Assert.assertEquals("Joe Root", inEvents[0].getData()[0]);
+                    CHECK++;
+                } else if (CHECK == 5) {
+                    Assert.assertEquals("Ben Stokes", inEvents[0].getData()[0]);
+                    CHECK++;
+                } else if (CHECK == 6) {
+                    Assert.assertEquals("Kane Williamson", inEvents[0].getData()[0]);
+                    CHECK++;
+                } else if (CHECK == 7) {
+                    Assert.assertEquals("Steve Smith", inEvents[0].getData()[0]);
+                    CHECK++;
+                } else if (CHECK == 8) {
+                    Assert.assertEquals("Hashim Amla", inEvents[0].getData()[0]);
+                    CHECK++;
+                }
+            }
+
+        });
+        InputHandler inputHandler = siddhiAppRuntime.getInputHandler("players");
+        siddhiAppRuntime.start();
+        long start = System.currentTimeMillis();
+        Object[] o1 = new Object[]{"Upul Tharanga", "Sri Lanka", 33.0, 62.5f, 32.5f, 80.5f, 16.3f, 116.3f, "LHB", false,
+                false};
+        Object[] o2 = new Object[]{"Anjelo Mathews", "Sri Lanka", 47.6, 65.3f, 42.1f, 83.4f, 26.3f, 136.3f, "RHB", true,
+                true};
+        Object[] o3 = new Object[]{"Asela Gunaratne", "Sri Lanka", 53.7, 57.4f, 36.5f, 85.5f, 36.3f, 146.7f, "RHB", true,
+                true};
+        Object[] o4 = new Object[]{"Joe Root", "England", 55.8, 52.5f, 52.7f, 88.3f, 24.9f, 128.3f, "RHB", false, false};
+        Object[] o5 = new Object[]{"Ben Stokes", "England", 41.2, 72.5f, 43.6f, 90.7f, 22.3f, 133.8f, "LHB", true, true};
+        Object[] o6 = new Object[]{"Kane Williamson", "New Zealand", 54.2, 48.7f, 45.1f, 79.3f, 29.3f, 119.3f, "RHB", false,
+                false};
+        Object[] o7 = new Object[]{"Steve Smith", "Australia", 63.3, 51.5f, 50.5f, 82.7f, 16.3f, 112.2f, "RHB", false,
+                false};
+        Object[] o8 = new Object[]{"AB de Villiers", "South Africa", 51.9, 62.1f, 52.5f, 101.5f, 33.3f, 156.3f, "RHB",
+                true, false};
+        Object[] o9 = new Object[]{"Hashim Amla", "South Africa", 47.8, 47.5f, 52.5f, 86.5f, 26.3f, 127.3f, "RHB", false,
+                false};
+        Object[] o10 = new Object[]{"Virat Kholi", "India", 52.0, 66.5f, 53.5f, 89.5f, 30.3f, 136.3f, "RHB", true, false};
+        Object[] o11 = new Object[]{"Rohit Sharma", "India", 32.0, 62.5f, 42.5f, 93.5f, 26.3f, 141.3f, "RHB", true, false};
+        for (int i = 1; i <= COUNT; i++) {
+            inputHandler.send(o1);
+            inputHandler.send(o2);
+            inputHandler.send(o3);
+            inputHandler.send(o4);
+            inputHandler.send(o5);
+            inputHandler.send(o6);
+            inputHandler.send(o7);
+            inputHandler.send(o8);
+            inputHandler.send(o9);
+            inputHandler.send(o10);
+            inputHandler.send(o11);
+        }
+
+        long end = System.currentTimeMillis();
+        System.out.println("XTime: " + (end - start) + " ms.");
+        siddhiAppRuntime.shutdown();
+    }
+
+    @Test
+    public void testEqualDoubleDoubleLeftSideVariableExperssionExecutorRightSideVariableExpressionExecutor()
+            throws InterruptedException, IllegalAccessException, InvocationTargetException,
+            InstantiationException, IOException {
+
+        CHECK = 1;
+        String definition = "@config(async = 'true') define stream players(playerName string,country string,TestAverage" +
+                " double,TestStrikeRate double,ODIAverage float,ODIStrikeRate float,T20Average float,T20StrikeRate float," +
+                "BattingStyle string);";
+        String query = "@info(name = 'query1') from players[(TestAverage == TestStrikeRate)]" +
+                " select playerName, BattingStyle insert into sqaud;";
+        SiddhiManager siddhiManager = new SiddhiManager();
+        SiddhiAppRuntime siddhiAppRuntime = siddhiManager.createSiddhiAppRuntime(definition + query);
+        siddhiAppRuntime.addCallback("query1", new QueryCallback() {
+            @Override
+            public void receive(long timeStamp, Event[] inEvents, Event[] removeEvents) {
+                EventPrinter.print(timeStamp, inEvents, removeEvents);
+                if (CHECK == 1) {
+                    Assert.assertEquals("Upul Tharanga", inEvents[0].getData()[0]);
+                    CHECK++;
+                }
+            }
+
+        });
+        InputHandler inputHandler = siddhiAppRuntime.getInputHandler("players");
+        siddhiAppRuntime.start();
+        long start = System.currentTimeMillis();
+        Object[] o1 = new Object[]{"Upul Tharanga", "Sri Lanka", 33.0, 33.0, 32.5f, 80.5f, 16.3f, 116.3f, "LHB"};
+        Object[] o2 = new Object[]{"Anjelo Mathews", "Sri Lanka", 47.6, 65.3, 42.1f, 83.4f, 26.3f, 136.3f, "RHB",};
+        Object[] o3 = new Object[]{"Asela Gunaratne", "Sri Lanka", 53.7, 57.4, 36.5f, 85.5f, 36.3f, 146.7f, "RHB",};
+        Object[] o4 = new Object[]{"Joe Root", "England", 55.8, 52.5, 52.7f, 88.3f, 24.9f, 128.3f, "RHB"};
+        Object[] o5 = new Object[]{"Ben Stokes", "England", 41.2, 72.5, 43.6f, 90.7f, 22.3f, 133.8f, "LHB"};
+        Object[] o6 = new Object[]{"Kane Williamson", "New Zealand", 54.2, 48.7, 45.1f, 79.3f, 29.3f, 119.3f, "RHB"};
+        Object[] o7 = new Object[]{"Steve Smith", "Australia", 63.3, 51.5, 50.5f, 82.7f, 16.3f, 112.2f, "RHB"};
+        Object[] o8 = new Object[]{"AB de Villiers", "South Africa", 51.9, 62.1, 52.5f, 101.5f, 33.3f, 156.3f, "RHB"};
+        Object[] o9 = new Object[]{"Hashim Amla", "South Africa", 47.8, 47.5, 52.5f, 86.5f, 26.3f, 127.3f, "RHB"};
+        Object[] o10 = new Object[]{"Virat Kholi", "India", 52.0, 66.5, 53.5f, 89.5f, 30.3f, 136.3f, "RHB"};
+        Object[] o11 = new Object[]{"Rohit Sharma", "India", 32.0, 62.5, 42.5f, 93.5f, 26.3f, 141.3f, "RHB"};
+        for (int i = 1; i <= COUNT; i++) {
+            inputHandler.send(o1);
+            inputHandler.send(o2);
+            inputHandler.send(o3);
+            inputHandler.send(o4);
+            inputHandler.send(o5);
+            inputHandler.send(o6);
+            inputHandler.send(o7);
+            inputHandler.send(o8);
+            inputHandler.send(o9);
+            inputHandler.send(o10);
+            inputHandler.send(o11);
+        }
+
+        long end = System.currentTimeMillis();
+        System.out.println("XTime: " + (end - start) + " ms.");
+        siddhiAppRuntime.shutdown();
+    }
+
+    @Test
+    public void testEqualIntegerDoubleLeftSideVariableExperssionExecutorRightSideVariableExpressionExecutor()
+            throws InterruptedException, IllegalAccessException, InvocationTargetException,
+            InstantiationException, IOException {
+
+        CHECK = 1;
+        String definition = "@config(async = 'true') define stream players(playerName string,country string,TestAverage" +
+                " int,TestStrikeRate double,ODIAverage float,ODIStrikeRate float,T20Average float,T20StrikeRate float," +
+                "BattingStyle string);";
+        String query = "@info(name = 'query1') from players[(TestAverage == TestStrikeRate)]" +
+                " select playerName, BattingStyle insert into sqaud;";
+        SiddhiManager siddhiManager = new SiddhiManager();
+        SiddhiAppRuntime siddhiAppRuntime = siddhiManager.createSiddhiAppRuntime(definition + query);
+        siddhiAppRuntime.addCallback("query1", new QueryCallback() {
+            @Override
+            public void receive(long timeStamp, Event[] inEvents, Event[] removeEvents) {
+                EventPrinter.print(timeStamp, inEvents, removeEvents);
+                if (CHECK == 1) {
+                    Assert.assertEquals("Upul Tharanga", inEvents[0].getData()[0]);
+                    CHECK++;
+                }
+            }
+
+        });
+        InputHandler inputHandler = siddhiAppRuntime.getInputHandler("players");
+        siddhiAppRuntime.start();
+        long start = System.currentTimeMillis();
+        Object[] o1 = new Object[]{"Upul Tharanga", "Sri Lanka", 33, 33.0, 32.5f, 80.5f, 16.3f, 116.3f, "LHB"};
+        Object[] o2 = new Object[]{"Anjelo Mathews", "Sri Lanka", 47, 65.3, 42.1f, 83.4f, 26.3f, 136.3f, "RHB",};
+        Object[] o3 = new Object[]{"Asela Gunaratne", "Sri Lanka", 53, 57.4, 36.5f, 85.5f, 36.3f, 146.7f, "RHB",};
+        Object[] o4 = new Object[]{"Joe Root", "England", 55, 52.5, 52.7f, 88.3f, 24.9f, 128.3f, "RHB"};
+        Object[] o5 = new Object[]{"Ben Stokes", "England", 41, 72.5, 43.6f, 90.7f, 22.3f, 133.8f, "LHB"};
+        Object[] o6 = new Object[]{"Kane Williamson", "New Zealand", 54, 48.7, 45.1f, 79.3f, 29.3f, 119.3f, "RHB"};
+        Object[] o7 = new Object[]{"Steve Smith", "Australia", 63, 51.5, 50.5f, 82.7f, 16.3f, 112.2f, "RHB"};
+        Object[] o8 = new Object[]{"AB de Villiers", "South Africa", 51, 62.1, 52.5f, 101.5f, 33.3f, 156.3f, "RHB"};
+        Object[] o9 = new Object[]{"Hashim Amla", "South Africa", 47, 47.5, 52.5f, 86.5f, 26.3f, 127.3f, "RHB"};
+        Object[] o10 = new Object[]{"Virat Kholi", "India", 52, 66.5, 53.5f, 89.5f, 30.3f, 136.3f, "RHB"};
+        Object[] o11 = new Object[]{"Rohit Sharma", "India", 32, 62.5, 42.5f, 93.5f, 26.3f, 141.3f, "RHB"};
+        for (int i = 1; i <= COUNT; i++) {
+            inputHandler.send(o1);
+            inputHandler.send(o2);
+            inputHandler.send(o3);
+            inputHandler.send(o4);
+            inputHandler.send(o5);
+            inputHandler.send(o6);
+            inputHandler.send(o7);
+            inputHandler.send(o8);
+            inputHandler.send(o9);
+            inputHandler.send(o10);
+            inputHandler.send(o11);
+        }
+
+        long end = System.currentTimeMillis();
+        System.out.println("XTime: " + (end - start) + " ms.");
+        siddhiAppRuntime.shutdown();
+    }
+
+    @Test
+    public void testEqualLongDoubleLeftSideVariableExperssionExecutorRightSideVariableExpressionExecutor()
+            throws InterruptedException, IllegalAccessException, InvocationTargetException,
+            InstantiationException, IOException {
+
+        CHECK = 1;
+        String definition = "@config(async = 'true') define stream players(playerName string,country string,TestAverage" +
+                " long,TestStrikeRate double,ODIAverage float,ODIStrikeRate float,T20Average float,T20StrikeRate float," +
+                "BattingStyle string);";
+        String query = "@info(name = 'query1') from players[(TestAverage == TestStrikeRate)]" +
+                " select playerName, BattingStyle insert into sqaud;";
+        SiddhiManager siddhiManager = new SiddhiManager();
+        SiddhiAppRuntime siddhiAppRuntime = siddhiManager.createSiddhiAppRuntime(definition + query);
+        siddhiAppRuntime.addCallback("query1", new QueryCallback() {
+            @Override
+            public void receive(long timeStamp, Event[] inEvents, Event[] removeEvents) {
+                EventPrinter.print(timeStamp, inEvents, removeEvents);
+                if (CHECK == 1) {
+                    Assert.assertEquals("Upul Tharanga", inEvents[0].getData()[0]);
+                    CHECK++;
+                }
+            }
+
+        });
+        InputHandler inputHandler = siddhiAppRuntime.getInputHandler("players");
+        siddhiAppRuntime.start();
+        long start = System.currentTimeMillis();
+        Object[] o1 = new Object[]{"Upul Tharanga", "Sri Lanka", 33l, 33.0, 32.5f, 80.5f, 16.3f, 116.3f, "LHB"};
+        Object[] o2 = new Object[]{"Anjelo Mathews", "Sri Lanka", 47l, 65.3, 42.1f, 83.4f, 26.3f, 136.3f, "RHB",};
+        Object[] o3 = new Object[]{"Asela Gunaratne", "Sri Lanka", 53l, 57.4, 36.5f, 85.5f, 36.3f, 146.7f, "RHB",};
+        Object[] o4 = new Object[]{"Joe Root", "England", 55l, 52.5, 52.7f, 88.3f, 24.9f, 128.3f, "RHB"};
+        Object[] o5 = new Object[]{"Ben Stokes", "England", 41l, 72.5, 43.6f, 90.7f, 22.3f, 133.8f, "LHB"};
+        Object[] o6 = new Object[]{"Kane Williamson", "New Zealand", 54l, 48.7, 45.1f, 79.3f, 29.3f, 119.3f, "RHB"};
+        Object[] o7 = new Object[]{"Steve Smith", "Australia", 63l, 51.5, 50.5f, 82.7f, 16.3f, 112.2f, "RHB"};
+        Object[] o8 = new Object[]{"AB de Villiers", "South Africa", 51l, 62.1, 52.5f, 101.5f, 33.3f, 156.3f, "RHB"};
+        Object[] o9 = new Object[]{"Hashim Amla", "South Africa", 47l, 47.5, 52.5f, 86.5f, 26.3f, 127.3f, "RHB"};
+        Object[] o10 = new Object[]{"Virat Kholi", "India", 52l, 66.5, 53.5f, 89.5f, 30.3f, 136.3f, "RHB"};
+        Object[] o11 = new Object[]{"Rohit Sharma", "India", 32l, 62.5, 42.5f, 93.5f, 26.3f, 141.3f, "RHB"};
+        for (int i = 1; i <= COUNT; i++) {
+            inputHandler.send(o1);
+            inputHandler.send(o2);
+            inputHandler.send(o3);
+            inputHandler.send(o4);
+            inputHandler.send(o5);
+            inputHandler.send(o6);
+            inputHandler.send(o7);
+            inputHandler.send(o8);
+            inputHandler.send(o9);
+            inputHandler.send(o10);
+            inputHandler.send(o11);
+        }
+
+        long end = System.currentTimeMillis();
+        System.out.println("XTime: " + (end - start) + " ms.");
+        siddhiAppRuntime.shutdown();
+    }
+
+    @Test
+    public void testEqualLongFloatLeftSideVariableExperssionExecutorRightSideVariableExpressionExecutor()
+            throws InterruptedException, IllegalAccessException, InvocationTargetException,
+            InstantiationException, IOException {
+
+        CHECK = 1;
+        String definition = "@config(async = 'true') define stream players(playerName string,country string,TestAverage" +
+                " long,TestStrikeRate double,ODIAverage float,ODIStrikeRate float,T20Average float,T20StrikeRate float," +
+                "BattingStyle string);";
+        String query = "@info(name = 'query1') from players[(TestAverage == ODIAverage)]" +
+                " select playerName, BattingStyle insert into sqaud;";
+        SiddhiManager siddhiManager = new SiddhiManager();
+        SiddhiAppRuntime siddhiAppRuntime = siddhiManager.createSiddhiAppRuntime(definition + query);
+        siddhiAppRuntime.addCallback("query1", new QueryCallback() {
+            @Override
+            public void receive(long timeStamp, Event[] inEvents, Event[] removeEvents) {
+                EventPrinter.print(timeStamp, inEvents, removeEvents);
+                if (CHECK == 1) {
+                    Assert.assertEquals("Upul Tharanga", inEvents[0].getData()[0]);
+                    CHECK++;
+                }
+            }
+
+        });
+        InputHandler inputHandler = siddhiAppRuntime.getInputHandler("players");
+        siddhiAppRuntime.start();
+        long start = System.currentTimeMillis();
+        Object[] o1 = new Object[]{"Upul Tharanga", "Sri Lanka", 33l, 33.0, 33f, 80.5f, 16.3f, 116.3f, "LHB"};
+        Object[] o2 = new Object[]{"Anjelo Mathews", "Sri Lanka", 47l, 65.3, 42.1f, 83.4f, 26.3f, 136.3f, "RHB",};
+        Object[] o3 = new Object[]{"Asela Gunaratne", "Sri Lanka", 53l, 57.4, 36.5f, 85.5f, 36.3f, 146.7f, "RHB",};
+        Object[] o4 = new Object[]{"Joe Root", "England", 55l, 52.5, 52.7f, 88.3f, 24.9f, 128.3f, "RHB"};
+        Object[] o5 = new Object[]{"Ben Stokes", "England", 41l, 72.5, 43.6f, 90.7f, 22.3f, 133.8f, "LHB"};
+        Object[] o6 = new Object[]{"Kane Williamson", "New Zealand", 54l, 48.7, 45.1f, 79.3f, 29.3f, 119.3f, "RHB"};
+        Object[] o7 = new Object[]{"Steve Smith", "Australia", 63l, 51.5, 50.5f, 82.7f, 16.3f, 112.2f, "RHB"};
+        Object[] o8 = new Object[]{"AB de Villiers", "South Africa", 51l, 62.1, 52.5f, 101.5f, 33.3f, 156.3f, "RHB"};
+        Object[] o9 = new Object[]{"Hashim Amla", "South Africa", 47l, 47.5, 52.5f, 86.5f, 26.3f, 127.3f, "RHB"};
+        Object[] o10 = new Object[]{"Virat Kholi", "India", 52l, 66.5, 53.5f, 89.5f, 30.3f, 136.3f, "RHB"};
+        Object[] o11 = new Object[]{"Rohit Sharma", "India", 32l, 62.5, 42.5f, 93.5f, 26.3f, 141.3f, "RHB"};
+        for (int i = 1; i <= COUNT; i++) {
+            inputHandler.send(o1);
+            inputHandler.send(o2);
+            inputHandler.send(o3);
+            inputHandler.send(o4);
+            inputHandler.send(o5);
+            inputHandler.send(o6);
+            inputHandler.send(o7);
+            inputHandler.send(o8);
+            inputHandler.send(o9);
+            inputHandler.send(o10);
+            inputHandler.send(o11);
+        }
+
+        long end = System.currentTimeMillis();
+        System.out.println("XTime: " + (end - start) + " ms.");
+        siddhiAppRuntime.shutdown();
+    }
+
+    @Test
+    public void testEqualLongIntegerLeftSideVariableExperssionExecutorRightSideVariableExpressionExecutor()
+            throws InterruptedException, IllegalAccessException, InvocationTargetException,
+            InstantiationException, IOException {
+
+        CHECK = 1;
+        String definition = "@config(async = 'true') define stream players(playerName string,country string,TestAverage" +
+                " long,TestStrikeRate double,ODIAverage int,ODIStrikeRate float,T20Average float,T20StrikeRate float," +
+                "BattingStyle string);";
+        String query = "@info(name = 'query1') from players[(TestAverage == ODIAverage)]" +
+                " select playerName, BattingStyle insert into sqaud;";
+        SiddhiManager siddhiManager = new SiddhiManager();
+        SiddhiAppRuntime siddhiAppRuntime = siddhiManager.createSiddhiAppRuntime(definition + query);
+        siddhiAppRuntime.addCallback("query1", new QueryCallback() {
+            @Override
+            public void receive(long timeStamp, Event[] inEvents, Event[] removeEvents) {
+                EventPrinter.print(timeStamp, inEvents, removeEvents);
+                if (CHECK == 1) {
+                    Assert.assertEquals("Upul Tharanga", inEvents[0].getData()[0]);
+                    CHECK++;
+                }
+            }
+
+        });
+        InputHandler inputHandler = siddhiAppRuntime.getInputHandler("players");
+        siddhiAppRuntime.start();
+        long start = System.currentTimeMillis();
+        Object[] o1 = new Object[]{"Upul Tharanga", "Sri Lanka", 33l, 33.0, 33, 80.5f, 16.3f, 116.3f, "LHB"};
+        Object[] o2 = new Object[]{"Anjelo Mathews", "Sri Lanka", 47l, 65.3, 42, 83.4f, 26.3f, 136.3f, "RHB",};
+        Object[] o3 = new Object[]{"Asela Gunaratne", "Sri Lanka", 53l, 57.4, 36, 85.5f, 36.3f, 146.7f, "RHB",};
+        Object[] o4 = new Object[]{"Joe Root", "England", 55l, 52.5, 52, 88.3f, 24.9f, 128.3f, "RHB"};
+        Object[] o5 = new Object[]{"Ben Stokes", "England", 41l, 72.5, 43, 90.7f, 22.3f, 133.8f, "LHB"};
+        Object[] o6 = new Object[]{"Kane Williamson", "New Zealand", 54l, 48.7, 45, 79.3f, 29.3f, 119.3f, "RHB"};
+        Object[] o7 = new Object[]{"Steve Smith", "Australia", 63l, 51.5, 50, 82.7f, 16.3f, 112.2f, "RHB"};
+        Object[] o8 = new Object[]{"AB de Villiers", "South Africa", 51l, 62.1, 52, 101.5f, 33.3f, 156.3f, "RHB"};
+        Object[] o9 = new Object[]{"Hashim Amla", "South Africa", 47l, 47.5, 52, 86.5f, 26.3f, 127.3f, "RHB"};
+        Object[] o10 = new Object[]{"Virat Kholi", "India", 52l, 66.5, 53, 89.5f, 30.3f, 136.3f, "RHB"};
+        Object[] o11 = new Object[]{"Rohit Sharma", "India", 32l, 62.5, 42, 93.5f, 26.3f, 141.3f, "RHB"};
+        for (int i = 1; i <= COUNT; i++) {
+            inputHandler.send(o1);
+            inputHandler.send(o2);
+            inputHandler.send(o3);
+            inputHandler.send(o4);
+            inputHandler.send(o5);
+            inputHandler.send(o6);
+            inputHandler.send(o7);
+            inputHandler.send(o8);
+            inputHandler.send(o9);
+            inputHandler.send(o10);
+            inputHandler.send(o11);
+        }
+
+        long end = System.currentTimeMillis();
+        System.out.println("XTime: " + (end - start) + " ms.");
+        siddhiAppRuntime.shutdown();
+    }
+
+    @Test
+    public void testEqualLongLongLeftSideVariableExperssionExecutorRightSideVariableExpressionExecutor()
+            throws InterruptedException, IllegalAccessException, InvocationTargetException,
+            InstantiationException, IOException {
+
+        CHECK = 1;
+        String definition = "@config(async = 'true') define stream players(playerName string,country string,TestAverage" +
+                " long,TestStrikeRate double,ODIAverage long,ODIStrikeRate float,T20Average float,T20StrikeRate float," +
+                "BattingStyle string);";
+        String query = "@info(name = 'query1') from players[(TestAverage == ODIAverage)]" +
+                " select playerName, BattingStyle insert into sqaud;";
+        SiddhiManager siddhiManager = new SiddhiManager();
+        SiddhiAppRuntime siddhiAppRuntime = siddhiManager.createSiddhiAppRuntime(definition + query);
+        siddhiAppRuntime.addCallback("query1", new QueryCallback() {
+            @Override
+            public void receive(long timeStamp, Event[] inEvents, Event[] removeEvents) {
+                EventPrinter.print(timeStamp, inEvents, removeEvents);
+                if (CHECK == 1) {
+                    Assert.assertEquals("Upul Tharanga", inEvents[0].getData()[0]);
+                    CHECK++;
+                }
+            }
+
+        });
+        InputHandler inputHandler = siddhiAppRuntime.getInputHandler("players");
+        siddhiAppRuntime.start();
+        long start = System.currentTimeMillis();
+        Object[] o1 = new Object[]{"Upul Tharanga", "Sri Lanka", 33l, 33.0, 33l, 80.5f, 16.3f, 116.3f, "LHB"};
+        Object[] o2 = new Object[]{"Anjelo Mathews", "Sri Lanka", 47l, 65.3, 42l, 83.4f, 26.3f, 136.3f, "RHB",};
+        Object[] o3 = new Object[]{"Asela Gunaratne", "Sri Lanka", 53l, 57.4, 36l, 85.5f, 36.3f, 146.7f, "RHB",};
+        Object[] o4 = new Object[]{"Joe Root", "England", 55l, 52.5, 52l, 88.3f, 24.9f, 128.3f, "RHB"};
+        Object[] o5 = new Object[]{"Ben Stokes", "England", 41l, 72.5, 43l, 90.7f, 22.3f, 133.8f, "LHB"};
+        Object[] o6 = new Object[]{"Kane Williamson", "New Zealand", 54l, 48.7, 45l, 79.3f, 29.3f, 119.3f, "RHB"};
+        Object[] o7 = new Object[]{"Steve Smith", "Australia", 63l, 51.5, 50l, 82.7f, 16.3f, 112.2f, "RHB"};
+        Object[] o8 = new Object[]{"AB de Villiers", "South Africa", 51l, 62.1, 52l, 101.5f, 33.3f, 156.3f, "RHB"};
+        Object[] o9 = new Object[]{"Hashim Amla", "South Africa", 47l, 47.5, 52l, 86.5f, 26.3f, 127.3f, "RHB"};
+        Object[] o10 = new Object[]{"Virat Kholi", "India", 52l, 66.5, 53l, 89.5f, 30.3f, 136.3f, "RHB"};
+        Object[] o11 = new Object[]{"Rohit Sharma", "India", 32l, 62.5, 42l, 93.5f, 26.3f, 141.3f, "RHB"};
+        for (int i = 1; i <= COUNT; i++) {
+            inputHandler.send(o1);
+            inputHandler.send(o2);
+            inputHandler.send(o3);
+            inputHandler.send(o4);
+            inputHandler.send(o5);
+            inputHandler.send(o6);
+            inputHandler.send(o7);
+            inputHandler.send(o8);
+            inputHandler.send(o9);
+            inputHandler.send(o10);
+            inputHandler.send(o11);
+        }
+
+        long end = System.currentTimeMillis();
+        System.out.println("XTime: " + (end - start) + " ms.");
+        siddhiAppRuntime.shutdown();
+    }
+
+    @Test
+    public void testEqualStringStringLeftSideVariableExperssionExecutorRightSideVariableExpressionExecutor()
+            throws InterruptedException, IllegalAccessException, InvocationTargetException,
+            InstantiationException, IOException {
+
+        CHECK = 1;
+        String definition = "@config(async = 'true') define stream players(playerName string,country string,TestAverage" +
+                " long,TestStrikeRate double,ODIAverage long,ODIStrikeRate float,T20Average float,T20StrikeRate float," +
+                "BattingStyle string, Nationality string);";
+        String query = "@info(name = 'query1') from players[(country == Nationality )]" +
+                " select playerName, BattingStyle insert into sqaud;";
+        SiddhiManager siddhiManager = new SiddhiManager();
+        SiddhiAppRuntime siddhiAppRuntime = siddhiManager.createSiddhiAppRuntime(definition + query);
+        siddhiAppRuntime.addCallback("query1", new QueryCallback() {
+            @Override
+            public void receive(long timeStamp, Event[] inEvents, Event[] removeEvents) {
+                EventPrinter.print(timeStamp, inEvents, removeEvents);
+                if (CHECK == 1) {
+                    Assert.assertEquals("Upul Tharanga", inEvents[0].getData()[0]);
+                    CHECK++;
+                } else if (CHECK == 2) {
+                    Assert.assertEquals("Anjelo Mathews", inEvents[0].getData()[0]);
+                    CHECK++;
+                } else if (CHECK == 3) {
+                    Assert.assertEquals("Asela Gunaratne", inEvents[0].getData()[0]);
+                    CHECK++;
+                } else if (CHECK == 4) {
+                    Assert.assertEquals("Joe Root", inEvents[0].getData()[0]);
+                    CHECK++;
+                } else if (CHECK == 5) {
+                    Assert.assertEquals("Kane Williamson", inEvents[0].getData()[0]);
+                    CHECK++;
+                } else if (CHECK == 6) {
+                    Assert.assertEquals("Steve Smith", inEvents[0].getData()[0]);
+                    CHECK++;
+                } else if (CHECK == 7) {
+                    Assert.assertEquals("AB de Villiers", inEvents[0].getData()[0]);
+                    CHECK++;
+                } else if (CHECK == 8) {
+                    Assert.assertEquals("Hashim Amla", inEvents[0].getData()[0]);
+                    CHECK++;
+                } else if (CHECK == 9) {
+                    Assert.assertEquals("Virat Kholi", inEvents[0].getData()[0]);
+                    CHECK++;
+                } else if (CHECK == 10) {
+                    Assert.assertEquals("Rohit Sharma", inEvents[0].getData()[0]);
+                    CHECK++;
+                }
+            }
+
+        });
+        InputHandler inputHandler = siddhiAppRuntime.getInputHandler("players");
+        siddhiAppRuntime.start();
+        long start = System.currentTimeMillis();
+        Object[] o1 = new Object[]{"Upul Tharanga", "Sri Lanka", 33l, 33.0, 33l, 80.5f, 16.3f, 116.3f, "LHB", "Sri Lanka"};
+        Object[] o2 = new Object[]{"Anjelo Mathews", "Sri Lanka", 47l, 65.3, 42l, 83.4f, 26.3f, 136.3f, "RHB", "Sri Lanka"};
+        Object[] o3 = new Object[]{"Asela Gunaratne", "Sri Lanka", 53l, 57.4, 36l, 85.5f, 36.3f, 146.7f, "RHB", "Sri Lanka"};
+        Object[] o4 = new Object[]{"Joe Root", "England", 55l, 52.5, 52l, 88.3f, 24.9f, 128.3f, "RHB", "England"};
+        Object[] o5 = new Object[]{"Ben Stokes", "England", 41l, 72.5, 43l, 90.7f, 22.3f, 133.8f, "LHB", "South Africa"};
+        Object[] o6 = new Object[]{"Kane Williamson", "New Zealand", 54l, 48.7, 45l, 79.3f, 29.3f, 119.3f, "RHB", "New Zealand"};
+        Object[] o7 = new Object[]{"Steve Smith", "Australia", 63l, 51.5, 50l, 82.7f, 16.3f, 112.2f, "RHB", "Australia"};
+        Object[] o8 = new Object[]{"AB de Villiers", "South Africa", 51l, 62.1, 52l, 101.5f, 33.3f, 156.3f, "RHB",
+                "South Africa"};
+        Object[] o9 = new Object[]{"Hashim Amla", "South Africa", 47l, 47.5, 52l, 86.5f, 26.3f, 127.3f, "RHB",
+                "South Africa"};
+        Object[] o10 = new Object[]{"Virat Kholi", "India", 52l, 66.5, 53l, 89.5f, 30.3f, 136.3f, "RHB", "India"};
+        Object[] o11 = new Object[]{"Rohit Sharma", "India", 32l, 62.5, 42l, 93.5f, 26.3f, 141.3f, "RHB", "India"};
+        for (int i = 1; i <= COUNT; i++) {
+            inputHandler.send(o1);
+            inputHandler.send(o2);
+            inputHandler.send(o3);
+            inputHandler.send(o4);
+            inputHandler.send(o5);
+            inputHandler.send(o6);
+            inputHandler.send(o7);
+            inputHandler.send(o8);
+            inputHandler.send(o9);
+            inputHandler.send(o10);
+            inputHandler.send(o11);
+        }
+
+        long end = System.currentTimeMillis();
+        System.out.println("XTime: " + (end - start) + " ms.");
+        siddhiAppRuntime.shutdown();
+    }
+
+    @Test
+    public void testEqualIntegerFloatLeftSideVariableExperssionExecutorRightSideVariableExpressionExecutor()
+            throws InterruptedException, IllegalAccessException, InvocationTargetException,
+            InstantiationException, IOException {
+
+        CHECK = 1;
+        String definition = "@config(async = 'true') define stream players(playerName string,country string,TestAverage" +
+                " int,TestStrikeRate double,ODIAverage float,ODIStrikeRate float,T20Average float,T20StrikeRate float," +
+                "BattingStyle string);";
+        String query = "@info(name = 'query1') from players[(TestAverage == ODIAverage)]" +
+                " select playerName, BattingStyle insert into sqaud;";
+        SiddhiManager siddhiManager = new SiddhiManager();
+        SiddhiAppRuntime siddhiAppRuntime = siddhiManager.createSiddhiAppRuntime(definition + query);
+        siddhiAppRuntime.addCallback("query1", new QueryCallback() {
+            @Override
+            public void receive(long timeStamp, Event[] inEvents, Event[] removeEvents) {
+                EventPrinter.print(timeStamp, inEvents, removeEvents);
+                if (CHECK == 1) {
+                    Assert.assertEquals("Upul Tharanga", inEvents[0].getData()[0]);
+                    CHECK++;
+                }
+            }
+
+        });
+        InputHandler inputHandler = siddhiAppRuntime.getInputHandler("players");
+        siddhiAppRuntime.start();
+        long start = System.currentTimeMillis();
+        Object[] o1 = new Object[]{"Upul Tharanga", "Sri Lanka", 33, 33.0, 33f, 80.5f, 16.3f, 116.3f, "LHB"};
+        Object[] o2 = new Object[]{"Anjelo Mathews", "Sri Lanka", 47, 65.3, 42.1f, 83.4f, 26.3f, 136.3f, "RHB",};
+        Object[] o3 = new Object[]{"Asela Gunaratne", "Sri Lanka", 53, 57.4, 36.5f, 85.5f, 36.3f, 146.7f, "RHB",};
+        Object[] o4 = new Object[]{"Joe Root", "England", 55, 52.5, 52.7f, 88.3f, 24.9f, 128.3f, "RHB"};
+        Object[] o5 = new Object[]{"Ben Stokes", "England", 41, 72.5, 43.6f, 90.7f, 22.3f, 133.8f, "LHB"};
+        Object[] o6 = new Object[]{"Kane Williamson", "New Zealand", 54, 48.7, 45.1f, 79.3f, 29.3f, 119.3f, "RHB"};
+        Object[] o7 = new Object[]{"Steve Smith", "Australia", 63, 51.5, 50.5f, 82.7f, 16.3f, 112.2f, "RHB"};
+        Object[] o8 = new Object[]{"AB de Villiers", "South Africa", 51, 62.1, 52.5f, 101.5f, 33.3f, 156.3f, "RHB"};
+        Object[] o9 = new Object[]{"Hashim Amla", "South Africa", 47, 47.5, 52.5f, 86.5f, 26.3f, 127.3f, "RHB"};
+        Object[] o10 = new Object[]{"Virat Kholi", "India", 52, 66.5, 53.5f, 89.5f, 30.3f, 136.3f, "RHB"};
+        Object[] o11 = new Object[]{"Rohit Sharma", "India", 32, 62.5, 42.5f, 93.5f, 26.3f, 141.3f, "RHB"};
+        for (int i = 1; i <= COUNT; i++) {
+            inputHandler.send(o1);
+            inputHandler.send(o2);
+            inputHandler.send(o3);
+            inputHandler.send(o4);
+            inputHandler.send(o5);
+            inputHandler.send(o6);
+            inputHandler.send(o7);
+            inputHandler.send(o8);
+            inputHandler.send(o9);
+            inputHandler.send(o10);
+            inputHandler.send(o11);
+        }
+
+        long end = System.currentTimeMillis();
+        System.out.println("XTime: " + (end - start) + " ms.");
+        siddhiAppRuntime.shutdown();
+    }
+
+    @Test
+    public void testEqualIntegerIntegerLeftSideVariableExperssionExecutorRightSideVariableExpressionExecutor()
+            throws InterruptedException, IllegalAccessException, InvocationTargetException,
+            InstantiationException, IOException {
+
+        CHECK = 1;
+        String definition = "@config(async = 'true') define stream players(playerName string,country string,TestAverage" +
+                " int,TestStrikeRate double,ODIAverage int,ODIStrikeRate float,T20Average float,T20StrikeRate float," +
+                "BattingStyle string);";
+        String query = "@info(name = 'query1') from players[(TestAverage == ODIAverage)]" +
+                " select playerName, BattingStyle insert into sqaud;";
+        SiddhiManager siddhiManager = new SiddhiManager();
+        SiddhiAppRuntime siddhiAppRuntime = siddhiManager.createSiddhiAppRuntime(definition + query);
+        siddhiAppRuntime.addCallback("query1", new QueryCallback() {
+            @Override
+            public void receive(long timeStamp, Event[] inEvents, Event[] removeEvents) {
+                EventPrinter.print(timeStamp, inEvents, removeEvents);
+                if (CHECK == 1) {
+                    Assert.assertEquals("Upul Tharanga", inEvents[0].getData()[0]);
+                    CHECK++;
+                }
+            }
+
+        });
+        InputHandler inputHandler = siddhiAppRuntime.getInputHandler("players");
+        siddhiAppRuntime.start();
+        long start = System.currentTimeMillis();
+        Object[] o1 = new Object[]{"Upul Tharanga", "Sri Lanka", 33, 33.0, 33, 80.5f, 16.3f, 116.3f, "LHB"};
+        Object[] o2 = new Object[]{"Anjelo Mathews", "Sri Lanka", 47, 65.3, 42, 83.4f, 26.3f, 136.3f, "RHB",};
+        Object[] o3 = new Object[]{"Asela Gunaratne", "Sri Lanka", 53, 57.4, 36, 85.5f, 36.3f, 146.7f, "RHB",};
+        Object[] o4 = new Object[]{"Joe Root", "England", 55, 52.5, 52, 88.3f, 24.9f, 128.3f, "RHB"};
+        Object[] o5 = new Object[]{"Ben Stokes", "England", 41, 72.5, 43, 90.7f, 22.3f, 133.8f, "LHB"};
+        Object[] o6 = new Object[]{"Kane Williamson", "New Zealand", 54, 48.7, 45, 79.3f, 29.3f, 119.3f, "RHB"};
+        Object[] o7 = new Object[]{"Steve Smith", "Australia", 63, 51.5, 50, 82.7f, 16.3f, 112.2f, "RHB"};
+        Object[] o8 = new Object[]{"AB de Villiers", "South Africa", 51, 62.1, 52, 101.5f, 33.3f, 156.3f, "RHB"};
+        Object[] o9 = new Object[]{"Hashim Amla", "South Africa", 47, 47.5, 52, 86.5f, 26.3f, 127.3f, "RHB"};
+        Object[] o10 = new Object[]{"Virat Kholi", "India", 52, 66.5, 53, 89.5f, 30.3f, 136.3f, "RHB"};
+        Object[] o11 = new Object[]{"Rohit Sharma", "India", 32, 62.5, 42, 93.5f, 26.3f, 141.3f, "RHB"};
+        for (int i = 1; i <= COUNT; i++) {
+            inputHandler.send(o1);
+            inputHandler.send(o2);
+            inputHandler.send(o3);
+            inputHandler.send(o4);
+            inputHandler.send(o5);
+            inputHandler.send(o6);
+            inputHandler.send(o7);
+            inputHandler.send(o8);
+            inputHandler.send(o9);
+            inputHandler.send(o10);
+            inputHandler.send(o11);
+        }
+
+        long end = System.currentTimeMillis();
+        System.out.println("XTime: " + (end - start) + " ms.");
+        siddhiAppRuntime.shutdown();
+    }
+
+    @Test
+    public void testEqualIntegerLongLeftSideVariableExperssionExecutorRightSideVariableExpressionExecutor()
+            throws InterruptedException, IllegalAccessException, InvocationTargetException,
+            InstantiationException, IOException {
+
+        CHECK = 1;
+        String definition = "@config(async = 'true') define stream players(playerName string,country string,TestAverage" +
+                " int,TestStrikeRate double,ODIAverage long,ODIStrikeRate float,T20Average float,T20StrikeRate float," +
+                "BattingStyle string);";
+        String query = "@info(name = 'query1') from players[(TestAverage == ODIAverage)]" +
+                " select playerName, BattingStyle insert into sqaud;";
+        SiddhiManager siddhiManager = new SiddhiManager();
+        SiddhiAppRuntime siddhiAppRuntime = siddhiManager.createSiddhiAppRuntime(definition + query);
+        siddhiAppRuntime.addCallback("query1", new QueryCallback() {
+            @Override
+            public void receive(long timeStamp, Event[] inEvents, Event[] removeEvents) {
+                EventPrinter.print(timeStamp, inEvents, removeEvents);
+                if (CHECK == 1) {
+                    Assert.assertEquals("Upul Tharanga", inEvents[0].getData()[0]);
+                    CHECK++;
+                }
+            }
+
+        });
+        InputHandler inputHandler = siddhiAppRuntime.getInputHandler("players");
+        siddhiAppRuntime.start();
+        long start = System.currentTimeMillis();
+        Object[] o1 = new Object[]{"Upul Tharanga", "Sri Lanka", 33, 33.0, 33l, 80.5f, 16.3f, 116.3f, "LHB"};
+        Object[] o2 = new Object[]{"Anjelo Mathews", "Sri Lanka", 47, 65.3, 42l, 83.4f, 26.3f, 136.3f, "RHB",};
+        Object[] o3 = new Object[]{"Asela Gunaratne", "Sri Lanka", 53, 57.4, 36l, 85.5f, 36.3f, 146.7f, "RHB",};
+        Object[] o4 = new Object[]{"Joe Root", "England", 55, 52.5, 52l, 88.3f, 24.9f, 128.3f, "RHB"};
+        Object[] o5 = new Object[]{"Ben Stokes", "England", 41, 72.5, 43l, 90.7f, 22.3f, 133.8f, "LHB"};
+        Object[] o6 = new Object[]{"Kane Williamson", "New Zealand", 54, 48.7, 45l, 79.3f, 29.3f, 119.3f, "RHB"};
+        Object[] o7 = new Object[]{"Steve Smith", "Australia", 63, 51.5, 50l, 82.7f, 16.3f, 112.2f, "RHB"};
+        Object[] o8 = new Object[]{"AB de Villiers", "South Africa", 51, 62.1, 52l, 101.5f, 33.3f, 156.3f, "RHB"};
+        Object[] o9 = new Object[]{"Hashim Amla", "South Africa", 47, 47.5, 52l, 86.5f, 26.3f, 127.3f, "RHB"};
+        Object[] o10 = new Object[]{"Virat Kholi", "India", 52, 66.5, 53l, 89.5f, 30.3f, 136.3f, "RHB"};
+        Object[] o11 = new Object[]{"Rohit Sharma", "India", 32, 62.5, 42l, 93.5f, 26.3f, 141.3f, "RHB"};
+        for (int i = 1; i <= COUNT; i++) {
+            inputHandler.send(o1);
+            inputHandler.send(o2);
+            inputHandler.send(o3);
+            inputHandler.send(o4);
+            inputHandler.send(o5);
+            inputHandler.send(o6);
+            inputHandler.send(o7);
+            inputHandler.send(o8);
+            inputHandler.send(o9);
+            inputHandler.send(o10);
+            inputHandler.send(o11);
+        }
+
+        long end = System.currentTimeMillis();
+        System.out.println("XTime: " + (end - start) + " ms.");
+        siddhiAppRuntime.shutdown();
+    }
+
+    @Test
+    public void testEqualFloatDoubleLeftSideVariableExperssionExecutorRightSideVariableExpressionExecutor()
+            throws InterruptedException, IllegalAccessException, InvocationTargetException,
+            InstantiationException, IOException {
+
+        CHECK = 1;
+        String definition = "@config(async = 'true') define stream players(playerName string,country string,TestAverage" +
+                " double,TestStrikeRate double,ODIAverage float,ODIStrikeRate float,T20Average float,T20StrikeRate float," +
+                "BattingStyle string);";
+        String query = "@info(name = 'query1') from players[(ODIAverage == TestStrikeRate)]" +
+                " select playerName, BattingStyle insert into sqaud;";
+        SiddhiManager siddhiManager = new SiddhiManager();
+        SiddhiAppRuntime siddhiAppRuntime = siddhiManager.createSiddhiAppRuntime(definition + query);
+        siddhiAppRuntime.addCallback("query1", new QueryCallback() {
+            @Override
+            public void receive(long timeStamp, Event[] inEvents, Event[] removeEvents) {
+                EventPrinter.print(timeStamp, inEvents, removeEvents);
+                if (CHECK == 1) {
+                    Assert.assertEquals("Upul Tharanga", inEvents[0].getData()[0]);
+                    CHECK++;
+                }
+            }
+
+        });
+        InputHandler inputHandler = siddhiAppRuntime.getInputHandler("players");
+        siddhiAppRuntime.start();
+        long start = System.currentTimeMillis();
+        Object[] o1 = new Object[]{"Upul Tharanga", "Sri Lanka", 33.0, 32.5, 32.5f, 80.5f, 16.3f, 116.3f, "LHB"};
+        Object[] o2 = new Object[]{"Anjelo Mathews", "Sri Lanka", 47.6, 65.3, 42.1f, 83.4f, 26.3f, 136.3f, "RHB",};
+        Object[] o3 = new Object[]{"Asela Gunaratne", "Sri Lanka", 53.7, 57.4, 36.5f, 85.5f, 36.3f, 146.7f, "RHB",};
+        Object[] o4 = new Object[]{"Joe Root", "England", 55.8, 52.5, 52.7f, 88.3f, 24.9f, 128.3f, "RHB"};
+        Object[] o5 = new Object[]{"Ben Stokes", "England", 41.2, 72.5, 43.6f, 90.7f, 22.3f, 133.8f, "LHB"};
+        Object[] o6 = new Object[]{"Kane Williamson", "New Zealand", 54.2, 48.7, 45.1f, 79.3f, 29.3f, 119.3f, "RHB"};
+        Object[] o7 = new Object[]{"Steve Smith", "Australia", 63.3, 51.5, 50.5f, 82.7f, 16.3f, 112.2f, "RHB"};
+        Object[] o8 = new Object[]{"AB de Villiers", "South Africa", 51.9, 62.1, 52.5f, 101.5f, 33.3f, 156.3f, "RHB"};
+        Object[] o9 = new Object[]{"Hashim Amla", "South Africa", 47.8, 47.5, 52.5f, 86.5f, 26.3f, 127.3f, "RHB"};
+        Object[] o10 = new Object[]{"Virat Kholi", "India", 52.0, 66.5, 53.5f, 89.5f, 30.3f, 136.3f, "RHB"};
+        Object[] o11 = new Object[]{"Rohit Sharma", "India", 32.0, 62.5, 42.5f, 93.5f, 26.3f, 141.3f, "RHB"};
+        for (int i = 1; i <= COUNT; i++) {
+            inputHandler.send(o1);
+            inputHandler.send(o2);
+            inputHandler.send(o3);
+            inputHandler.send(o4);
+            inputHandler.send(o5);
+            inputHandler.send(o6);
+            inputHandler.send(o7);
+            inputHandler.send(o8);
+            inputHandler.send(o9);
+            inputHandler.send(o10);
+            inputHandler.send(o11);
+        }
+
+        long end = System.currentTimeMillis();
+        System.out.println("XTime: " + (end - start) + " ms.");
+        siddhiAppRuntime.shutdown();
+    }
+
+    @Test
+    public void testEqualFloatFloatLeftSideVariableExperssionExecutorRightSideVariableExpressionExecutor()
+            throws InterruptedException, IllegalAccessException, InvocationTargetException,
+            InstantiationException, IOException {
+
+        CHECK = 1;
+        String definition = "@config(async = 'true') define stream players(playerName string,country string,TestAverage" +
+                " double,TestStrikeRate double,ODIAverage float,ODIStrikeRate float,T20Average float,T20StrikeRate float," +
+                "BattingStyle string);";
+        String query = "@info(name = 'query1') from players[(ODIAverage == ODIStrikeRate)]" +
+                " select playerName, BattingStyle insert into sqaud;";
+        SiddhiManager siddhiManager = new SiddhiManager();
+        SiddhiAppRuntime siddhiAppRuntime = siddhiManager.createSiddhiAppRuntime(definition + query);
+        siddhiAppRuntime.addCallback("query1", new QueryCallback() {
+            @Override
+            public void receive(long timeStamp, Event[] inEvents, Event[] removeEvents) {
+                EventPrinter.print(timeStamp, inEvents, removeEvents);
+                if (CHECK == 1) {
+                    Assert.assertEquals("Upul Tharanga", inEvents[0].getData()[0]);
+                    CHECK++;
+                }
+            }
+
+        });
+        InputHandler inputHandler = siddhiAppRuntime.getInputHandler("players");
+        siddhiAppRuntime.start();
+        long start = System.currentTimeMillis();
+        Object[] o1 = new Object[]{"Upul Tharanga", "Sri Lanka", 33.0, 32.5, 32.5f, 32.5f, 16.3f, 116.3f, "LHB"};
+        Object[] o2 = new Object[]{"Anjelo Mathews", "Sri Lanka", 47.6, 65.3, 42.1f, 83.4f, 26.3f, 136.3f, "RHB",};
+        Object[] o3 = new Object[]{"Asela Gunaratne", "Sri Lanka", 53.7, 57.4, 36.5f, 85.5f, 36.3f, 146.7f, "RHB",};
+        Object[] o4 = new Object[]{"Joe Root", "England", 55.8, 52.5, 52.7f, 88.3f, 24.9f, 128.3f, "RHB"};
+        Object[] o5 = new Object[]{"Ben Stokes", "England", 41.2, 72.5, 43.6f, 90.7f, 22.3f, 133.8f, "LHB"};
+        Object[] o6 = new Object[]{"Kane Williamson", "New Zealand", 54.2, 48.7, 45.1f, 79.3f, 29.3f, 119.3f, "RHB"};
+        Object[] o7 = new Object[]{"Steve Smith", "Australia", 63.3, 51.5, 50.5f, 82.7f, 16.3f, 112.2f, "RHB"};
+        Object[] o8 = new Object[]{"AB de Villiers", "South Africa", 51.9, 62.1, 52.5f, 101.5f, 33.3f, 156.3f, "RHB"};
+        Object[] o9 = new Object[]{"Hashim Amla", "South Africa", 47.8, 47.5, 52.5f, 86.5f, 26.3f, 127.3f, "RHB"};
+        Object[] o10 = new Object[]{"Virat Kholi", "India", 52.0, 66.5, 53.5f, 89.5f, 30.3f, 136.3f, "RHB"};
+        Object[] o11 = new Object[]{"Rohit Sharma", "India", 32.0, 62.5, 42.5f, 93.5f, 26.3f, 141.3f, "RHB"};
+        for (int i = 1; i <= COUNT; i++) {
+            inputHandler.send(o1);
+            inputHandler.send(o2);
+            inputHandler.send(o3);
+            inputHandler.send(o4);
+            inputHandler.send(o5);
+            inputHandler.send(o6);
+            inputHandler.send(o7);
+            inputHandler.send(o8);
+            inputHandler.send(o9);
+            inputHandler.send(o10);
+            inputHandler.send(o11);
+        }
+
+        long end = System.currentTimeMillis();
+        System.out.println("XTime: " + (end - start) + " ms.");
+        siddhiAppRuntime.shutdown();
+    }
+
+    @Test
+    public void testEqualFloatIntegerLeftSideVariableExperssionExecutorRightSideVariableExpressionExecutor()
+            throws InterruptedException, IllegalAccessException, InvocationTargetException,
+            InstantiationException, IOException {
+
+        CHECK = 1;
+        String definition = "@config(async = 'true') define stream players(playerName string,country string,TestAverage" +
+                " double,TestStrikeRate double,ODIAverage float,ODIStrikeRate int,T20Average float,T20StrikeRate float," +
+                "BattingStyle string);";
+        String query = "@info(name = 'query1') from players[(ODIAverage == ODIStrikeRate)]" +
+                " select playerName, BattingStyle insert into sqaud;";
+        SiddhiManager siddhiManager = new SiddhiManager();
+        SiddhiAppRuntime siddhiAppRuntime = siddhiManager.createSiddhiAppRuntime(definition + query);
+        siddhiAppRuntime.addCallback("query1", new QueryCallback() {
+            @Override
+            public void receive(long timeStamp, Event[] inEvents, Event[] removeEvents) {
+                EventPrinter.print(timeStamp, inEvents, removeEvents);
+                if (CHECK == 1) {
+                    Assert.assertEquals("Upul Tharanga", inEvents[0].getData()[0]);
+                    CHECK++;
+                }
+            }
+
+        });
+        InputHandler inputHandler = siddhiAppRuntime.getInputHandler("players");
+        siddhiAppRuntime.start();
+        long start = System.currentTimeMillis();
+        Object[] o1 = new Object[]{"Upul Tharanga", "Sri Lanka", 33.0, 32.5, 32.0f, 32, 16.3f, 116.3f, "LHB"};
+        Object[] o2 = new Object[]{"Anjelo Mathews", "Sri Lanka", 47.6, 65.3, 42.1f, 83, 26.3f, 136.3f, "RHB",};
+        Object[] o3 = new Object[]{"Asela Gunaratne", "Sri Lanka", 53.7, 57.4, 36.5f, 85, 36.3f, 146.7f, "RHB",};
+        Object[] o4 = new Object[]{"Joe Root", "England", 55.8, 52.5, 52.7f, 88, 24.9f, 128.3f, "RHB"};
+        Object[] o5 = new Object[]{"Ben Stokes", "England", 41.2, 72.5, 43.6f, 90, 22.3f, 133.8f, "LHB"};
+        Object[] o6 = new Object[]{"Kane Williamson", "New Zealand", 54.2, 48.7, 45f, 79, 29.3f, 119.3f, "RHB"};
+        Object[] o7 = new Object[]{"Steve Smith", "Australia", 63.3, 51.5, 50.5f, 82, 16.3f, 112.2f, "RHB"};
+        Object[] o8 = new Object[]{"AB de Villiers", "South Africa", 51.9, 62.1, 52f, 101, 33.3f, 156.3f, "RHB"};
+        Object[] o9 = new Object[]{"Hashim Amla", "South Africa", 47.8, 47.5, 52.5f, 86, 26.3f, 127.3f, "RHB"};
+        Object[] o10 = new Object[]{"Virat Kholi", "India", 52.0, 66.5, 53.5f, 89, 30.3f, 136.3f, "RHB"};
+        Object[] o11 = new Object[]{"Rohit Sharma", "India", 32.0, 62.5, 42.5f, 93, 26.3f, 141.3f, "RHB"};
+        for (int i = 1; i <= COUNT; i++) {
+            inputHandler.send(o1);
+            inputHandler.send(o2);
+            inputHandler.send(o3);
+            inputHandler.send(o4);
+            inputHandler.send(o5);
+            inputHandler.send(o6);
+            inputHandler.send(o7);
+            inputHandler.send(o8);
+            inputHandler.send(o9);
+            inputHandler.send(o10);
+            inputHandler.send(o11);
+        }
+
+        long end = System.currentTimeMillis();
+        System.out.println("XTime: " + (end - start) + " ms.");
+        siddhiAppRuntime.shutdown();
+    }
+
+    @Test
+    public void testEqualDoubleIntegerLeftSideVariableExperssionExecutorRightSideVariableExpressionExecutor()
+            throws InterruptedException, IllegalAccessException, InvocationTargetException,
+            InstantiationException, IOException {
+
+        CHECK = 1;
+        String definition = "@config(async = 'true') define stream players(playerName string,country string,TestAverage" +
+                " double,TestStrikeRate double,ODIAverage int,ODIStrikeRate float,T20Average float,T20StrikeRate float," +
+                "BattingStyle string);";
+        String query = "@info(name = 'query1') from players[(TestAverage == ODIAverage)]" +
+                " select playerName, BattingStyle insert into sqaud;";
+        SiddhiManager siddhiManager = new SiddhiManager();
+        SiddhiAppRuntime siddhiAppRuntime = siddhiManager.createSiddhiAppRuntime(definition + query);
+        siddhiAppRuntime.addCallback("query1", new QueryCallback() {
+            @Override
+            public void receive(long timeStamp, Event[] inEvents, Event[] removeEvents) {
+                EventPrinter.print(timeStamp, inEvents, removeEvents);
+                if (CHECK == 1) {
+                    Assert.assertEquals("Upul Tharanga", inEvents[0].getData()[0]);
+                    CHECK++;
+                }
+            }
+
+        });
+        InputHandler inputHandler = siddhiAppRuntime.getInputHandler("players");
+        siddhiAppRuntime.start();
+        long start = System.currentTimeMillis();
+        Object[] o1 = new Object[]{"Upul Tharanga", "Sri Lanka", 33.0, 33.0, 33, 80.5f, 16.3f, 116.3f, "LHB"};
+        Object[] o2 = new Object[]{"Anjelo Mathews", "Sri Lanka", 47.6, 65.3, 42, 83.4f, 26.3f, 136.3f, "RHB",};
+        Object[] o3 = new Object[]{"Asela Gunaratne", "Sri Lanka", 53.7, 57.4, 36, 85.5f, 36.3f, 146.7f, "RHB",};
+        Object[] o4 = new Object[]{"Joe Root", "England", 55.8, 52.5, 52, 88.3f, 24.9f, 128.3f, "RHB"};
+        Object[] o5 = new Object[]{"Ben Stokes", "England", 41.2, 72.5, 43, 90.7f, 22.3f, 133.8f, "LHB"};
+        Object[] o6 = new Object[]{"Kane Williamson", "New Zealand", 54.2, 48.7, 45, 79.3f, 29.3f, 119.3f, "RHB"};
+        Object[] o7 = new Object[]{"Steve Smith", "Australia", 63.3, 51.5, 50, 82.7f, 16.3f, 112.2f, "RHB"};
+        Object[] o8 = new Object[]{"AB de Villiers", "South Africa", 51.9, 62.1, 52, 101.5f, 33.3f, 156.3f, "RHB"};
+        Object[] o9 = new Object[]{"Hashim Amla", "South Africa", 47.8, 47.5, 52, 86.5f, 26.3f, 127.3f, "RHB"};
+        Object[] o10 = new Object[]{"Virat Kholi", "India", 52.0, 66.5, 53, 89.5f, 30.3f, 136.3f, "RHB"};
+        Object[] o11 = new Object[]{"Rohit Sharma", "India", 32.0, 62.5, 42, 93.5f, 26.3f, 141.3f, "RHB"};
+        for (int i = 1; i <= COUNT; i++) {
+            inputHandler.send(o1);
+            inputHandler.send(o2);
+            inputHandler.send(o3);
+            inputHandler.send(o4);
+            inputHandler.send(o5);
+            inputHandler.send(o6);
+            inputHandler.send(o7);
+            inputHandler.send(o8);
+            inputHandler.send(o9);
+            inputHandler.send(o10);
+            inputHandler.send(o11);
+        }
+
+        long end = System.currentTimeMillis();
+        System.out.println("XTime: " + (end - start) + " ms.");
+        siddhiAppRuntime.shutdown();
+    }
+
+    @Test
+    public void testEqualDoubleLongLeftSideVariableExperssionExecutorRightSideVariableExpressionExecutor()
+            throws InterruptedException, IllegalAccessException, InvocationTargetException,
+            InstantiationException, IOException {
+
+        CHECK = 1;
+        String definition = "@config(async = 'true') define stream players(playerName string,country string,TestAverage" +
+                " double,TestStrikeRate double,ODIAverage long,ODIStrikeRate float,T20Average float,T20StrikeRate float," +
+                "BattingStyle string);";
+        String query = "@info(name = 'query1') from players[(TestAverage == ODIAverage)]" +
+                " select playerName, BattingStyle insert into sqaud;";
+        SiddhiManager siddhiManager = new SiddhiManager();
+        SiddhiAppRuntime siddhiAppRuntime = siddhiManager.createSiddhiAppRuntime(definition + query);
+        siddhiAppRuntime.addCallback("query1", new QueryCallback() {
+            @Override
+            public void receive(long timeStamp, Event[] inEvents, Event[] removeEvents) {
+                EventPrinter.print(timeStamp, inEvents, removeEvents);
+                if (CHECK == 1) {
+                    Assert.assertEquals("Upul Tharanga", inEvents[0].getData()[0]);
+                    CHECK++;
+                }
+            }
+
+        });
+        InputHandler inputHandler = siddhiAppRuntime.getInputHandler("players");
+        siddhiAppRuntime.start();
+        long start = System.currentTimeMillis();
+        Object[] o1 = new Object[]{"Upul Tharanga", "Sri Lanka", 33.0, 33.0, 33l, 80.5f, 16.3f, 116.3f, "LHB"};
+        Object[] o2 = new Object[]{"Anjelo Mathews", "Sri Lanka", 47.6, 65.3, 42l, 83.4f, 26.3f, 136.3f, "RHB",};
+        Object[] o3 = new Object[]{"Asela Gunaratne", "Sri Lanka", 53.7, 57.4, 36l, 85.5f, 36.3f, 146.7f, "RHB",};
+        Object[] o4 = new Object[]{"Joe Root", "England", 55.8, 52.5, 52l, 88.3f, 24.9f, 128.3f, "RHB"};
+        Object[] o5 = new Object[]{"Ben Stokes", "England", 41.2, 72.5, 43l, 90.7f, 22.3f, 133.8f, "LHB"};
+        Object[] o6 = new Object[]{"Kane Williamson", "New Zealand", 54.2, 48.7, 45l, 79.3f, 29.3f, 119.3f, "RHB"};
+        Object[] o7 = new Object[]{"Steve Smith", "Australia", 63.3, 51.5, 50l, 82.7f, 16.3f, 112.2f, "RHB"};
+        Object[] o8 = new Object[]{"AB de Villiers", "South Africa", 51.9, 62.1, 52l, 101.5f, 33.3f, 156.3f, "RHB"};
+        Object[] o9 = new Object[]{"Hashim Amla", "South Africa", 47.8, 47.5, 52l, 86.5f, 26.3f, 127.3f, "RHB"};
+        Object[] o10 = new Object[]{"Virat Kholi", "India", 52.0, 66.5, 53l, 89.5f, 30.3f, 136.3f, "RHB"};
+        Object[] o11 = new Object[]{"Rohit Sharma", "India", 32.0, 62.5, 42l, 93.5f, 26.3f, 141.3f, "RHB"};
+        for (int i = 1; i <= COUNT; i++) {
+            inputHandler.send(o1);
+            inputHandler.send(o2);
+            inputHandler.send(o3);
+            inputHandler.send(o4);
+            inputHandler.send(o5);
+            inputHandler.send(o6);
+            inputHandler.send(o7);
+            inputHandler.send(o8);
+            inputHandler.send(o9);
+            inputHandler.send(o10);
+            inputHandler.send(o11);
+        }
+
+        long end = System.currentTimeMillis();
+        System.out.println("XTime: " + (end - start) + " ms.");
+        siddhiAppRuntime.shutdown();
+    }
+
+    @Test
+    public void testEqualFloatLongLeftSideVariableExperssionExecutorRightSideVariableExpressionExecutor()
+            throws InterruptedException, IllegalAccessException, InvocationTargetException,
+            InstantiationException, IOException {
+
+        CHECK = 1;
+        String definition = "@config(async = 'true') define stream players(playerName string,country string,TestAverage" +
+                " double,TestStrikeRate double,ODIAverage long,ODIStrikeRate float,T20Average float,T20StrikeRate float," +
+                "BattingStyle string);";
+        String query = "@info(name = 'query1') from players[(ODIStrikeRate == ODIAverage)]" +
+                " select playerName, BattingStyle insert into sqaud;";
+        SiddhiManager siddhiManager = new SiddhiManager();
+        SiddhiAppRuntime siddhiAppRuntime = siddhiManager.createSiddhiAppRuntime(definition + query);
+        siddhiAppRuntime.addCallback("query1", new QueryCallback() {
+            @Override
+            public void receive(long timeStamp, Event[] inEvents, Event[] removeEvents) {
+                EventPrinter.print(timeStamp, inEvents, removeEvents);
+                if (CHECK == 1) {
+                    Assert.assertEquals("Upul Tharanga", inEvents[0].getData()[0]);
+                    CHECK++;
+                }
+            }
+
+        });
+        InputHandler inputHandler = siddhiAppRuntime.getInputHandler("players");
+        siddhiAppRuntime.start();
+        long start = System.currentTimeMillis();
+        Object[] o1 = new Object[]{"Upul Tharanga", "Sri Lanka", 33.0, 33.0, 33l, 33.0f, 16.3f, 116.3f, "LHB"};
+        Object[] o2 = new Object[]{"Anjelo Mathews", "Sri Lanka", 47.6, 65.3, 42l, 83.4f, 26.3f, 136.3f, "RHB",};
+        Object[] o3 = new Object[]{"Asela Gunaratne", "Sri Lanka", 53.7, 57.4, 36l, 85.5f, 36.3f, 146.7f, "RHB",};
+        Object[] o4 = new Object[]{"Joe Root", "England", 55.8, 52.5, 52l, 88.3f, 24.9f, 128.3f, "RHB"};
+        Object[] o5 = new Object[]{"Ben Stokes", "England", 41.2, 72.5, 43l, 90.7f, 22.3f, 133.8f, "LHB"};
+        Object[] o6 = new Object[]{"Kane Williamson", "New Zealand", 54.2, 48.7, 45l, 79.3f, 29.3f, 119.3f, "RHB"};
+        Object[] o7 = new Object[]{"Steve Smith", "Australia", 63.3, 51.5, 50l, 82.7f, 16.3f, 112.2f, "RHB"};
+        Object[] o8 = new Object[]{"AB de Villiers", "South Africa", 51.9, 62.1, 52l, 101.5f, 33.3f, 156.3f, "RHB"};
+        Object[] o9 = new Object[]{"Hashim Amla", "South Africa", 47.8, 47.5, 52l, 86.5f, 26.3f, 127.3f, "RHB"};
+        Object[] o10 = new Object[]{"Virat Kholi", "India", 52.0, 66.5, 53l, 89.5f, 30.3f, 136.3f, "RHB"};
+        Object[] o11 = new Object[]{"Rohit Sharma", "India", 32.0, 62.5, 42l, 93.5f, 26.3f, 141.3f, "RHB"};
+        for (int i = 1; i <= COUNT; i++) {
+            inputHandler.send(o1);
+            inputHandler.send(o2);
+            inputHandler.send(o3);
+            inputHandler.send(o4);
+            inputHandler.send(o5);
+            inputHandler.send(o6);
+            inputHandler.send(o7);
+            inputHandler.send(o8);
+            inputHandler.send(o9);
+            inputHandler.send(o10);
+            inputHandler.send(o11);
+        }
+
+        long end = System.currentTimeMillis();
+        System.out.println("XTime: " + (end - start) + " ms.");
+        siddhiAppRuntime.shutdown();
+    }
+
+    @Test
+    public void testEqualDoubleFloatLeftSideVariableExperssionExecutorRightSideVariableExpressionExecutor()
+            throws InterruptedException, IllegalAccessException, InvocationTargetException,
+            InstantiationException, IOException {
+
+        CHECK = 1;
+        String definition = "@config(async = 'true') define stream players(playerName string,country string,TestAverage" +
+                " double,TestStrikeRate double,ODIAverage float,ODIStrikeRate float,T20Average float,T20StrikeRate float," +
+                "BattingStyle string);";
+        String query = "@info(name = 'query1') from players[(TestAverage == ODIAverage)]" +
+                " select playerName, BattingStyle insert into sqaud;";
+        SiddhiManager siddhiManager = new SiddhiManager();
+        SiddhiAppRuntime siddhiAppRuntime = siddhiManager.createSiddhiAppRuntime(definition + query);
+        siddhiAppRuntime.addCallback("query1", new QueryCallback() {
+            @Override
+            public void receive(long timeStamp, Event[] inEvents, Event[] removeEvents) {
+                EventPrinter.print(timeStamp, inEvents, removeEvents);
+                if (CHECK == 1) {
+                    Assert.assertEquals("Upul Tharanga", inEvents[0].getData()[0]);
+                    CHECK++;
+                }
+            }
+
+        });
+        InputHandler inputHandler = siddhiAppRuntime.getInputHandler("players");
+        siddhiAppRuntime.start();
+        long start = System.currentTimeMillis();
+        Object[] o1 = new Object[]{"Upul Tharanga", "Sri Lanka", 33.0, 33.0, 33.0f, 80.5f, 16.3f, 116.3f, "LHB"};
+        Object[] o2 = new Object[]{"Anjelo Mathews", "Sri Lanka", 47.6, 65.3, 42.1f, 83.4f, 26.3f, 136.3f, "RHB",};
+        Object[] o3 = new Object[]{"Asela Gunaratne", "Sri Lanka", 53.7, 57.4, 36.5f, 85.5f, 36.3f, 146.7f, "RHB",};
+        Object[] o4 = new Object[]{"Joe Root", "England", 55.8, 52.5, 52.7f, 88.3f, 24.9f, 128.3f, "RHB"};
+        Object[] o5 = new Object[]{"Ben Stokes", "England", 41.2, 72.5, 43.6f, 90.7f, 22.3f, 133.8f, "LHB"};
+        Object[] o6 = new Object[]{"Kane Williamson", "New Zealand", 54.2, 48.7, 45.1f, 79.3f, 29.3f, 119.3f, "RHB"};
+        Object[] o7 = new Object[]{"Steve Smith", "Australia", 63.3, 51.5, 50.5f, 82.7f, 16.3f, 112.2f, "RHB"};
+        Object[] o8 = new Object[]{"AB de Villiers", "South Africa", 51.9, 62.1, 52.5f, 101.5f, 33.3f, 156.3f, "RHB"};
+        Object[] o9 = new Object[]{"Hashim Amla", "South Africa", 47.8, 47.5, 52.5f, 86.5f, 26.3f, 127.3f, "RHB"};
+        Object[] o10 = new Object[]{"Virat Kholi", "India", 52.0, 66.5, 53.5f, 89.5f, 30.3f, 136.3f, "RHB"};
+        Object[] o11 = new Object[]{"Rohit Sharma", "India", 32.0, 62.5, 42.5f, 93.5f, 26.3f, 141.3f, "RHB"};
+        for (int i = 1; i <= COUNT; i++) {
+            inputHandler.send(o1);
+            inputHandler.send(o2);
+            inputHandler.send(o3);
+            inputHandler.send(o4);
+            inputHandler.send(o5);
+            inputHandler.send(o6);
+            inputHandler.send(o7);
+            inputHandler.send(o8);
+            inputHandler.send(o9);
+            inputHandler.send(o10);
+            inputHandler.send(o11);
+        }
+
+        long end = System.currentTimeMillis();
+        System.out.println("XTime: " + (end - start) + " ms.");
+        siddhiAppRuntime.shutdown();
+    }
+
+    @Test
+    public void testNotEqualBoolBoolLeftSideVariableExperssionExecutorRightSideVariableExpressionExecutor()
+            throws InterruptedException, IllegalAccessException, InvocationTargetException,
+            InstantiationException, IOException {
+
+        CHECK = 1;
+        String definition = "@config(async = 'true') define stream players(playerName string,country string,TestAverage" +
+                " double,TestStrikeRate float,ODIAverage float,ODIStrikeRate float,T20Average float,T20StrikeRate float," +
+                "BattingStyle string, AggresiveBattingStyle bool, Allrounder bool);";
+        String query = "@info(name = 'query1') from players[(AggresiveBattingStyle != Allrounder)]" +
+                " select playerName, BattingStyle insert into sqaud;";
+        SiddhiManager siddhiManager = new SiddhiManager();
+        SiddhiAppRuntime siddhiAppRuntime = siddhiManager.createSiddhiAppRuntime(definition + query);
+        siddhiAppRuntime.addCallback("query1", new QueryCallback() {
+            @Override
+            public void receive(long timeStamp, Event[] inEvents, Event[] removeEvents) {
+                EventPrinter.print(timeStamp, inEvents, removeEvents);
+                if (CHECK == 1) {
+                    Assert.assertEquals("AB de Villiers", inEvents[0].getData()[0]);
+                    CHECK++;
+                } else if (CHECK == 2) {
+                    Assert.assertEquals("Virat Kholi", inEvents[0].getData()[0]);
+                    CHECK++;
+                } else if (CHECK == 3) {
+                    Assert.assertEquals("Rohit Sharma", inEvents[0].getData()[0]);
+                    CHECK++;
+                }
             }
 
         });
