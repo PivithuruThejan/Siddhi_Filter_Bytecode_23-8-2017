@@ -26,9 +26,12 @@ import org.wso2.siddhi.core.executor.VariableExpressionExecutor;
 import org.wso2.siddhi.core.executor.condition.AndConditionExpressionExecutor;
 import org.wso2.siddhi.core.executor.condition.NotConditionExpressionExecutor;
 import org.wso2.siddhi.core.executor.condition.OrConditionExpressionExecutor;
+import org.wso2.siddhi.core.executor.condition.compare.equal.EqualCompareConditionExpressionExecutor;
+import org.wso2.siddhi.core.executor.condition.compare.equal.EqualCompareConditionExpressionExecutorBoolBool;
 import org.wso2.siddhi.core.executor.condition.compare.greaterthan.*;
 import org.wso2.siddhi.core.executor.condition.compare.greaterthanequal.*;
 import org.wso2.siddhi.core.executor.condition.compare.lessthan.*;
+import org.wso2.siddhi.core.executor.condition.compare.lessthanequal.*;
 
 import static org.mvel2.asm.Opcodes.*;
 import static org.mvel2.asm.Opcodes.ISTORE;
@@ -2349,6 +2352,68 @@ public class ByteCodeRegistry {
     }
 
     /**
+     * This class generates byte code for "<=" operator with float on left and double on right.
+     */
+    class PrivateLessThanEqualCompareConditionExpressionExecutorFloatDoubleBytecodeEmitter implements ByteCodeEmitter {
+
+        /**
+         * This method overrides the interface method.
+         *
+         * @param conditionExecutor
+         * @param status
+         * @param parent
+         * @param specialCase
+         * @param parentStatus
+         * @param methodVisitor
+         * @param byteCodeGenarator
+         */
+        @Override
+        public void generate(ExpressionExecutor conditionExecutor, int status, int parent,
+                             Label specialCase, int parentStatus, MethodVisitor methodVisitor,
+                             ByteCodeGenarator byteCodeGenarator) {
+            ExpressionExecutor left = ((LessThanEqualCompareConditionExpressionExecutorFloatDouble) conditionExecutor)
+                    .getLeftExpressionExecutor();
+            ExpressionExecutor right = ((LessThanEqualCompareConditionExpressionExecutorFloatDouble) conditionExecutor)
+                    .getRightExpressionExecutor();
+            byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
+            if (left instanceof VariableExpressionExecutor) {
+                methodVisitor.visitVarInsn(ALOAD, 2);
+                methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Float");
+                methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Float", "floatValue", "()F",
+                        false);
+            }
+
+            methodVisitor.visitVarInsn(FSTORE, 2);
+            byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
+            if (right instanceof VariableExpressionExecutor) {
+                methodVisitor.visitVarInsn(ALOAD, 3);
+                methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Double");
+                methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Double", "doubleValue", "()D",
+                        false);
+            }
+
+            methodVisitor.visitVarInsn(DSTORE, 3);
+            methodVisitor.visitVarInsn(FLOAD, 2);
+            methodVisitor.visitInsn(F2D);
+            methodVisitor.visitVarInsn(DLOAD, 3);
+            methodVisitor.visitInsn(DCMPG);
+            Label l0 = new Label();
+            methodVisitor.visitJumpInsn(IFGT, l0);
+            methodVisitor.visitInsn(ICONST_1);
+            Label l1 = new Label();
+            methodVisitor.visitJumpInsn(GOTO, l1);
+            methodVisitor.visitLabel(l0);
+            methodVisitor.visitInsn(ICONST_0);
+            methodVisitor.visitLabel(l1);
+            if (status == 2) {
+                methodVisitor.visitVarInsn(ISTORE, 3);
+            } else {
+                methodVisitor.visitVarInsn(ISTORE, 2);
+            }
+        }
+    }
+
+    /**
      * This class generates byte code for "<" operator with float on left and long on right.
      */
     class PrivateLessThanCompareConditionExpressionExecutorFloatLongBytecodeEmitter implements ByteCodeEmitter {
@@ -2411,6 +2476,68 @@ public class ByteCodeRegistry {
     }
 
     /**
+     * This class generates byte code for "<=" operator with float on left and long on right.
+     */
+    class PrivateLessThanEqualCompareConditionExpressionExecutorFloatLongBytecodeEmitter implements ByteCodeEmitter {
+
+        /**
+         * This method overrides the interface method.
+         *
+         * @param conditionExecutor
+         * @param status
+         * @param parent
+         * @param specialCase
+         * @param parentStatus
+         * @param methodVisitor
+         * @param byteCodeGenarator
+         */
+        @Override
+        public void generate(ExpressionExecutor conditionExecutor, int status, int parent,
+                             Label specialCase, int parentStatus, MethodVisitor methodVisitor,
+                             ByteCodeGenarator byteCodeGenarator) {
+            ExpressionExecutor left = ((LessThanEqualCompareConditionExpressionExecutorFloatLong) conditionExecutor)
+                    .getLeftExpressionExecutor();
+            ExpressionExecutor right = ((LessThanEqualCompareConditionExpressionExecutorFloatLong) conditionExecutor)
+                    .getRightExpressionExecutor();
+            byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
+            if (left instanceof VariableExpressionExecutor) {
+                methodVisitor.visitVarInsn(ALOAD, 2);
+                methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Float");
+                methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Float", "floatValue", "()F",
+                        false);
+            }
+
+            methodVisitor.visitVarInsn(FSTORE, 2);
+            byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
+            if (right instanceof VariableExpressionExecutor) {
+                methodVisitor.visitVarInsn(ALOAD, 3);
+                methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Long");
+                methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Long", "longValue", "()J",
+                        false);
+            }
+
+            methodVisitor.visitVarInsn(LSTORE, 3);
+            methodVisitor.visitVarInsn(FLOAD, 2);
+            methodVisitor.visitVarInsn(LLOAD, 3);
+            methodVisitor.visitInsn(L2F);
+            methodVisitor.visitInsn(FCMPG);
+            Label l0 = new Label();
+            methodVisitor.visitJumpInsn(IFGT, l0);
+            methodVisitor.visitInsn(ICONST_1);
+            Label l1 = new Label();
+            methodVisitor.visitJumpInsn(GOTO, l1);
+            methodVisitor.visitLabel(l0);
+            methodVisitor.visitInsn(ICONST_0);
+            methodVisitor.visitLabel(l1);
+            if (status == 2) {
+                methodVisitor.visitVarInsn(ISTORE, 3);
+            } else {
+                methodVisitor.visitVarInsn(ISTORE, 2);
+            }
+        }
+    }
+
+    /**
      * This class generates byte code for "<" operator with long on left and long on right.
      */
     class PrivateLessThanCompareConditionExpressionExecutorLongLongBytecodeEmitter implements ByteCodeEmitter {
@@ -2457,6 +2584,67 @@ public class ByteCodeRegistry {
             methodVisitor.visitInsn(LCMP);
             Label l0 = new Label();
             methodVisitor.visitJumpInsn(IFGE, l0);
+            methodVisitor.visitInsn(ICONST_1);
+            Label l1 = new Label();
+            methodVisitor.visitJumpInsn(GOTO, l1);
+            methodVisitor.visitLabel(l0);
+            methodVisitor.visitInsn(ICONST_0);
+            methodVisitor.visitLabel(l1);
+            if (status == 2) {
+                methodVisitor.visitVarInsn(ISTORE, 3);
+            } else {
+                methodVisitor.visitVarInsn(ISTORE, 2);
+            }
+        }
+    }
+
+    /**
+     * This class generates byte code for "<=" operator with long on left and long on right.
+     */
+    class PrivateLessThanEqualCompareConditionExpressionExecutorLongLongBytecodeEmitter implements ByteCodeEmitter {
+
+        /**
+         * This method overrides the interface method.
+         *
+         * @param conditionExecutor
+         * @param status
+         * @param parent
+         * @param specialCase
+         * @param parentStatus
+         * @param methodVisitor
+         * @param byteCodeGenarator
+         */
+        @Override
+        public void generate(ExpressionExecutor conditionExecutor, int status, int parent,
+                             Label specialCase, int parentStatus, MethodVisitor methodVisitor,
+                             ByteCodeGenarator byteCodeGenarator) {
+            ExpressionExecutor left = ((LessThanEqualCompareConditionExpressionExecutorLongLong) conditionExecutor)
+                    .getLeftExpressionExecutor();
+            ExpressionExecutor right = ((LessThanEqualCompareConditionExpressionExecutorLongLong) conditionExecutor)
+                    .getRightExpressionExecutor();
+            byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
+            if (left instanceof VariableExpressionExecutor) {
+                methodVisitor.visitVarInsn(ALOAD, 2);
+                methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Long");
+                methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Long", "longValue", "()J",
+                        false);
+            }
+
+            methodVisitor.visitVarInsn(LSTORE, 4);
+            byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
+            if (right instanceof VariableExpressionExecutor) {
+                methodVisitor.visitVarInsn(ALOAD, 3);
+                methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Long");
+                methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Long", "longValue", "()J",
+                        false);
+            }
+
+            methodVisitor.visitVarInsn(LSTORE, 6);
+            methodVisitor.visitVarInsn(LLOAD, 4);
+            methodVisitor.visitVarInsn(LLOAD, 6);
+            methodVisitor.visitInsn(LCMP);
+            Label l0 = new Label();
+            methodVisitor.visitJumpInsn(IFGT, l0);
             methodVisitor.visitInsn(ICONST_1);
             Label l1 = new Label();
             methodVisitor.visitJumpInsn(GOTO, l1);
@@ -2534,6 +2722,68 @@ public class ByteCodeRegistry {
     }
 
     /**
+     * This class generates byte code for "<=" operator with long on left and double on right.
+     */
+    class PrivateLessThanEqualCompareConditionExpressionExecutorLongDoubleBytecodeEmitter implements ByteCodeEmitter {
+
+        /**
+         * This method overrides the interface method.
+         *
+         * @param conditionExecutor
+         * @param status
+         * @param parent
+         * @param specialCase
+         * @param parentStatus
+         * @param methodVisitor
+         * @param byteCodeGenarator
+         */
+        @Override
+        public void generate(ExpressionExecutor conditionExecutor, int status, int parent,
+                             Label specialCase, int parentStatus, MethodVisitor methodVisitor,
+                             ByteCodeGenarator byteCodeGenarator) {
+            ExpressionExecutor left = ((LessThanEqualCompareConditionExpressionExecutorLongDouble) conditionExecutor)
+                    .getLeftExpressionExecutor();
+            ExpressionExecutor right = ((LessThanEqualCompareConditionExpressionExecutorLongDouble) conditionExecutor)
+                    .getRightExpressionExecutor();
+            byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
+            if (left instanceof VariableExpressionExecutor) {
+                methodVisitor.visitVarInsn(ALOAD, 2);
+                methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Long");
+                methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Long", "longValue", "()J",
+                        false);
+            }
+
+            methodVisitor.visitVarInsn(LSTORE, 4);
+            byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
+            if (right instanceof VariableExpressionExecutor) {
+                methodVisitor.visitVarInsn(ALOAD, 3);
+                methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Double");
+                methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Double", "doubleValue", "()D",
+                        false);
+            }
+
+            methodVisitor.visitVarInsn(DSTORE, 6);
+            methodVisitor.visitVarInsn(LLOAD, 4);
+            methodVisitor.visitInsn(L2D);
+            methodVisitor.visitVarInsn(DLOAD, 6);
+            methodVisitor.visitInsn(DCMPG);
+            Label l0 = new Label();
+            methodVisitor.visitJumpInsn(IFGT, l0);
+            methodVisitor.visitInsn(ICONST_1);
+            Label l1 = new Label();
+            methodVisitor.visitJumpInsn(GOTO, l1);
+            methodVisitor.visitLabel(l0);
+            methodVisitor.visitInsn(ICONST_0);
+            methodVisitor.visitLabel(l1);
+            if (status == 2) {
+                methodVisitor.visitVarInsn(ISTORE, 3);
+            } else {
+                methodVisitor.visitVarInsn(ISTORE, 2);
+            }
+        }
+    }
+
+    /**
      * This class generates byte code for "<" operator with int on left and double on right.
      */
     class PrivateLessThanCompareConditionExpressionExecutorIntegerDoubleBytecodeEmitter implements ByteCodeEmitter {
@@ -2581,6 +2831,68 @@ public class ByteCodeRegistry {
             methodVisitor.visitInsn(DCMPG);
             Label l0 = new Label();
             methodVisitor.visitJumpInsn(IFGE, l0);
+            methodVisitor.visitInsn(ICONST_1);
+            Label l1 = new Label();
+            methodVisitor.visitJumpInsn(GOTO, l1);
+            methodVisitor.visitLabel(l0);
+            methodVisitor.visitInsn(ICONST_0);
+            methodVisitor.visitLabel(l1);
+            if (status == 2) {
+                methodVisitor.visitVarInsn(ISTORE, 3);
+            } else {
+                methodVisitor.visitVarInsn(ISTORE, 2);
+            }
+        }
+    }
+
+    /**
+     * This class generates byte code for "<=" operator with int on left and double on right.
+     */
+    class PrivateLessThanEqualCompareConditionExpressionExecutorIntegerDoubleBytecodeEmitter implements ByteCodeEmitter {
+
+        /**
+         * This method overrides the interface method.
+         *
+         * @param conditionExecutor
+         * @param status
+         * @param parent
+         * @param specialCase
+         * @param parentStatus
+         * @param methodVisitor
+         * @param byteCodeGenarator
+         */
+        @Override
+        public void generate(ExpressionExecutor conditionExecutor, int status, int parent,
+                             Label specialCase, int parentStatus, MethodVisitor methodVisitor,
+                             ByteCodeGenarator byteCodeGenarator) {
+            ExpressionExecutor left = ((LessThanEqualCompareConditionExpressionExecutorIntDouble) conditionExecutor)
+                    .getLeftExpressionExecutor();
+            ExpressionExecutor right = ((LessThanEqualCompareConditionExpressionExecutorIntDouble) conditionExecutor)
+                    .getRightExpressionExecutor();
+            byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
+            if (left instanceof VariableExpressionExecutor) {
+                methodVisitor.visitVarInsn(ALOAD, 2);
+                methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Integer");
+                methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Integer", "intValue", "()I",
+                        false);
+            }
+
+            methodVisitor.visitVarInsn(ISTORE, 2);
+            byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
+            if (right instanceof VariableExpressionExecutor) {
+                methodVisitor.visitVarInsn(ALOAD, 3);
+                methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Double");
+                methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Double", "doubleValue", "()D",
+                        false);
+            }
+
+            methodVisitor.visitVarInsn(DSTORE, 3);
+            methodVisitor.visitVarInsn(ILOAD, 2);
+            methodVisitor.visitInsn(I2D);
+            methodVisitor.visitVarInsn(DLOAD, 3);
+            methodVisitor.visitInsn(DCMPG);
+            Label l0 = new Label();
+            methodVisitor.visitJumpInsn(IFGT, l0);
             methodVisitor.visitInsn(ICONST_1);
             Label l1 = new Label();
             methodVisitor.visitJumpInsn(GOTO, l1);
@@ -2658,6 +2970,68 @@ public class ByteCodeRegistry {
     }
 
     /**
+     * This class generates byte code for "<=" operator with int on left and long on right.
+     */
+    class PrivateLessThanEqualCompareConditionExpressionExecutorIntegerLongBytecodeEmitter implements ByteCodeEmitter {
+
+        /**
+         * This method overrides the interface method.
+         *
+         * @param conditionExecutor
+         * @param status
+         * @param parent
+         * @param specialCase
+         * @param parentStatus
+         * @param methodVisitor
+         * @param byteCodeGenarator
+         */
+        @Override
+        public void generate(ExpressionExecutor conditionExecutor, int status, int parent,
+                             Label specialCase, int parentStatus, MethodVisitor methodVisitor,
+                             ByteCodeGenarator byteCodeGenarator) {
+            ExpressionExecutor left = ((LessThanEqualCompareConditionExpressionExecutorIntLong) conditionExecutor)
+                    .getLeftExpressionExecutor();
+            ExpressionExecutor right = ((LessThanEqualCompareConditionExpressionExecutorIntLong) conditionExecutor)
+                    .getRightExpressionExecutor();
+            byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
+            if (left instanceof VariableExpressionExecutor) {
+                methodVisitor.visitVarInsn(ALOAD, 2);
+                methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Integer");
+                methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Integer", "intValue", "()I",
+                        false);
+            }
+
+            methodVisitor.visitVarInsn(ISTORE, 2);
+            byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
+            if (right instanceof VariableExpressionExecutor) {
+                methodVisitor.visitVarInsn(ALOAD, 3);
+                methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Long");
+                methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Long", "longValue", "()J",
+                        false);
+            }
+
+            methodVisitor.visitVarInsn(LSTORE, 3);
+            methodVisitor.visitVarInsn(ILOAD, 2);
+            methodVisitor.visitInsn(I2L);
+            methodVisitor.visitVarInsn(LLOAD, 3);
+            methodVisitor.visitInsn(LCMP);
+            Label l0 = new Label();
+            methodVisitor.visitJumpInsn(IFGT, l0);
+            methodVisitor.visitInsn(ICONST_1);
+            Label l1 = new Label();
+            methodVisitor.visitJumpInsn(GOTO, l1);
+            methodVisitor.visitLabel(l0);
+            methodVisitor.visitInsn(ICONST_0);
+            methodVisitor.visitLabel(l1);
+            if (status == 2) {
+                methodVisitor.visitVarInsn(ISTORE, 3);
+            } else {
+                methodVisitor.visitVarInsn(ISTORE, 2);
+            }
+        }
+    }
+
+    /**
      * This class generates byte code for "<" operator with int on left and int on right.
      */
     class PrivateLessThanCompareConditionExpressionExecutorIntegerIntegerBytecodeEmitter implements ByteCodeEmitter {
@@ -2703,6 +3077,66 @@ public class ByteCodeRegistry {
             methodVisitor.visitVarInsn(ILOAD, 3);
             Label l0 = new Label();
             methodVisitor.visitJumpInsn(IF_ICMPGE, l0);
+            methodVisitor.visitInsn(ICONST_1);
+            Label l1 = new Label();
+            methodVisitor.visitJumpInsn(GOTO, l1);
+            methodVisitor.visitLabel(l0);
+            methodVisitor.visitInsn(ICONST_0);
+            methodVisitor.visitLabel(l1);
+            if (status == 2) {
+                methodVisitor.visitVarInsn(ISTORE, 3);
+            } else {
+                methodVisitor.visitVarInsn(ISTORE, 2);
+            }
+        }
+    }
+
+    /**
+     * This class generates byte code for "<=" operator with int on left and int on right.
+     */
+    class PrivateLessThanEqualCompareConditionExpressionExecutorIntegerIntegerBytecodeEmitter implements ByteCodeEmitter {
+
+        /**
+         * This method overrides the interface method.
+         *
+         * @param conditionExecutor
+         * @param status
+         * @param parent
+         * @param specialCase
+         * @param parentStatus
+         * @param methodVisitor
+         * @param byteCodeGenarator
+         */
+        @Override
+        public void generate(ExpressionExecutor conditionExecutor, int status, int parent,
+                             Label specialCase, int parentStatus, MethodVisitor methodVisitor,
+                             ByteCodeGenarator byteCodeGenarator) {
+            ExpressionExecutor left = ((LessThanEqualCompareConditionExpressionExecutorIntInt) conditionExecutor)
+                    .getLeftExpressionExecutor();
+            ExpressionExecutor right = ((LessThanEqualCompareConditionExpressionExecutorIntInt) conditionExecutor)
+                    .getRightExpressionExecutor();
+            byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
+            if (left instanceof VariableExpressionExecutor) {
+                methodVisitor.visitVarInsn(ALOAD, 2);
+                methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Integer");
+                methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Integer", "intValue", "()I",
+                        false);
+            }
+
+            methodVisitor.visitVarInsn(ISTORE, 2);
+            byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
+            if (right instanceof VariableExpressionExecutor) {
+                methodVisitor.visitVarInsn(ALOAD, 3);
+                methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Integer");
+                methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Integer", "intValue", "()I",
+                        false);
+            }
+
+            methodVisitor.visitVarInsn(ISTORE, 3);
+            methodVisitor.visitVarInsn(ILOAD, 2);
+            methodVisitor.visitVarInsn(ILOAD, 3);
+            Label l0 = new Label();
+            methodVisitor.visitJumpInsn(IF_ICMPGT, l0);
             methodVisitor.visitInsn(ICONST_1);
             Label l1 = new Label();
             methodVisitor.visitJumpInsn(GOTO, l1);
@@ -2780,6 +3214,68 @@ public class ByteCodeRegistry {
     }
 
     /**
+     * This class generates byte code for "<=" operator with long on left and int on right.
+     */
+    class PrivateLessThanEqualCompareConditionExpressionExecutorLongIntegerBytecodeEmitter implements ByteCodeEmitter {
+
+        /**
+         * This method overrides the interface method.
+         *
+         * @param conditionExecutor
+         * @param status
+         * @param parent
+         * @param specialCase
+         * @param parentStatus
+         * @param methodVisitor
+         * @param byteCodeGenarator
+         */
+        @Override
+        public void generate(ExpressionExecutor conditionExecutor, int status, int parent,
+                             Label specialCase, int parentStatus, MethodVisitor methodVisitor,
+                             ByteCodeGenarator byteCodeGenarator) {
+            ExpressionExecutor left = ((LessThanEqualCompareConditionExpressionExecutorLongInt) conditionExecutor)
+                    .getLeftExpressionExecutor();
+            ExpressionExecutor right = ((LessThanEqualCompareConditionExpressionExecutorLongInt) conditionExecutor)
+                    .getRightExpressionExecutor();
+            byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
+            if (left instanceof VariableExpressionExecutor) {
+                methodVisitor.visitVarInsn(ALOAD, 2);
+                methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Long");
+                methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Long", "longValue", "()J",
+                        false);
+            }
+
+            methodVisitor.visitVarInsn(LSTORE, 4);
+            byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
+            if (right instanceof VariableExpressionExecutor) {
+                methodVisitor.visitVarInsn(ALOAD, 3);
+                methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Integer");
+                methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Integer", "intValue", "()I",
+                        false);
+            }
+
+            methodVisitor.visitVarInsn(ISTORE, 3);
+            methodVisitor.visitVarInsn(LLOAD, 4);
+            methodVisitor.visitVarInsn(ILOAD, 3);
+            methodVisitor.visitInsn(I2L);
+            methodVisitor.visitInsn(LCMP);
+            Label l0 = new Label();
+            methodVisitor.visitJumpInsn(IFGT, l0);
+            methodVisitor.visitInsn(ICONST_1);
+            Label l1 = new Label();
+            methodVisitor.visitJumpInsn(GOTO, l1);
+            methodVisitor.visitLabel(l0);
+            methodVisitor.visitInsn(ICONST_0);
+            methodVisitor.visitLabel(l1);
+            if (status == 2) {
+                methodVisitor.visitVarInsn(ISTORE, 3);
+            } else {
+                methodVisitor.visitVarInsn(ISTORE, 2);
+            }
+        }
+    }
+
+    /**
      * This class generates byte code for "<" operator with int on left and float on right.
      */
     class PrivateLessThanCompareConditionExpressionExecutorIntegerFloatBytecodeEmitter implements ByteCodeEmitter {
@@ -2827,6 +3323,68 @@ public class ByteCodeRegistry {
             methodVisitor.visitInsn(FCMPL);
             Label l0 = new Label();
             methodVisitor.visitJumpInsn(IFGE, l0);
+            methodVisitor.visitInsn(ICONST_1);
+            Label l1 = new Label();
+            methodVisitor.visitJumpInsn(GOTO, l1);
+            methodVisitor.visitLabel(l0);
+            methodVisitor.visitInsn(ICONST_0);
+            methodVisitor.visitLabel(l1);
+            if (status == 2) {
+                methodVisitor.visitVarInsn(ISTORE, 3);
+            } else {
+                methodVisitor.visitVarInsn(ISTORE, 2);
+            }
+        }
+    }
+
+    /**
+     * This class generates byte code for "<=" operator with int on left and float on right.
+     */
+    class PrivateLessThanEqualCompareConditionExpressionExecutorIntegerFloatBytecodeEmitter implements ByteCodeEmitter {
+
+        /**
+         * This method overrides the interface method.
+         *
+         * @param conditionExecutor
+         * @param status
+         * @param parent
+         * @param specialCase
+         * @param parentStatus
+         * @param methodVisitor
+         * @param byteCodeGenarator
+         */
+        @Override
+        public void generate(ExpressionExecutor conditionExecutor, int status, int parent,
+                             Label specialCase, int parentStatus, MethodVisitor methodVisitor,
+                             ByteCodeGenarator byteCodeGenarator) {
+            ExpressionExecutor left = ((LessThanEqualCompareConditionExpressionExecutorIntFloat) conditionExecutor)
+                    .getLeftExpressionExecutor();
+            ExpressionExecutor right = ((LessThanEqualCompareConditionExpressionExecutorIntFloat) conditionExecutor)
+                    .getRightExpressionExecutor();
+            byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
+            if (left instanceof VariableExpressionExecutor) {
+                methodVisitor.visitVarInsn(ALOAD, 2);
+                methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Integer");
+                methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Integer", "intValue", "()I",
+                        false);
+            }
+
+            methodVisitor.visitVarInsn(ISTORE, 2);
+            byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
+            if (right instanceof VariableExpressionExecutor) {
+                methodVisitor.visitVarInsn(ALOAD, 3);
+                methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Float");
+                methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Float", "floatValue", "()F",
+                        false);
+            }
+
+            methodVisitor.visitVarInsn(FSTORE, 3);
+            methodVisitor.visitVarInsn(ILOAD, 2);
+            methodVisitor.visitInsn(I2F);
+            methodVisitor.visitVarInsn(FLOAD, 3);
+            methodVisitor.visitInsn(FCMPL);
+            Label l0 = new Label();
+            methodVisitor.visitJumpInsn(IFGT, l0);
             methodVisitor.visitInsn(ICONST_1);
             Label l1 = new Label();
             methodVisitor.visitJumpInsn(GOTO, l1);
@@ -2904,6 +3462,68 @@ public class ByteCodeRegistry {
     }
 
     /**
+     * This class generates byte code for "<=" operator with long on left and float on right.
+     */
+    class PrivateLessThanEqualCompareConditionExpressionExecutorLongFloatBytecodeEmitter implements ByteCodeEmitter {
+
+        /**
+         * This method overrides the interface method.
+         *
+         * @param conditionExecutor
+         * @param status
+         * @param parent
+         * @param specialCase
+         * @param parentStatus
+         * @param methodVisitor
+         * @param byteCodeGenarator
+         */
+        @Override
+        public void generate(ExpressionExecutor conditionExecutor, int status, int parent,
+                             Label specialCase, int parentStatus, MethodVisitor methodVisitor,
+                             ByteCodeGenarator byteCodeGenarator) {
+            ExpressionExecutor left = ((LessThanEqualCompareConditionExpressionExecutorLongFloat) conditionExecutor)
+                    .getLeftExpressionExecutor();
+            ExpressionExecutor right = ((LessThanEqualCompareConditionExpressionExecutorLongFloat) conditionExecutor)
+                    .getRightExpressionExecutor();
+            byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
+            if (left instanceof VariableExpressionExecutor) {
+                methodVisitor.visitVarInsn(ALOAD, 2);
+                methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Long");
+                methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Long", "longValue", "()J",
+                        false);
+            }
+
+            methodVisitor.visitVarInsn(LSTORE, 4);
+            byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
+            if (right instanceof VariableExpressionExecutor) {
+                methodVisitor.visitVarInsn(ALOAD, 3);
+                methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Float");
+                methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Float", "floatValue", "()F",
+                        false);
+            }
+
+            methodVisitor.visitVarInsn(FSTORE, 3);
+            methodVisitor.visitVarInsn(LLOAD, 4);
+            methodVisitor.visitInsn(L2F);
+            methodVisitor.visitVarInsn(FLOAD, 3);
+            methodVisitor.visitInsn(FCMPL);
+            Label l0 = new Label();
+            methodVisitor.visitJumpInsn(IFGT, l0);
+            methodVisitor.visitInsn(ICONST_1);
+            Label l1 = new Label();
+            methodVisitor.visitJumpInsn(GOTO, l1);
+            methodVisitor.visitLabel(l0);
+            methodVisitor.visitInsn(ICONST_0);
+            methodVisitor.visitLabel(l1);
+            if (status == 2) {
+                methodVisitor.visitVarInsn(ISTORE, 3);
+            } else {
+                methodVisitor.visitVarInsn(ISTORE, 2);
+            }
+        }
+    }
+
+    /**
      * This class generates byte code for "<" operator with float on left and int on right.
      */
     class PrivateLessThanCompareConditionExpressionExecutorFloatIntegerBytecodeEmitter implements ByteCodeEmitter {
@@ -2951,6 +3571,68 @@ public class ByteCodeRegistry {
             methodVisitor.visitInsn(FCMPL);
             Label l0 = new Label();
             methodVisitor.visitJumpInsn(IFGE, l0);
+            methodVisitor.visitInsn(ICONST_1);
+            Label l1 = new Label();
+            methodVisitor.visitJumpInsn(GOTO, l1);
+            methodVisitor.visitLabel(l0);
+            methodVisitor.visitInsn(ICONST_0);
+            methodVisitor.visitLabel(l1);
+            if (status == 2) {
+                methodVisitor.visitVarInsn(ISTORE, 3);
+            } else {
+                methodVisitor.visitVarInsn(ISTORE, 2);
+            }
+        }
+    }
+
+    /**
+     * This class generates byte code for "<=" operator with float on left and int on right.
+     */
+    class PrivateLessThanEqualCompareConditionExpressionExecutorFloatIntegerBytecodeEmitter implements ByteCodeEmitter {
+
+        /**
+         * This method overrides the interface method.
+         *
+         * @param conditionExecutor
+         * @param status
+         * @param parent
+         * @param specialCase
+         * @param parentStatus
+         * @param methodVisitor
+         * @param byteCodeGenarator
+         */
+        @Override
+        public void generate(ExpressionExecutor conditionExecutor, int status, int parent,
+                             Label specialCase, int parentStatus, MethodVisitor methodVisitor,
+                             ByteCodeGenarator byteCodeGenarator) {
+            ExpressionExecutor left = ((LessThanEqualCompareConditionExpressionExecutorFloatInt) conditionExecutor)
+                    .getLeftExpressionExecutor();
+            ExpressionExecutor right = ((LessThanEqualCompareConditionExpressionExecutorFloatInt) conditionExecutor)
+                    .getRightExpressionExecutor();
+            byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
+            if (left instanceof VariableExpressionExecutor) {
+                methodVisitor.visitVarInsn(ALOAD, 2);
+                methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Float");
+                methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Float", "floatValue", "()F",
+                        false);
+            }
+
+            methodVisitor.visitVarInsn(FSTORE, 2);
+            byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
+            if (right instanceof VariableExpressionExecutor) {
+                methodVisitor.visitVarInsn(ALOAD, 3);
+                methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Integer");
+                methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Integer", "intValue", "()I",
+                        false);
+            }
+
+            methodVisitor.visitVarInsn(ISTORE, 3);
+            methodVisitor.visitVarInsn(FLOAD, 2);
+            methodVisitor.visitVarInsn(ILOAD, 3);
+            methodVisitor.visitInsn(I2F);
+            methodVisitor.visitInsn(FCMPL);
+            Label l0 = new Label();
+            methodVisitor.visitJumpInsn(IFGT, l0);
             methodVisitor.visitInsn(ICONST_1);
             Label l1 = new Label();
             methodVisitor.visitJumpInsn(GOTO, l1);
@@ -3027,6 +3709,67 @@ public class ByteCodeRegistry {
     }
 
     /**
+     * This class generates byte code for "<=" operator with float on left and float on right.
+     */
+    class PrivateLessThanEqualCompareConditionExpressionExecutorFloatFloatBytecodeEmitter implements ByteCodeEmitter {
+
+        /**
+         * This method overrides the interface method.
+         *
+         * @param conditionExecutor
+         * @param status
+         * @param parent
+         * @param specialCase
+         * @param parentStatus
+         * @param methodVisitor
+         * @param byteCodeGenarator
+         */
+        @Override
+        public void generate(ExpressionExecutor conditionExecutor, int status, int parent,
+                             Label specialCase, int parentStatus, MethodVisitor methodVisitor,
+                             ByteCodeGenarator byteCodeGenarator) {
+            ExpressionExecutor left = ((LessThanEqualCompareConditionExpressionExecutorFloatFloat) conditionExecutor)
+                    .getLeftExpressionExecutor();
+            ExpressionExecutor right = ((LessThanEqualCompareConditionExpressionExecutorFloatFloat) conditionExecutor)
+                    .getRightExpressionExecutor();
+            byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
+            if (left instanceof VariableExpressionExecutor) {
+                methodVisitor.visitVarInsn(ALOAD, 2);
+                methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Float");
+                methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Float", "floatValue", "()F",
+                        false);
+            }
+
+            methodVisitor.visitVarInsn(FSTORE, 2);
+            byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
+            if (right instanceof VariableExpressionExecutor) {
+                methodVisitor.visitVarInsn(ALOAD, 3);
+                methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Float");
+                methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Float", "floatValue", "()F",
+                        false);
+            }
+
+            methodVisitor.visitVarInsn(FSTORE, 3);
+            methodVisitor.visitVarInsn(FLOAD, 2);
+            methodVisitor.visitVarInsn(FLOAD, 3);
+            methodVisitor.visitInsn(FCMPL);
+            Label l0 = new Label();
+            methodVisitor.visitJumpInsn(IFGT, l0);
+            methodVisitor.visitInsn(ICONST_1);
+            Label l1 = new Label();
+            methodVisitor.visitJumpInsn(GOTO, l1);
+            methodVisitor.visitLabel(l0);
+            methodVisitor.visitInsn(ICONST_0);
+            methodVisitor.visitLabel(l1);
+            if (status == 2) {
+                methodVisitor.visitVarInsn(ISTORE, 3);
+            } else {
+                methodVisitor.visitVarInsn(ISTORE, 2);
+            }
+        }
+    }
+
+    /**
      * This class generates byte code for "<" operator with double on left and double on right.
      */
     class PrivateLessThanCompareConditionExpressionExecutorDoubleDoubleBytecodeEmitter implements ByteCodeEmitter {
@@ -3073,6 +3816,67 @@ public class ByteCodeRegistry {
             methodVisitor.visitInsn(DCMPL);
             Label l0 = new Label();
             methodVisitor.visitJumpInsn(IFGE, l0);
+            methodVisitor.visitInsn(ICONST_1);
+            Label l1 = new Label();
+            methodVisitor.visitJumpInsn(GOTO, l1);
+            methodVisitor.visitLabel(l0);
+            methodVisitor.visitInsn(ICONST_0);
+            methodVisitor.visitLabel(l1);
+            if (status == 2) {
+                methodVisitor.visitVarInsn(ISTORE, 3);
+            } else {
+                methodVisitor.visitVarInsn(ISTORE, 2);
+            }
+        }
+    }
+
+    /**
+     * This class generates byte code for "<=" operator with double on left and double on right.
+     */
+    class PrivateLessThanEqualCompareConditionExpressionExecutorDoubleDoubleBytecodeEmitter implements ByteCodeEmitter {
+
+        /**
+         * This method overrides the interface method.
+         *
+         * @param conditionExecutor
+         * @param status
+         * @param parent
+         * @param specialCase
+         * @param parentStatus
+         * @param methodVisitor
+         * @param byteCodeGenarator
+         */
+        @Override
+        public void generate(ExpressionExecutor conditionExecutor, int status, int parent,
+                             Label specialCase, int parentStatus, MethodVisitor methodVisitor,
+                             ByteCodeGenarator byteCodeGenarator) {
+            ExpressionExecutor left = ((LessThanEqualCompareConditionExpressionExecutorDoubleDouble) conditionExecutor)
+                    .getLeftExpressionExecutor();
+            ExpressionExecutor right = ((LessThanEqualCompareConditionExpressionExecutorDoubleDouble) conditionExecutor)
+                    .getRightExpressionExecutor();
+            byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
+            if (left instanceof VariableExpressionExecutor) {
+                methodVisitor.visitVarInsn(ALOAD, 2);
+                methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Double");
+                methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Double", "doubleValue", "()D",
+                        false);
+            }
+
+            methodVisitor.visitVarInsn(DSTORE, 4);
+            byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
+            if (right instanceof VariableExpressionExecutor) {
+                methodVisitor.visitVarInsn(ALOAD, 3);
+                methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Double");
+                methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Double", "doubleValue", "()D",
+                        false);
+            }
+
+            methodVisitor.visitVarInsn(DSTORE, 6);
+            methodVisitor.visitVarInsn(DLOAD, 4);
+            methodVisitor.visitVarInsn(DLOAD, 6);
+            methodVisitor.visitInsn(DCMPL);
+            Label l0 = new Label();
+            methodVisitor.visitJumpInsn(IFGT, l0);
             methodVisitor.visitInsn(ICONST_1);
             Label l1 = new Label();
             methodVisitor.visitJumpInsn(GOTO, l1);
@@ -3150,6 +3954,68 @@ public class ByteCodeRegistry {
     }
 
     /**
+     * This class generates byte code for "<=" operator with double on left and long on right.
+     */
+    class PrivateLessThanEqualCompareConditionExpressionExecutorDoubleLongBytecodeEmitter implements ByteCodeEmitter {
+
+        /**
+         * This method overrides the interface method.
+         *
+         * @param conditionExecutor
+         * @param status
+         * @param parent
+         * @param specialCase
+         * @param parentStatus
+         * @param methodVisitor
+         * @param byteCodeGenarator
+         */
+        @Override
+        public void generate(ExpressionExecutor conditionExecutor, int status, int parent,
+                             Label specialCase, int parentStatus, MethodVisitor methodVisitor,
+                             ByteCodeGenarator byteCodeGenarator) {
+            ExpressionExecutor left = ((LessThanEqualCompareConditionExpressionExecutorDoubleLong) conditionExecutor)
+                    .getLeftExpressionExecutor();
+            ExpressionExecutor right = ((LessThanEqualCompareConditionExpressionExecutorDoubleLong) conditionExecutor)
+                    .getRightExpressionExecutor();
+            byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
+            if (left instanceof VariableExpressionExecutor) {
+                methodVisitor.visitVarInsn(ALOAD, 2);
+                methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Double");
+                methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Double", "doubleValue", "()D",
+                        false);
+            }
+
+            methodVisitor.visitVarInsn(DSTORE, 4);
+            byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
+            if (right instanceof VariableExpressionExecutor) {
+                methodVisitor.visitVarInsn(ALOAD, 3);
+                methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Long");
+                methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Long", "longValue", "()J",
+                        false);
+            }
+
+            methodVisitor.visitVarInsn(LSTORE, 6);
+            methodVisitor.visitVarInsn(DLOAD, 4);
+            methodVisitor.visitVarInsn(LLOAD, 6);
+            methodVisitor.visitInsn(L2D);
+            methodVisitor.visitInsn(DCMPL);
+            Label l0 = new Label();
+            methodVisitor.visitJumpInsn(IFGT, l0);
+            methodVisitor.visitInsn(ICONST_1);
+            Label l1 = new Label();
+            methodVisitor.visitJumpInsn(GOTO, l1);
+            methodVisitor.visitLabel(l0);
+            methodVisitor.visitInsn(ICONST_0);
+            methodVisitor.visitLabel(l1);
+            if (status == 2) {
+                methodVisitor.visitVarInsn(ISTORE, 3);
+            } else {
+                methodVisitor.visitVarInsn(ISTORE, 2);
+            }
+        }
+    }
+
+    /**
      * This class generates byte code for "<" operator with double on left and int on right.
      */
     class PrivateLessThanCompareConditionExpressionExecutorDoubleIntegerBytecodeEmitter implements ByteCodeEmitter {
@@ -3212,6 +4078,68 @@ public class ByteCodeRegistry {
     }
 
     /**
+     * This class generates byte code for "<=" operator with double on left and int on right.
+     */
+    class PrivateLessThanEqualCompareConditionExpressionExecutorDoubleIntegerBytecodeEmitter implements ByteCodeEmitter {
+
+        /**
+         * This method overrides the interface method.
+         *
+         * @param conditionExecutor
+         * @param status
+         * @param parent
+         * @param specialCase
+         * @param parentStatus
+         * @param methodVisitor
+         * @param byteCodeGenarator
+         */
+        @Override
+        public void generate(ExpressionExecutor conditionExecutor, int status, int parent,
+                             Label specialCase, int parentStatus, MethodVisitor methodVisitor,
+                             ByteCodeGenarator byteCodeGenarator) {
+            ExpressionExecutor left = ((LessThanEqualCompareConditionExpressionExecutorDoubleInt) conditionExecutor)
+                    .getLeftExpressionExecutor();
+            ExpressionExecutor right = ((LessThanEqualCompareConditionExpressionExecutorDoubleInt) conditionExecutor)
+                    .getRightExpressionExecutor();
+            byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
+            if (left instanceof VariableExpressionExecutor) {
+                methodVisitor.visitVarInsn(ALOAD, 2);
+                methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Double");
+                methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Double", "doubleValue", "()D",
+                        false);
+            }
+
+            methodVisitor.visitVarInsn(DSTORE, 4);
+            byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
+            if (right instanceof VariableExpressionExecutor) {
+                methodVisitor.visitVarInsn(ALOAD, 3);
+                methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Integer");
+                methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Integer", "intValue", "()I",
+                        false);
+            }
+
+            methodVisitor.visitVarInsn(ISTORE, 3);
+            methodVisitor.visitVarInsn(DLOAD, 4);
+            methodVisitor.visitVarInsn(ILOAD, 3);
+            methodVisitor.visitInsn(I2D);
+            methodVisitor.visitInsn(DCMPL);
+            Label l0 = new Label();
+            methodVisitor.visitJumpInsn(IFGT, l0);
+            methodVisitor.visitInsn(ICONST_1);
+            Label l1 = new Label();
+            methodVisitor.visitJumpInsn(GOTO, l1);
+            methodVisitor.visitLabel(l0);
+            methodVisitor.visitInsn(ICONST_0);
+            methodVisitor.visitLabel(l1);
+            if (status == 2) {
+                methodVisitor.visitVarInsn(ISTORE, 3);
+            } else {
+                methodVisitor.visitVarInsn(ISTORE, 2);
+            }
+        }
+    }
+
+    /**
      * This class generates byte code for "<" operator with double on left and float on right.
      */
     class PrivateLessThanCompareConditionExpressionExecutorDoubleFloatBytecodeEmitter implements ByteCodeEmitter {
@@ -3259,6 +4187,128 @@ public class ByteCodeRegistry {
             methodVisitor.visitInsn(DCMPL);
             Label l0 = new Label();
             methodVisitor.visitJumpInsn(IFGE, l0);
+            methodVisitor.visitInsn(ICONST_1);
+            Label l1 = new Label();
+            methodVisitor.visitJumpInsn(GOTO, l1);
+            methodVisitor.visitLabel(l0);
+            methodVisitor.visitInsn(ICONST_0);
+            methodVisitor.visitLabel(l1);
+            if (status == 2) {
+                methodVisitor.visitVarInsn(ISTORE, 3);
+            } else {
+                methodVisitor.visitVarInsn(ISTORE, 2);
+            }
+        }
+    }
+
+    /**
+     * This class generates byte code for "<=" operator with double on left and float on right.
+     */
+    class PrivateLessThanEqualCompareConditionExpressionExecutorDoubleFloatBytecodeEmitter implements ByteCodeEmitter {
+
+        /**
+         * This method overrides the interface method.
+         *
+         * @param conditionExecutor
+         * @param status
+         * @param parent
+         * @param specialCase
+         * @param parentStatus
+         * @param methodVisitor
+         * @param byteCodeGenarator
+         */
+        @Override
+        public void generate(ExpressionExecutor conditionExecutor, int status, int parent,
+                             Label specialCase, int parentStatus, MethodVisitor methodVisitor,
+                             ByteCodeGenarator byteCodeGenarator) {
+            ExpressionExecutor left = ((LessThanEqualCompareConditionExpressionExecutorDoubleFloat) conditionExecutor)
+                    .getLeftExpressionExecutor();
+            ExpressionExecutor right = ((LessThanEqualCompareConditionExpressionExecutorDoubleFloat) conditionExecutor)
+                    .getRightExpressionExecutor();
+            byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
+            if (left instanceof VariableExpressionExecutor) {
+                methodVisitor.visitVarInsn(ALOAD, 2);
+                methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Double");
+                methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Double", "doubleValue", "()D",
+                        false);
+            }
+
+            methodVisitor.visitVarInsn(DSTORE, 4);
+            byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
+            if (right instanceof VariableExpressionExecutor) {
+                methodVisitor.visitVarInsn(ALOAD, 3);
+                methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Float");
+                methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Float", "floatValue", "()F",
+                        false);
+            }
+
+            methodVisitor.visitVarInsn(FSTORE, 3);
+            methodVisitor.visitVarInsn(DLOAD, 4);
+            methodVisitor.visitVarInsn(FLOAD, 3);
+            methodVisitor.visitInsn(F2D);
+            methodVisitor.visitInsn(DCMPL);
+            Label l0 = new Label();
+            methodVisitor.visitJumpInsn(IFGT, l0);
+            methodVisitor.visitInsn(ICONST_1);
+            Label l1 = new Label();
+            methodVisitor.visitJumpInsn(GOTO, l1);
+            methodVisitor.visitLabel(l0);
+            methodVisitor.visitInsn(ICONST_0);
+            methodVisitor.visitLabel(l1);
+            if (status == 2) {
+                methodVisitor.visitVarInsn(ISTORE, 3);
+            } else {
+                methodVisitor.visitVarInsn(ISTORE, 2);
+            }
+        }
+    }
+
+    /**
+     * This class generates byte code for "==" operator with boolean on left and boolean on right.
+     */
+    class PrivateEqualCompareConditionExpressionExecutorBoolBoolBytecodeEmitter implements ByteCodeEmitter {
+
+        /**
+         * This method overrides the interface method.
+         *
+         * @param conditionExecutor
+         * @param status
+         * @param parent
+         * @param specialCase
+         * @param parentStatus
+         * @param methodVisitor
+         * @param byteCodeGenarator
+         */
+        @Override
+        public void generate(ExpressionExecutor conditionExecutor, int status, int parent,
+                             Label specialCase, int parentStatus, MethodVisitor methodVisitor,
+                             ByteCodeGenarator byteCodeGenarator) {
+            ExpressionExecutor left = ((EqualCompareConditionExpressionExecutorBoolBool) conditionExecutor)
+                    .getLeftExpressionExecutor();
+            ExpressionExecutor right = ((EqualCompareConditionExpressionExecutor) conditionExecutor)
+                    .getRightExpressionExecutor();
+            byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
+            if (left instanceof VariableExpressionExecutor) {
+                methodVisitor.visitVarInsn(ALOAD, 2);
+                methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Boolean");
+                methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Boolean", "booleanValue", "()Z",
+                        false);
+            }
+
+            methodVisitor.visitVarInsn(ISTORE, 2);
+            byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
+            if (right instanceof VariableExpressionExecutor) {
+                methodVisitor.visitVarInsn(ALOAD, 3);
+                methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Boolean");
+                methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Boolean", "booleanValue", "()Z",
+                        false);
+            }
+
+            methodVisitor.visitVarInsn(ISTORE, 3);
+            methodVisitor.visitVarInsn(ILOAD, 2);
+            methodVisitor.visitVarInsn(ILOAD, 3);
+            Label l0 = new Label();
+            methodVisitor.visitJumpInsn(IF_ICMPNE, l0);
             methodVisitor.visitInsn(ICONST_1);
             Label l1 = new Label();
             methodVisitor.visitJumpInsn(GOTO, l1);

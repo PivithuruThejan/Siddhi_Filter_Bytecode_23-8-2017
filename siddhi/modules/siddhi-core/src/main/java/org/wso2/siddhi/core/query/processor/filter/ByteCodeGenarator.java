@@ -26,9 +26,11 @@ import org.wso2.siddhi.core.executor.VariableExpressionExecutor;
 import org.wso2.siddhi.core.executor.condition.AndConditionExpressionExecutor;
 import org.wso2.siddhi.core.executor.condition.NotConditionExpressionExecutor;
 import org.wso2.siddhi.core.executor.condition.OrConditionExpressionExecutor;
+import org.wso2.siddhi.core.executor.condition.compare.equal.EqualCompareConditionExpressionExecutorBoolBool;
 import org.wso2.siddhi.core.executor.condition.compare.greaterthan.*;
 import org.wso2.siddhi.core.executor.condition.compare.greaterthanequal.*;
 import org.wso2.siddhi.core.executor.condition.compare.lessthan.*;
+import org.wso2.siddhi.core.executor.condition.compare.lessthanequal.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -151,6 +153,40 @@ public class ByteCodeGenarator {
                 byteCode.new PrivateGreaterThanEqualCompareConditionExpressionExecutorLongIntegerBytecodeEmitter());
         byteCodegenerators.put(GreaterThanEqualCompareConditionExpressionExecutorLongLong.class,
                 byteCode.new PrivateGreaterThanEqualCompareConditionExpressionExecutorLongLongBytecodeEmitter());
+        byteCodegenerators.put(LessThanEqualCompareConditionExpressionExecutorDoubleDouble.class,
+                byteCode.new PrivateLessThanEqualCompareConditionExpressionExecutorDoubleDoubleBytecodeEmitter());
+        byteCodegenerators.put(LessThanEqualCompareConditionExpressionExecutorDoubleFloat.class,
+                byteCode.new PrivateLessThanEqualCompareConditionExpressionExecutorDoubleFloatBytecodeEmitter());
+        byteCodegenerators.put(LessThanEqualCompareConditionExpressionExecutorDoubleInt.class,
+                byteCode.new PrivateLessThanEqualCompareConditionExpressionExecutorDoubleIntegerBytecodeEmitter());
+        byteCodegenerators.put(LessThanEqualCompareConditionExpressionExecutorDoubleLong.class,
+                byteCode.new PrivateLessThanEqualCompareConditionExpressionExecutorDoubleLongBytecodeEmitter());
+        byteCodegenerators.put(LessThanEqualCompareConditionExpressionExecutorFloatDouble.class,
+                byteCode.new PrivateLessThanEqualCompareConditionExpressionExecutorFloatDoubleBytecodeEmitter());
+        byteCodegenerators.put(LessThanEqualCompareConditionExpressionExecutorFloatFloat.class,
+                byteCode.new PrivateLessThanEqualCompareConditionExpressionExecutorFloatFloatBytecodeEmitter());
+        byteCodegenerators.put(LessThanEqualCompareConditionExpressionExecutorFloatInt.class,
+                byteCode.new PrivateLessThanEqualCompareConditionExpressionExecutorFloatIntegerBytecodeEmitter());
+        byteCodegenerators.put(LessThanEqualCompareConditionExpressionExecutorFloatLong.class,
+                byteCode.new PrivateLessThanEqualCompareConditionExpressionExecutorFloatLongBytecodeEmitter());
+        byteCodegenerators.put(LessThanEqualCompareConditionExpressionExecutorIntDouble.class,
+                byteCode.new PrivateLessThanEqualCompareConditionExpressionExecutorIntegerDoubleBytecodeEmitter());
+        byteCodegenerators.put(LessThanEqualCompareConditionExpressionExecutorIntFloat.class,
+                byteCode.new PrivateLessThanEqualCompareConditionExpressionExecutorIntegerFloatBytecodeEmitter());
+        byteCodegenerators.put(LessThanEqualCompareConditionExpressionExecutorIntInt.class,
+                byteCode.new PrivateLessThanEqualCompareConditionExpressionExecutorIntegerIntegerBytecodeEmitter());
+        byteCodegenerators.put(LessThanEqualCompareConditionExpressionExecutorIntLong.class,
+                byteCode.new PrivateLessThanEqualCompareConditionExpressionExecutorIntegerLongBytecodeEmitter());
+        byteCodegenerators.put(LessThanEqualCompareConditionExpressionExecutorLongDouble.class,
+                byteCode.new PrivateLessThanEqualCompareConditionExpressionExecutorLongDoubleBytecodeEmitter());
+        byteCodegenerators.put(LessThanEqualCompareConditionExpressionExecutorLongFloat.class,
+                byteCode.new PrivateLessThanEqualCompareConditionExpressionExecutorLongFloatBytecodeEmitter());
+        byteCodegenerators.put(LessThanEqualCompareConditionExpressionExecutorLongInt.class,
+                byteCode.new PrivateLessThanEqualCompareConditionExpressionExecutorLongIntegerBytecodeEmitter());
+        byteCodegenerators.put(LessThanEqualCompareConditionExpressionExecutorLongLong.class,
+                byteCode.new PrivateLessThanEqualCompareConditionExpressionExecutorLongLongBytecodeEmitter());
+        byteCodegenerators.put(EqualCompareConditionExpressionExecutorBoolBool.class,
+                byteCode.new PrivateEqualCompareConditionExpressionExecutorBoolBoolBytecodeEmitter());
     }
 
     private ClassWriter classWriter;
