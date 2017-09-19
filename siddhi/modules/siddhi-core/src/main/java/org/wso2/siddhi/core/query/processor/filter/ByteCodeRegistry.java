@@ -31,7 +31,7 @@ import org.wso2.siddhi.core.executor.condition.compare.greaterthan.*;
 import org.wso2.siddhi.core.executor.condition.compare.greaterthanequal.*;
 import org.wso2.siddhi.core.executor.condition.compare.lessthan.*;
 import org.wso2.siddhi.core.executor.condition.compare.lessthanequal.*;
-import org.wso2.siddhi.core.executor.condition.compare.notequal.NotEqualCompareConditionExpressionExecutorBoolBool;
+import org.wso2.siddhi.core.executor.condition.compare.notequal.*;
 
 import static org.mvel2.asm.Opcodes.*;
 import static org.mvel2.asm.Opcodes.ISTORE;
@@ -4444,6 +4444,67 @@ public class ByteCodeRegistry {
     }
 
     /**
+     * This class generates byte code for "!=" operator with double on left and double on right.
+     */
+    class PrivateNotEqualCompareConditionExpressionExecutorDoubleDoubleBytecodeEmitter implements ByteCodeEmitter {
+
+        /**
+         * This method overrides the interface method.
+         *
+         * @param conditionExecutor
+         * @param status
+         * @param parent
+         * @param specialCase
+         * @param parentStatus
+         * @param methodVisitor
+         * @param byteCodeGenarator
+         */
+        @Override
+        public void generate(ExpressionExecutor conditionExecutor, int status, int parent,
+                             Label specialCase, int parentStatus, MethodVisitor methodVisitor,
+                             ByteCodeGenarator byteCodeGenarator) {
+            ExpressionExecutor left = ((NotEqualCompareConditionExpressionExecutorDoubleDouble) conditionExecutor)
+                    .getLeftExpressionExecutor();
+            ExpressionExecutor right = ((NotEqualCompareConditionExpressionExecutorDoubleDouble) conditionExecutor)
+                    .getRightExpressionExecutor();
+            byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
+            if (left instanceof VariableExpressionExecutor) {
+                methodVisitor.visitVarInsn(ALOAD, 2);
+                methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Double");
+                methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Double", "doubleValue", "()D",
+                        false);
+            }
+
+            methodVisitor.visitVarInsn(DSTORE, 4);
+            byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
+            if (right instanceof VariableExpressionExecutor) {
+                methodVisitor.visitVarInsn(ALOAD, 3);
+                methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Double");
+                methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Double", "doubleValue", "()D",
+                        false);
+            }
+
+            methodVisitor.visitVarInsn(DSTORE, 6);
+            methodVisitor.visitVarInsn(DLOAD, 4);
+            methodVisitor.visitVarInsn(DLOAD, 6);
+            methodVisitor.visitInsn(DCMPL);
+            Label l0 = new Label();
+            methodVisitor.visitJumpInsn(IFEQ, l0);
+            methodVisitor.visitInsn(ICONST_1);
+            Label l1 = new Label();
+            methodVisitor.visitJumpInsn(GOTO, l1);
+            methodVisitor.visitLabel(l0);
+            methodVisitor.visitInsn(ICONST_0);
+            methodVisitor.visitLabel(l1);
+            if (status == 2) {
+                methodVisitor.visitVarInsn(ISTORE, 3);
+            } else {
+                methodVisitor.visitVarInsn(ISTORE, 2);
+            }
+        }
+    }
+
+    /**
      * This class generates byte code for "==" operator with double on left and float on right.
      */
     class PrivateEqualCompareConditionExpressionExecutorDoubleFloatBytecodeEmitter implements ByteCodeEmitter {
@@ -4491,6 +4552,68 @@ public class ByteCodeRegistry {
             methodVisitor.visitInsn(DCMPL);
             Label l0 = new Label();
             methodVisitor.visitJumpInsn(IFNE, l0);
+            methodVisitor.visitInsn(ICONST_1);
+            Label l1 = new Label();
+            methodVisitor.visitJumpInsn(GOTO, l1);
+            methodVisitor.visitLabel(l0);
+            methodVisitor.visitInsn(ICONST_0);
+            methodVisitor.visitLabel(l1);
+            if (status == 2) {
+                methodVisitor.visitVarInsn(ISTORE, 3);
+            } else {
+                methodVisitor.visitVarInsn(ISTORE, 2);
+            }
+        }
+    }
+
+    /**
+     * This class generates byte code for "!=" operator with double on left and float on right.
+     */
+    class PrivateNotEqualCompareConditionExpressionExecutorDoubleFloatBytecodeEmitter implements ByteCodeEmitter {
+
+        /**
+         * This method overrides the interface method.
+         *
+         * @param conditionExecutor
+         * @param status
+         * @param parent
+         * @param specialCase
+         * @param parentStatus
+         * @param methodVisitor
+         * @param byteCodeGenarator
+         */
+        @Override
+        public void generate(ExpressionExecutor conditionExecutor, int status, int parent,
+                             Label specialCase, int parentStatus, MethodVisitor methodVisitor,
+                             ByteCodeGenarator byteCodeGenarator) {
+            ExpressionExecutor left = ((NotEqualCompareConditionExpressionExecutorDoubleFloat) conditionExecutor)
+                    .getLeftExpressionExecutor();
+            ExpressionExecutor right = ((NotEqualCompareConditionExpressionExecutorDoubleFloat) conditionExecutor)
+                    .getRightExpressionExecutor();
+            byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
+            if (left instanceof VariableExpressionExecutor) {
+                methodVisitor.visitVarInsn(ALOAD, 2);
+                methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Double");
+                methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Double", "doubleValue", "()D",
+                        false);
+            }
+
+            methodVisitor.visitVarInsn(DSTORE, 4);
+            byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
+            if (right instanceof VariableExpressionExecutor) {
+                methodVisitor.visitVarInsn(ALOAD, 3);
+                methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Float");
+                methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Float", "floatValue", "()F",
+                        false);
+            }
+
+            methodVisitor.visitVarInsn(FSTORE, 3);
+            methodVisitor.visitVarInsn(DLOAD, 4);
+            methodVisitor.visitVarInsn(FLOAD, 3);
+            methodVisitor.visitInsn(F2D);
+            methodVisitor.visitInsn(DCMPL);
+            Label l0 = new Label();
+            methodVisitor.visitJumpInsn(IFEQ, l0);
             methodVisitor.visitInsn(ICONST_1);
             Label l1 = new Label();
             methodVisitor.visitJumpInsn(GOTO, l1);
@@ -4568,6 +4691,68 @@ public class ByteCodeRegistry {
     }
 
     /**
+     * This class generates byte code for "!=" operator with double on left and int on right.
+     */
+    class PrivateNotEqualCompareConditionExpressionExecutorDoubleIntegerBytecodeEmitter implements ByteCodeEmitter {
+
+        /**
+         * This method overrides the interface method.
+         *
+         * @param conditionExecutor
+         * @param status
+         * @param parent
+         * @param specialCase
+         * @param parentStatus
+         * @param methodVisitor
+         * @param byteCodeGenarator
+         */
+        @Override
+        public void generate(ExpressionExecutor conditionExecutor, int status, int parent,
+                             Label specialCase, int parentStatus, MethodVisitor methodVisitor,
+                             ByteCodeGenarator byteCodeGenarator) {
+            ExpressionExecutor left = ((NotEqualCompareConditionExpressionExecutorDoubleInt) conditionExecutor)
+                    .getLeftExpressionExecutor();
+            ExpressionExecutor right = ((NotEqualCompareConditionExpressionExecutorDoubleInt) conditionExecutor)
+                    .getRightExpressionExecutor();
+            byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
+            if (left instanceof VariableExpressionExecutor) {
+                methodVisitor.visitVarInsn(ALOAD, 2);
+                methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Double");
+                methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Double", "doubleValue", "()D",
+                        false);
+            }
+
+            methodVisitor.visitVarInsn(DSTORE, 4);
+            byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
+            if (right instanceof VariableExpressionExecutor) {
+                methodVisitor.visitVarInsn(ALOAD, 3);
+                methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Integer");
+                methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Integer", "intValue", "()I",
+                        false);
+            }
+
+            methodVisitor.visitVarInsn(ISTORE, 3);
+            methodVisitor.visitVarInsn(DLOAD, 4);
+            methodVisitor.visitVarInsn(ILOAD, 3);
+            methodVisitor.visitInsn(I2D);
+            methodVisitor.visitInsn(DCMPL);
+            Label l0 = new Label();
+            methodVisitor.visitJumpInsn(IFEQ, l0);
+            methodVisitor.visitInsn(ICONST_1);
+            Label l1 = new Label();
+            methodVisitor.visitJumpInsn(GOTO, l1);
+            methodVisitor.visitLabel(l0);
+            methodVisitor.visitInsn(ICONST_0);
+            methodVisitor.visitLabel(l1);
+            if (status == 2) {
+                methodVisitor.visitVarInsn(ISTORE, 3);
+            } else {
+                methodVisitor.visitVarInsn(ISTORE, 2);
+            }
+        }
+    }
+
+    /**
      * This class generates byte code for "==" operator with double on left and long on right.
      */
     class PrivateEqualCompareConditionExpressionExecutorDoubleLongBytecodeEmitter implements ByteCodeEmitter {
@@ -4615,6 +4800,68 @@ public class ByteCodeRegistry {
             methodVisitor.visitInsn(DCMPL);
             Label l0 = new Label();
             methodVisitor.visitJumpInsn(IFNE, l0);
+            methodVisitor.visitInsn(ICONST_1);
+            Label l1 = new Label();
+            methodVisitor.visitJumpInsn(GOTO, l1);
+            methodVisitor.visitLabel(l0);
+            methodVisitor.visitInsn(ICONST_0);
+            methodVisitor.visitLabel(l1);
+            if (status == 2) {
+                methodVisitor.visitVarInsn(ISTORE, 3);
+            } else {
+                methodVisitor.visitVarInsn(ISTORE, 2);
+            }
+        }
+    }
+
+    /**
+     * This class generates byte code for "!=" operator with double on left and long on right.
+     */
+    class PrivateNotEqualCompareConditionExpressionExecutorDoubleLongBytecodeEmitter implements ByteCodeEmitter {
+
+        /**
+         * This method overrides the interface method.
+         *
+         * @param conditionExecutor
+         * @param status
+         * @param parent
+         * @param specialCase
+         * @param parentStatus
+         * @param methodVisitor
+         * @param byteCodeGenarator
+         */
+        @Override
+        public void generate(ExpressionExecutor conditionExecutor, int status, int parent,
+                             Label specialCase, int parentStatus, MethodVisitor methodVisitor,
+                             ByteCodeGenarator byteCodeGenarator) {
+            ExpressionExecutor left = ((NotEqualCompareConditionExpressionExecutorDoubleLong) conditionExecutor)
+                    .getLeftExpressionExecutor();
+            ExpressionExecutor right = ((NotEqualCompareConditionExpressionExecutorDoubleLong) conditionExecutor)
+                    .getRightExpressionExecutor();
+            byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
+            if (left instanceof VariableExpressionExecutor) {
+                methodVisitor.visitVarInsn(ALOAD, 2);
+                methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Double");
+                methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Double", "doubleValue", "()D",
+                        false);
+            }
+
+            methodVisitor.visitVarInsn(DSTORE, 4);
+            byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
+            if (right instanceof VariableExpressionExecutor) {
+                methodVisitor.visitVarInsn(ALOAD, 3);
+                methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Long");
+                methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Long", "longValue", "()J",
+                        false);
+            }
+
+            methodVisitor.visitVarInsn(LSTORE, 6);
+            methodVisitor.visitVarInsn(DLOAD, 4);
+            methodVisitor.visitVarInsn(LLOAD, 6);
+            methodVisitor.visitInsn(L2D);
+            methodVisitor.visitInsn(DCMPL);
+            Label l0 = new Label();
+            methodVisitor.visitJumpInsn(IFEQ, l0);
             methodVisitor.visitInsn(ICONST_1);
             Label l1 = new Label();
             methodVisitor.visitJumpInsn(GOTO, l1);
@@ -4692,6 +4939,68 @@ public class ByteCodeRegistry {
     }
 
     /**
+     * This class generates byte code for "!=" operator with float on left and double on right.
+     */
+    class PrivateNotEqualCompareConditionExpressionExecutorFloatDoubleBytecodeEmitter implements ByteCodeEmitter {
+
+        /**
+         * This method overrides the interface method.
+         *
+         * @param conditionExecutor
+         * @param status
+         * @param parent
+         * @param specialCase
+         * @param parentStatus
+         * @param methodVisitor
+         * @param byteCodeGenarator
+         */
+        @Override
+        public void generate(ExpressionExecutor conditionExecutor, int status, int parent,
+                             Label specialCase, int parentStatus, MethodVisitor methodVisitor,
+                             ByteCodeGenarator byteCodeGenarator) {
+            ExpressionExecutor left = ((NotEqualCompareConditionExpressionExecutorFloatDouble) conditionExecutor)
+                    .getLeftExpressionExecutor();
+            ExpressionExecutor right = ((NotEqualCompareConditionExpressionExecutorFloatDouble) conditionExecutor)
+                    .getRightExpressionExecutor();
+            byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
+            if (left instanceof VariableExpressionExecutor) {
+                methodVisitor.visitVarInsn(ALOAD, 2);
+                methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Float");
+                methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Float", "floatValue", "()F",
+                        false);
+            }
+
+            methodVisitor.visitVarInsn(FSTORE, 2);
+            byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
+            if (right instanceof VariableExpressionExecutor) {
+                methodVisitor.visitVarInsn(ALOAD, 3);
+                methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Double");
+                methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Double", "doubleValue", "()D",
+                        false);
+            }
+
+            methodVisitor.visitVarInsn(DSTORE, 3);
+            methodVisitor.visitVarInsn(FLOAD, 2);
+            methodVisitor.visitInsn(F2D);
+            methodVisitor.visitVarInsn(DLOAD, 3);
+            methodVisitor.visitInsn(DCMPL);
+            Label l0 = new Label();
+            methodVisitor.visitJumpInsn(IFEQ, l0);
+            methodVisitor.visitInsn(ICONST_1);
+            Label l1 = new Label();
+            methodVisitor.visitJumpInsn(GOTO, l1);
+            methodVisitor.visitLabel(l0);
+            methodVisitor.visitInsn(ICONST_0);
+            methodVisitor.visitLabel(l1);
+            if (status == 2) {
+                methodVisitor.visitVarInsn(ISTORE, 3);
+            } else {
+                methodVisitor.visitVarInsn(ISTORE, 2);
+            }
+        }
+    }
+
+    /**
      * This class generates byte code for "==" operator with long on left and double on right.
      */
     class PrivateEqualCompareConditionExpressionExecutorLongDoubleBytecodeEmitter implements ByteCodeEmitter {
@@ -4739,6 +5048,68 @@ public class ByteCodeRegistry {
             methodVisitor.visitInsn(DCMPL);
             Label l0 = new Label();
             methodVisitor.visitJumpInsn(IFNE, l0);
+            methodVisitor.visitInsn(ICONST_1);
+            Label l1 = new Label();
+            methodVisitor.visitJumpInsn(GOTO, l1);
+            methodVisitor.visitLabel(l0);
+            methodVisitor.visitInsn(ICONST_0);
+            methodVisitor.visitLabel(l1);
+            if (status == 2) {
+                methodVisitor.visitVarInsn(ISTORE, 3);
+            } else {
+                methodVisitor.visitVarInsn(ISTORE, 2);
+            }
+        }
+    }
+
+    /**
+     * This class generates byte code for "!=" operator with long on left and double on right.
+     */
+    class PrivateNotEqualCompareConditionExpressionExecutorLongDoubleBytecodeEmitter implements ByteCodeEmitter {
+
+        /**
+         * This method overrides the interface method.
+         *
+         * @param conditionExecutor
+         * @param status
+         * @param parent
+         * @param specialCase
+         * @param parentStatus
+         * @param methodVisitor
+         * @param byteCodeGenarator
+         */
+        @Override
+        public void generate(ExpressionExecutor conditionExecutor, int status, int parent,
+                             Label specialCase, int parentStatus, MethodVisitor methodVisitor,
+                             ByteCodeGenarator byteCodeGenarator) {
+            ExpressionExecutor left = ((NotEqualCompareConditionExpressionExecutorLongDouble) conditionExecutor)
+                    .getLeftExpressionExecutor();
+            ExpressionExecutor right = ((NotEqualCompareConditionExpressionExecutorLongDouble) conditionExecutor)
+                    .getRightExpressionExecutor();
+            byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
+            if (left instanceof VariableExpressionExecutor) {
+                methodVisitor.visitVarInsn(ALOAD, 2);
+                methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Long");
+                methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Long", "longValue", "()J",
+                        false);
+            }
+
+            methodVisitor.visitVarInsn(LSTORE, 4);
+            byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
+            if (right instanceof VariableExpressionExecutor) {
+                methodVisitor.visitVarInsn(ALOAD, 3);
+                methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Double");
+                methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Double", "doubleValue", "()D",
+                        false);
+            }
+
+            methodVisitor.visitVarInsn(DSTORE, 6);
+            methodVisitor.visitVarInsn(LLOAD, 4);
+            methodVisitor.visitInsn(L2D);
+            methodVisitor.visitVarInsn(DLOAD, 6);
+            methodVisitor.visitInsn(DCMPL);
+            Label l0 = new Label();
+            methodVisitor.visitJumpInsn(IFEQ, l0);
             methodVisitor.visitInsn(ICONST_1);
             Label l1 = new Label();
             methodVisitor.visitJumpInsn(GOTO, l1);
@@ -4816,6 +5187,68 @@ public class ByteCodeRegistry {
     }
 
     /**
+     * This class generates byte code for "!=" operator with long on left and float on right.
+     */
+    class PrivateNotEqualCompareConditionExpressionExecutorLongFloatBytecodeEmitter implements ByteCodeEmitter {
+
+        /**
+         * This method overrides the interface method.
+         *
+         * @param conditionExecutor
+         * @param status
+         * @param parent
+         * @param specialCase
+         * @param parentStatus
+         * @param methodVisitor
+         * @param byteCodeGenarator
+         */
+        @Override
+        public void generate(ExpressionExecutor conditionExecutor, int status, int parent,
+                             Label specialCase, int parentStatus, MethodVisitor methodVisitor,
+                             ByteCodeGenarator byteCodeGenarator) {
+            ExpressionExecutor left = ((NotEqualCompareConditionExpressionExecutorLongFloat) conditionExecutor)
+                    .getLeftExpressionExecutor();
+            ExpressionExecutor right = ((NotEqualCompareConditionExpressionExecutorLongFloat) conditionExecutor)
+                    .getRightExpressionExecutor();
+            byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
+            if (left instanceof VariableExpressionExecutor) {
+                methodVisitor.visitVarInsn(ALOAD, 2);
+                methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Long");
+                methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Long", "longValue", "()J",
+                        false);
+            }
+
+            methodVisitor.visitVarInsn(LSTORE, 4);
+            byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
+            if (right instanceof VariableExpressionExecutor) {
+                methodVisitor.visitVarInsn(ALOAD, 3);
+                methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Float");
+                methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Float", "floatValue", "()F",
+                        false);
+            }
+
+            methodVisitor.visitVarInsn(FSTORE, 3);
+            methodVisitor.visitVarInsn(LLOAD, 4);
+            methodVisitor.visitInsn(L2F);
+            methodVisitor.visitVarInsn(FLOAD, 3);
+            methodVisitor.visitInsn(FCMPL);
+            Label l0 = new Label();
+            methodVisitor.visitJumpInsn(IFEQ, l0);
+            methodVisitor.visitInsn(ICONST_1);
+            Label l1 = new Label();
+            methodVisitor.visitJumpInsn(GOTO, l1);
+            methodVisitor.visitLabel(l0);
+            methodVisitor.visitInsn(ICONST_0);
+            methodVisitor.visitLabel(l1);
+            if (status == 2) {
+                methodVisitor.visitVarInsn(ISTORE, 3);
+            } else {
+                methodVisitor.visitVarInsn(ISTORE, 2);
+            }
+        }
+    }
+
+    /**
      * This class generates byte code for "==" operator with long on left and int on right.
      */
     class PrivateEqualCompareConditionExpressionExecutorLongIntegerBytecodeEmitter implements ByteCodeEmitter {
@@ -4878,6 +5311,68 @@ public class ByteCodeRegistry {
     }
 
     /**
+     * This class generates byte code for "!=" operator with long on left and int on right.
+     */
+    class PrivateNotEqualCompareConditionExpressionExecutorLongIntegerBytecodeEmitter implements ByteCodeEmitter {
+
+        /**
+         * This method overrides the interface method.
+         *
+         * @param conditionExecutor
+         * @param status
+         * @param parent
+         * @param specialCase
+         * @param parentStatus
+         * @param methodVisitor
+         * @param byteCodeGenarator
+         */
+        @Override
+        public void generate(ExpressionExecutor conditionExecutor, int status, int parent,
+                             Label specialCase, int parentStatus, MethodVisitor methodVisitor,
+                             ByteCodeGenarator byteCodeGenarator) {
+            ExpressionExecutor left = ((NotEqualCompareConditionExpressionExecutorLongInt) conditionExecutor)
+                    .getLeftExpressionExecutor();
+            ExpressionExecutor right = ((NotEqualCompareConditionExpressionExecutorLongInt) conditionExecutor)
+                    .getRightExpressionExecutor();
+            byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
+            if (left instanceof VariableExpressionExecutor) {
+                methodVisitor.visitVarInsn(ALOAD, 2);
+                methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Long");
+                methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Long", "longValue", "()J",
+                        false);
+            }
+
+            methodVisitor.visitVarInsn(LSTORE, 4);
+            byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
+            if (right instanceof VariableExpressionExecutor) {
+                methodVisitor.visitVarInsn(ALOAD, 3);
+                methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Integer");
+                methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Integer", "intValue", "()I",
+                        false);
+            }
+
+            methodVisitor.visitVarInsn(ISTORE, 3);
+            methodVisitor.visitVarInsn(LLOAD, 4);
+            methodVisitor.visitVarInsn(ILOAD, 3);
+            methodVisitor.visitInsn(I2L);
+            methodVisitor.visitInsn(LCMP);
+            Label l0 = new Label();
+            methodVisitor.visitJumpInsn(IFEQ, l0);
+            methodVisitor.visitInsn(ICONST_1);
+            Label l1 = new Label();
+            methodVisitor.visitJumpInsn(GOTO, l1);
+            methodVisitor.visitLabel(l0);
+            methodVisitor.visitInsn(ICONST_0);
+            methodVisitor.visitLabel(l1);
+            if (status == 2) {
+                methodVisitor.visitVarInsn(ISTORE, 3);
+            } else {
+                methodVisitor.visitVarInsn(ISTORE, 2);
+            }
+        }
+    }
+
+    /**
      * This class generates byte code for "==" operator with long on left and long on right.
      */
     class PrivateEqualCompareConditionExpressionExecutorLongLongBytecodeEmitter implements ByteCodeEmitter {
@@ -4924,6 +5419,67 @@ public class ByteCodeRegistry {
             methodVisitor.visitInsn(LCMP);
             Label l0 = new Label();
             methodVisitor.visitJumpInsn(IFNE, l0);
+            methodVisitor.visitInsn(ICONST_1);
+            Label l1 = new Label();
+            methodVisitor.visitJumpInsn(GOTO, l1);
+            methodVisitor.visitLabel(l0);
+            methodVisitor.visitInsn(ICONST_0);
+            methodVisitor.visitLabel(l1);
+            if (status == 2) {
+                methodVisitor.visitVarInsn(ISTORE, 3);
+            } else {
+                methodVisitor.visitVarInsn(ISTORE, 2);
+            }
+        }
+    }
+
+    /**
+     * This class generates byte code for "!=" operator with long on left and long on right.
+     */
+    class PrivateNotEqualCompareConditionExpressionExecutorLongLongBytecodeEmitter implements ByteCodeEmitter {
+
+        /**
+         * This method overrides the interface method.
+         *
+         * @param conditionExecutor
+         * @param status
+         * @param parent
+         * @param specialCase
+         * @param parentStatus
+         * @param methodVisitor
+         * @param byteCodeGenarator
+         */
+        @Override
+        public void generate(ExpressionExecutor conditionExecutor, int status, int parent,
+                             Label specialCase, int parentStatus, MethodVisitor methodVisitor,
+                             ByteCodeGenarator byteCodeGenarator) {
+            ExpressionExecutor left = ((NotEqualCompareConditionExpressionExecutorLongLong) conditionExecutor)
+                    .getLeftExpressionExecutor();
+            ExpressionExecutor right = ((NotEqualCompareConditionExpressionExecutorLongLong) conditionExecutor)
+                    .getRightExpressionExecutor();
+            byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
+            if (left instanceof VariableExpressionExecutor) {
+                methodVisitor.visitVarInsn(ALOAD, 2);
+                methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Long");
+                methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Long", "longValue", "()J",
+                        false);
+            }
+
+            methodVisitor.visitVarInsn(LSTORE, 4);
+            byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
+            if (right instanceof VariableExpressionExecutor) {
+                methodVisitor.visitVarInsn(ALOAD, 3);
+                methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Long");
+                methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Long", "longValue", "()J",
+                        false);
+            }
+
+            methodVisitor.visitVarInsn(LSTORE, 6);
+            methodVisitor.visitVarInsn(LLOAD, 4);
+            methodVisitor.visitVarInsn(LLOAD, 6);
+            methodVisitor.visitInsn(LCMP);
+            Label l0 = new Label();
+            methodVisitor.visitJumpInsn(IFEQ, l0);
             methodVisitor.visitInsn(ICONST_1);
             Label l1 = new Label();
             methodVisitor.visitJumpInsn(GOTO, l1);
@@ -5001,6 +5557,68 @@ public class ByteCodeRegistry {
     }
 
     /**
+     * This class generates byte code for "!=" operator with int on left and double on right.
+     */
+    class PrivateNotEqualCompareConditionExpressionExecutorIntegerDoubleBytecodeEmitter implements ByteCodeEmitter {
+
+        /**
+         * This method overrides the interface method.
+         *
+         * @param conditionExecutor
+         * @param status
+         * @param parent
+         * @param specialCase
+         * @param parentStatus
+         * @param methodVisitor
+         * @param byteCodeGenarator
+         */
+        @Override
+        public void generate(ExpressionExecutor conditionExecutor, int status, int parent,
+                             Label specialCase, int parentStatus, MethodVisitor methodVisitor,
+                             ByteCodeGenarator byteCodeGenarator) {
+            ExpressionExecutor left = ((NotEqualCompareConditionExpressionExecutorIntDouble) conditionExecutor)
+                    .getLeftExpressionExecutor();
+            ExpressionExecutor right = ((NotEqualCompareConditionExpressionExecutorIntDouble) conditionExecutor)
+                    .getRightExpressionExecutor();
+            byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
+            if (left instanceof VariableExpressionExecutor) {
+                methodVisitor.visitVarInsn(ALOAD, 2);
+                methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Integer");
+                methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Integer", "intValue", "()I",
+                        false);
+            }
+
+            methodVisitor.visitVarInsn(ISTORE, 2);
+            byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
+            if (right instanceof VariableExpressionExecutor) {
+                methodVisitor.visitVarInsn(ALOAD, 3);
+                methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Double");
+                methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Double", "doubleValue", "()D",
+                        false);
+            }
+
+            methodVisitor.visitVarInsn(DSTORE, 3);
+            methodVisitor.visitVarInsn(ILOAD, 2);
+            methodVisitor.visitInsn(I2D);
+            methodVisitor.visitVarInsn(DLOAD, 3);
+            methodVisitor.visitInsn(DCMPL);
+            Label l0 = new Label();
+            methodVisitor.visitJumpInsn(IFEQ, l0);
+            methodVisitor.visitInsn(ICONST_1);
+            Label l1 = new Label();
+            methodVisitor.visitJumpInsn(GOTO, l1);
+            methodVisitor.visitLabel(l0);
+            methodVisitor.visitInsn(ICONST_0);
+            methodVisitor.visitLabel(l1);
+            if (status == 2) {
+                methodVisitor.visitVarInsn(ISTORE, 3);
+            } else {
+                methodVisitor.visitVarInsn(ISTORE, 2);
+            }
+        }
+    }
+
+    /**
      * This class generates byte code for "==" operator with int on left and float on right.
      */
     class PrivateEqualCompareConditionExpressionExecutorIntegerFloatBytecodeEmitter implements ByteCodeEmitter {
@@ -5063,6 +5681,68 @@ public class ByteCodeRegistry {
     }
 
     /**
+     * This class generates byte code for "!=" operator with int on left and float on right.
+     */
+    class PrivateNotEqualCompareConditionExpressionExecutorIntegerFloatBytecodeEmitter implements ByteCodeEmitter {
+
+        /**
+         * This method overrides the interface method.
+         *
+         * @param conditionExecutor
+         * @param status
+         * @param parent
+         * @param specialCase
+         * @param parentStatus
+         * @param methodVisitor
+         * @param byteCodeGenarator
+         */
+        @Override
+        public void generate(ExpressionExecutor conditionExecutor, int status, int parent,
+                             Label specialCase, int parentStatus, MethodVisitor methodVisitor,
+                             ByteCodeGenarator byteCodeGenarator) {
+            ExpressionExecutor left = ((NotEqualCompareConditionExpressionExecutorIntFloat) conditionExecutor)
+                    .getLeftExpressionExecutor();
+            ExpressionExecutor right = ((NotEqualCompareConditionExpressionExecutorIntFloat) conditionExecutor)
+                    .getRightExpressionExecutor();
+            byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
+            if (left instanceof VariableExpressionExecutor) {
+                methodVisitor.visitVarInsn(ALOAD, 2);
+                methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Integer");
+                methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Integer", "intValue", "()I",
+                        false);
+            }
+
+            methodVisitor.visitVarInsn(ISTORE, 2);
+            byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
+            if (right instanceof VariableExpressionExecutor) {
+                methodVisitor.visitVarInsn(ALOAD, 3);
+                methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Float");
+                methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Float", "floatValue", "()F",
+                        false);
+            }
+
+            methodVisitor.visitVarInsn(FSTORE, 3);
+            methodVisitor.visitVarInsn(ILOAD, 2);
+            methodVisitor.visitInsn(I2F);
+            methodVisitor.visitVarInsn(FLOAD, 3);
+            methodVisitor.visitInsn(FCMPL);
+            Label l0 = new Label();
+            methodVisitor.visitJumpInsn(IFEQ, l0);
+            methodVisitor.visitInsn(ICONST_1);
+            Label l1 = new Label();
+            methodVisitor.visitJumpInsn(GOTO, l1);
+            methodVisitor.visitLabel(l0);
+            methodVisitor.visitInsn(ICONST_0);
+            methodVisitor.visitLabel(l1);
+            if (status == 2) {
+                methodVisitor.visitVarInsn(ISTORE, 3);
+            } else {
+                methodVisitor.visitVarInsn(ISTORE, 2);
+            }
+        }
+    }
+
+    /**
      * This class generates byte code for "==" operator with int on left and int on right.
      */
     class PrivateEqualCompareConditionExpressionExecutorIntegerIntegerBytecodeEmitter implements ByteCodeEmitter {
@@ -5108,6 +5788,66 @@ public class ByteCodeRegistry {
             methodVisitor.visitVarInsn(ILOAD, 3);
             Label l0 = new Label();
             methodVisitor.visitJumpInsn(IF_ICMPNE, l0);
+            methodVisitor.visitInsn(ICONST_1);
+            Label l1 = new Label();
+            methodVisitor.visitJumpInsn(GOTO, l1);
+            methodVisitor.visitLabel(l0);
+            methodVisitor.visitInsn(ICONST_0);
+            methodVisitor.visitLabel(l1);
+            if (status == 2) {
+                methodVisitor.visitVarInsn(ISTORE, 3);
+            } else {
+                methodVisitor.visitVarInsn(ISTORE, 2);
+            }
+        }
+    }
+
+    /**
+     * This class generates byte code for "!=" operator with int on left and int on right.
+     */
+    class PrivateNotEqualCompareConditionExpressionExecutorIntegerIntegerBytecodeEmitter implements ByteCodeEmitter {
+
+        /**
+         * This method overrides the interface method.
+         *
+         * @param conditionExecutor
+         * @param status
+         * @param parent
+         * @param specialCase
+         * @param parentStatus
+         * @param methodVisitor
+         * @param byteCodeGenarator
+         */
+        @Override
+        public void generate(ExpressionExecutor conditionExecutor, int status, int parent,
+                             Label specialCase, int parentStatus, MethodVisitor methodVisitor,
+                             ByteCodeGenarator byteCodeGenarator) {
+            ExpressionExecutor left = ((NotEqualCompareConditionExpressionExecutorIntInt) conditionExecutor)
+                    .getLeftExpressionExecutor();
+            ExpressionExecutor right = ((NotEqualCompareConditionExpressionExecutorIntInt) conditionExecutor)
+                    .getRightExpressionExecutor();
+            byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
+            if (left instanceof VariableExpressionExecutor) {
+                methodVisitor.visitVarInsn(ALOAD, 2);
+                methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Integer");
+                methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Integer", "intValue", "()I",
+                        false);
+            }
+
+            methodVisitor.visitVarInsn(ISTORE, 2);
+            byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
+            if (right instanceof VariableExpressionExecutor) {
+                methodVisitor.visitVarInsn(ALOAD, 3);
+                methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Integer");
+                methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Integer", "intValue", "()I",
+                        false);
+            }
+
+            methodVisitor.visitVarInsn(ISTORE, 3);
+            methodVisitor.visitVarInsn(ILOAD, 2);
+            methodVisitor.visitVarInsn(ILOAD, 3);
+            Label l0 = new Label();
+            methodVisitor.visitJumpInsn(IF_ICMPEQ, l0);
             methodVisitor.visitInsn(ICONST_1);
             Label l1 = new Label();
             methodVisitor.visitJumpInsn(GOTO, l1);
@@ -5185,6 +5925,68 @@ public class ByteCodeRegistry {
     }
 
     /**
+     * This class generates byte code for "!=" operator with int on left and long on right.
+     */
+    class PrivateNotEqualCompareConditionExpressionExecutorIntegerLongBytecodeEmitter implements ByteCodeEmitter {
+
+        /**
+         * This method overrides the interface method.
+         *
+         * @param conditionExecutor
+         * @param status
+         * @param parent
+         * @param specialCase
+         * @param parentStatus
+         * @param methodVisitor
+         * @param byteCodeGenarator
+         */
+        @Override
+        public void generate(ExpressionExecutor conditionExecutor, int status, int parent,
+                             Label specialCase, int parentStatus, MethodVisitor methodVisitor,
+                             ByteCodeGenarator byteCodeGenarator) {
+            ExpressionExecutor left = ((NotEqualCompareConditionExpressionExecutorIntLong) conditionExecutor)
+                    .getLeftExpressionExecutor();
+            ExpressionExecutor right = ((NotEqualCompareConditionExpressionExecutorIntLong) conditionExecutor)
+                    .getRightExpressionExecutor();
+            byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
+            if (left instanceof VariableExpressionExecutor) {
+                methodVisitor.visitVarInsn(ALOAD, 2);
+                methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Integer");
+                methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Integer", "intValue", "()I",
+                        false);
+            }
+
+            methodVisitor.visitVarInsn(ISTORE, 2);
+            byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
+            if (right instanceof VariableExpressionExecutor) {
+                methodVisitor.visitVarInsn(ALOAD, 3);
+                methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Long");
+                methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Long", "longValue", "()J",
+                        false);
+            }
+
+            methodVisitor.visitVarInsn(LSTORE, 3);
+            methodVisitor.visitVarInsn(ILOAD, 2);
+            methodVisitor.visitInsn(I2L);
+            methodVisitor.visitVarInsn(LLOAD, 3);
+            methodVisitor.visitInsn(LCMP);
+            Label l0 = new Label();
+            methodVisitor.visitJumpInsn(IFEQ, l0);
+            methodVisitor.visitInsn(ICONST_1);
+            Label l1 = new Label();
+            methodVisitor.visitJumpInsn(GOTO, l1);
+            methodVisitor.visitLabel(l0);
+            methodVisitor.visitInsn(ICONST_0);
+            methodVisitor.visitLabel(l1);
+            if (status == 2) {
+                methodVisitor.visitVarInsn(ISTORE, 3);
+            } else {
+                methodVisitor.visitVarInsn(ISTORE, 2);
+            }
+        }
+    }
+
+    /**
      * This class generates byte code for "==" operator with float on left and float on right.
      */
     class PrivateEqualCompareConditionExpressionExecutorFloatFloatBytecodeEmitter implements ByteCodeEmitter {
@@ -5231,6 +6033,67 @@ public class ByteCodeRegistry {
             methodVisitor.visitInsn(FCMPL);
             Label l0 = new Label();
             methodVisitor.visitJumpInsn(IFNE, l0);
+            methodVisitor.visitInsn(ICONST_1);
+            Label l1 = new Label();
+            methodVisitor.visitJumpInsn(GOTO, l1);
+            methodVisitor.visitLabel(l0);
+            methodVisitor.visitInsn(ICONST_0);
+            methodVisitor.visitLabel(l1);
+            if (status == 2) {
+                methodVisitor.visitVarInsn(ISTORE, 3);
+            } else {
+                methodVisitor.visitVarInsn(ISTORE, 2);
+            }
+        }
+    }
+
+    /**
+     * This class generates byte code for "!=" operator with float on left and float on right.
+     */
+    class PrivateNotEqualCompareConditionExpressionExecutorFloatFloatBytecodeEmitter implements ByteCodeEmitter {
+
+        /**
+         * This method overrides the interface method.
+         *
+         * @param conditionExecutor
+         * @param status
+         * @param parent
+         * @param specialCase
+         * @param parentStatus
+         * @param methodVisitor
+         * @param byteCodeGenarator
+         */
+        @Override
+        public void generate(ExpressionExecutor conditionExecutor, int status, int parent,
+                             Label specialCase, int parentStatus, MethodVisitor methodVisitor,
+                             ByteCodeGenarator byteCodeGenarator) {
+            ExpressionExecutor left = ((NotEqualCompareConditionExpressionExecutorFloatFloat) conditionExecutor)
+                    .getLeftExpressionExecutor();
+            ExpressionExecutor right = ((NotEqualCompareConditionExpressionExecutorFloatFloat) conditionExecutor)
+                    .getRightExpressionExecutor();
+            byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
+            if (left instanceof VariableExpressionExecutor) {
+                methodVisitor.visitVarInsn(ALOAD, 2);
+                methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Float");
+                methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Float", "floatValue", "()F",
+                        false);
+            }
+
+            methodVisitor.visitVarInsn(FSTORE, 2);
+            byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
+            if (right instanceof VariableExpressionExecutor) {
+                methodVisitor.visitVarInsn(ALOAD, 3);
+                methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Float");
+                methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Float", "floatValue", "()F",
+                        false);
+            }
+
+            methodVisitor.visitVarInsn(FSTORE, 3);
+            methodVisitor.visitVarInsn(FLOAD, 2);
+            methodVisitor.visitVarInsn(FLOAD, 3);
+            methodVisitor.visitInsn(FCMPL);
+            Label l0 = new Label();
+            methodVisitor.visitJumpInsn(IFEQ, l0);
             methodVisitor.visitInsn(ICONST_1);
             Label l1 = new Label();
             methodVisitor.visitJumpInsn(GOTO, l1);
@@ -5308,6 +6171,68 @@ public class ByteCodeRegistry {
     }
 
     /**
+     * This class generates byte code for "!=" operator with float on left and int on right.
+     */
+    class PrivateNotEqualCompareConditionExpressionExecutorFloatIntBytecodeEmitter implements ByteCodeEmitter {
+
+        /**
+         * This method overrides the interface method.
+         *
+         * @param conditionExecutor
+         * @param status
+         * @param parent
+         * @param specialCase
+         * @param parentStatus
+         * @param methodVisitor
+         * @param byteCodeGenarator
+         */
+        @Override
+        public void generate(ExpressionExecutor conditionExecutor, int status, int parent,
+                             Label specialCase, int parentStatus, MethodVisitor methodVisitor,
+                             ByteCodeGenarator byteCodeGenarator) {
+            ExpressionExecutor left = ((NotEqualCompareConditionExpressionExecutorFloatInt) conditionExecutor)
+                    .getLeftExpressionExecutor();
+            ExpressionExecutor right = ((NotEqualCompareConditionExpressionExecutorFloatInt) conditionExecutor)
+                    .getRightExpressionExecutor();
+            byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
+            if (left instanceof VariableExpressionExecutor) {
+                methodVisitor.visitVarInsn(ALOAD, 2);
+                methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Float");
+                methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Float", "floatValue", "()F",
+                        false);
+            }
+
+            methodVisitor.visitVarInsn(FSTORE, 2);
+            byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
+            if (right instanceof VariableExpressionExecutor) {
+                methodVisitor.visitVarInsn(ALOAD, 3);
+                methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Integer");
+                methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Integer", "intValue", "()I",
+                        false);
+            }
+
+            methodVisitor.visitVarInsn(ISTORE, 3);
+            methodVisitor.visitVarInsn(FLOAD, 2);
+            methodVisitor.visitVarInsn(ILOAD, 3);
+            methodVisitor.visitInsn(I2F);
+            methodVisitor.visitInsn(FCMPL);
+            Label l0 = new Label();
+            methodVisitor.visitJumpInsn(IFEQ, l0);
+            methodVisitor.visitInsn(ICONST_1);
+            Label l1 = new Label();
+            methodVisitor.visitJumpInsn(GOTO, l1);
+            methodVisitor.visitLabel(l0);
+            methodVisitor.visitInsn(ICONST_0);
+            methodVisitor.visitLabel(l1);
+            if (status == 2) {
+                methodVisitor.visitVarInsn(ISTORE, 3);
+            } else {
+                methodVisitor.visitVarInsn(ISTORE, 2);
+            }
+        }
+    }
+
+    /**
      * This class generates byte code for "==" operator with float on left and long on right.
      */
     class PrivateEqualCompareConditionExpressionExecutorFloatLongBytecodeEmitter implements ByteCodeEmitter {
@@ -5370,7 +6295,69 @@ public class ByteCodeRegistry {
     }
 
     /**
-     * This class generates byte code for "==" operator with float on left and long on right.
+     * This class generates byte code for "!=" operator with float on left and long on right.
+     */
+    class PrivateNotEqualCompareConditionExpressionExecutorFloatLongBytecodeEmitter implements ByteCodeEmitter {
+
+        /**
+         * This method overrides the interface method.
+         *
+         * @param conditionExecutor
+         * @param status
+         * @param parent
+         * @param specialCase
+         * @param parentStatus
+         * @param methodVisitor
+         * @param byteCodeGenarator
+         */
+        @Override
+        public void generate(ExpressionExecutor conditionExecutor, int status, int parent,
+                             Label specialCase, int parentStatus, MethodVisitor methodVisitor,
+                             ByteCodeGenarator byteCodeGenarator) {
+            ExpressionExecutor left = ((NotEqualCompareConditionExpressionExecutorFloatLong) conditionExecutor)
+                    .getLeftExpressionExecutor();
+            ExpressionExecutor right = ((NotEqualCompareConditionExpressionExecutorFloatLong) conditionExecutor)
+                    .getRightExpressionExecutor();
+            byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
+            if (left instanceof VariableExpressionExecutor) {
+                methodVisitor.visitVarInsn(ALOAD, 2);
+                methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Float");
+                methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Float", "floatValue", "()F",
+                        false);
+            }
+
+            methodVisitor.visitVarInsn(FSTORE, 2);
+            byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
+            if (right instanceof VariableExpressionExecutor) {
+                methodVisitor.visitVarInsn(ALOAD, 3);
+                methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Long");
+                methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Long", "longValue", "()J",
+                        false);
+            }
+
+            methodVisitor.visitVarInsn(LSTORE, 3);
+            methodVisitor.visitVarInsn(FLOAD, 2);
+            methodVisitor.visitVarInsn(LLOAD, 3);
+            methodVisitor.visitInsn(L2F);
+            methodVisitor.visitInsn(FCMPL);
+            Label l0 = new Label();
+            methodVisitor.visitJumpInsn(IFEQ, l0);
+            methodVisitor.visitInsn(ICONST_1);
+            Label l1 = new Label();
+            methodVisitor.visitJumpInsn(GOTO, l1);
+            methodVisitor.visitLabel(l0);
+            methodVisitor.visitInsn(ICONST_0);
+            methodVisitor.visitLabel(l1);
+            if (status == 2) {
+                methodVisitor.visitVarInsn(ISTORE, 3);
+            } else {
+                methodVisitor.visitVarInsn(ISTORE, 2);
+            }
+        }
+    }
+
+    /**
+     * This class generates byte code for "==" operator with String on left and String on right.
      */
     class PrivateEqualCompareConditionExpressionExecutorStringStringBytecodeEmitter implements ByteCodeEmitter {
 
@@ -5411,6 +6398,62 @@ public class ByteCodeRegistry {
             methodVisitor.visitVarInsn(ALOAD, 3);
             Label l0 = new Label();
             methodVisitor.visitJumpInsn(IF_ACMPNE, l0);
+            methodVisitor.visitInsn(ICONST_1);
+            Label l1 = new Label();
+            methodVisitor.visitJumpInsn(GOTO, l1);
+            methodVisitor.visitLabel(l0);
+            methodVisitor.visitInsn(ICONST_0);
+            methodVisitor.visitLabel(l1);
+            if (status == 2) {
+                methodVisitor.visitVarInsn(ISTORE, 3);
+            } else {
+                methodVisitor.visitVarInsn(ISTORE, 2);
+            }
+        }
+    }
+
+    /**
+     * This class generates byte code for "!=" operator with String on left and String on right.
+     */
+    class PrivateNotEqualCompareConditionExpressionExecutorStringStringBytecodeEmitter implements ByteCodeEmitter {
+
+        /**
+         * This method overrides the interface method.
+         *
+         * @param conditionExecutor
+         * @param status
+         * @param parent
+         * @param specialCase
+         * @param parentStatus
+         * @param methodVisitor
+         * @param byteCodeGenarator
+         */
+        @Override
+        public void generate(ExpressionExecutor conditionExecutor, int status, int parent,
+                             Label specialCase, int parentStatus, MethodVisitor methodVisitor,
+                             ByteCodeGenarator byteCodeGenarator) {
+            ExpressionExecutor left = ((NotEqualCompareConditionExpressionExecutorStringString) conditionExecutor)
+                    .getLeftExpressionExecutor();
+            ExpressionExecutor right = ((NotEqualCompareConditionExpressionExecutorStringString) conditionExecutor)
+                    .getRightExpressionExecutor();
+            byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
+            if (left instanceof VariableExpressionExecutor) {
+                methodVisitor.visitVarInsn(ALOAD, 2);
+                methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/String");
+            }
+
+            methodVisitor.visitVarInsn(ASTORE, 2);
+            byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
+            if (right instanceof VariableExpressionExecutor) {
+                methodVisitor.visitVarInsn(ALOAD, 3);
+                methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/String");
+            }
+
+            methodVisitor.visitVarInsn(ASTORE, 3);
+            methodVisitor.visitVarInsn(ALOAD, 2);
+            methodVisitor.visitVarInsn(ALOAD, 3);
+            Label l0 = new Label();
+            methodVisitor.visitJumpInsn(IF_ACMPEQ, l0);
             methodVisitor.visitInsn(ICONST_1);
             Label l1 = new Label();
             methodVisitor.visitJumpInsn(GOTO, l1);
