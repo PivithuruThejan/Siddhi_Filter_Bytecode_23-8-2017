@@ -85,9 +85,12 @@ public class ByteCodeGenarator {
                 byteCode.new PrivateGreaterThanCompareConditionExpressionExecutorFloatLongBytecodeEmitter());
         byteCodegenerators.put(GreaterThanCompareConditionExpressionExecutorLongFloat.class,
                 byteCode.new PrivateGreaterThanCompareConditionExpressionExecutorLongFloatBytecodeEmitter());
+
         byteCodegenerators.put(GreaterThanCompareConditionExpressionExecutorIntLong.class,
                 byteCode.new PrivateGreaterThanCompareConditionExpressionExecutorIntegerLongBytecodeEmitter());
-        byteCodegenerators.put(GreaterThanCompareConditionExpressionExecutorLongInt.class, byteCode.new PrivateGreaterThanCompareConditionExpressionExecutorLongIntegerBytecodeEmitter());
+
+        byteCodegenerators.put(GreaterThanCompareConditionExpressionExecutorLongInt.class,
+                byteCode.new PrivateGreaterThanCompareConditionExpressionExecutorLongIntegerBytecodeEmitter());
 
         byteCodegenerators.put(GreaterThanCompareConditionExpressionExecutorLongLong.class,
                 byteCode.new PrivateGreaterThanCompareConditionExpressionExecutorLongLongBytecodeEmitter());
@@ -288,6 +291,8 @@ public class ByteCodeGenarator {
         this.byteCodeHelper.end(classWriter, methodVisitor);
         return ByteCodeGenarator.expressionExecutor;
     }
+
+
 
     /**
      * This method generates byte code for a specific expression.
