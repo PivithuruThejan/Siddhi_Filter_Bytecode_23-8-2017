@@ -2381,7 +2381,10 @@ public class ByteCodeRegistry {
             ExpressionExecutor right = ((LessThanCompareConditionExpressionExecutorFloatDouble) conditionExecutor)
                     .getRightExpressionExecutor();
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
+            Label l0 = new Label();
             if (left instanceof VariableExpressionExecutor) {
+                methodVisitor.visitVarInsn(ALOAD, 2);
+                methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 2);
                 methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Float");
                 methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Float", "floatValue", "()F",
@@ -2391,6 +2394,8 @@ public class ByteCodeRegistry {
             methodVisitor.visitVarInsn(FSTORE, 2);
             byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
             if (right instanceof VariableExpressionExecutor) {
+                methodVisitor.visitVarInsn(ALOAD, 3);
+                methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 3);
                 methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Double");
                 methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Double", "doubleValue", "()D",
@@ -2402,7 +2407,6 @@ public class ByteCodeRegistry {
             methodVisitor.visitInsn(F2D);
             methodVisitor.visitVarInsn(DLOAD, 3);
             methodVisitor.visitInsn(DCMPG);
-            Label l0 = new Label();
             methodVisitor.visitJumpInsn(IFGE, l0);
             methodVisitor.visitInsn(ICONST_1);
             Label l1 = new Label();
@@ -2505,7 +2509,10 @@ public class ByteCodeRegistry {
             ExpressionExecutor right = ((LessThanCompareConditionExpressionExecutorFloatLong) conditionExecutor)
                     .getRightExpressionExecutor();
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
+            Label l0 = new Label();
             if (left instanceof VariableExpressionExecutor) {
+                methodVisitor.visitVarInsn(ALOAD, 2);
+                methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 2);
                 methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Float");
                 methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Float", "floatValue", "()F",
@@ -2515,6 +2522,8 @@ public class ByteCodeRegistry {
             methodVisitor.visitVarInsn(FSTORE, 2);
             byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
             if (right instanceof VariableExpressionExecutor) {
+                methodVisitor.visitVarInsn(ALOAD, 3);
+                methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 3);
                 methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Long");
                 methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Long", "longValue", "()J",
@@ -2526,7 +2535,6 @@ public class ByteCodeRegistry {
             methodVisitor.visitVarInsn(LLOAD, 3);
             methodVisitor.visitInsn(L2F);
             methodVisitor.visitInsn(FCMPG);
-            Label l0 = new Label();
             methodVisitor.visitJumpInsn(IFGE, l0);
             methodVisitor.visitInsn(ICONST_1);
             Label l1 = new Label();
@@ -2629,7 +2637,10 @@ public class ByteCodeRegistry {
             ExpressionExecutor right = ((LessThanCompareConditionExpressionExecutorLongLong) conditionExecutor)
                     .getRightExpressionExecutor();
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
+            Label l0 = new Label();
             if (left instanceof VariableExpressionExecutor) {
+                methodVisitor.visitVarInsn(ALOAD, 2);
+                methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 2);
                 methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Long");
                 methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Long", "longValue", "()J",
@@ -2640,6 +2651,8 @@ public class ByteCodeRegistry {
             byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
             if (right instanceof VariableExpressionExecutor) {
                 methodVisitor.visitVarInsn(ALOAD, 3);
+                methodVisitor.visitJumpInsn(IFNULL, l0);
+                methodVisitor.visitVarInsn(ALOAD, 3);
                 methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Long");
                 methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Long", "longValue", "()J",
                         false);
@@ -2649,7 +2662,6 @@ public class ByteCodeRegistry {
             methodVisitor.visitVarInsn(LLOAD, 4);
             methodVisitor.visitVarInsn(LLOAD, 6);
             methodVisitor.visitInsn(LCMP);
-            Label l0 = new Label();
             methodVisitor.visitJumpInsn(IFGE, l0);
             methodVisitor.visitInsn(ICONST_1);
             Label l1 = new Label();
@@ -2751,7 +2763,10 @@ public class ByteCodeRegistry {
             ExpressionExecutor right = ((LessThanCompareConditionExpressionExecutorLongDouble) conditionExecutor)
                     .getRightExpressionExecutor();
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
+            Label l0 = new Label();
             if (left instanceof VariableExpressionExecutor) {
+                methodVisitor.visitVarInsn(ALOAD, 2);
+                methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 2);
                 methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Long");
                 methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Long", "longValue", "()J",
@@ -2761,6 +2776,8 @@ public class ByteCodeRegistry {
             methodVisitor.visitVarInsn(LSTORE, 4);
             byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
             if (right instanceof VariableExpressionExecutor) {
+                methodVisitor.visitVarInsn(ALOAD, 3);
+                methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 3);
                 methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Double");
                 methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Double", "doubleValue", "()D",
@@ -2772,7 +2789,6 @@ public class ByteCodeRegistry {
             methodVisitor.visitInsn(L2D);
             methodVisitor.visitVarInsn(DLOAD, 6);
             methodVisitor.visitInsn(DCMPG);
-            Label l0 = new Label();
             methodVisitor.visitJumpInsn(IFGE, l0);
             methodVisitor.visitInsn(ICONST_1);
             Label l1 = new Label();
@@ -2875,7 +2891,10 @@ public class ByteCodeRegistry {
             ExpressionExecutor right = ((LessThanCompareConditionExpressionExecutorIntDouble) conditionExecutor)
                     .getRightExpressionExecutor();
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
+            Label l0 = new Label();
             if (left instanceof VariableExpressionExecutor) {
+                methodVisitor.visitVarInsn(ALOAD, 2);
+                methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 2);
                 methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Integer");
                 methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Integer", "intValue", "()I",
@@ -2885,6 +2904,8 @@ public class ByteCodeRegistry {
             methodVisitor.visitVarInsn(ISTORE, 2);
             byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
             if (right instanceof VariableExpressionExecutor) {
+                methodVisitor.visitVarInsn(ALOAD, 3);
+                methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 3);
                 methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Double");
                 methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Double", "doubleValue", "()D",
@@ -2896,7 +2917,6 @@ public class ByteCodeRegistry {
             methodVisitor.visitInsn(I2D);
             methodVisitor.visitVarInsn(DLOAD, 3);
             methodVisitor.visitInsn(DCMPG);
-            Label l0 = new Label();
             methodVisitor.visitJumpInsn(IFGE, l0);
             methodVisitor.visitInsn(ICONST_1);
             Label l1 = new Label();
@@ -2999,7 +3019,10 @@ public class ByteCodeRegistry {
             ExpressionExecutor right = ((LessThanCompareConditionExpressionExecutorIntLong) conditionExecutor)
                     .getRightExpressionExecutor();
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
+            Label l0 = new Label();
             if (left instanceof VariableExpressionExecutor) {
+                methodVisitor.visitVarInsn(ALOAD, 2);
+                methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 2);
                 methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Integer");
                 methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Integer", "intValue", "()I",
@@ -3009,6 +3032,8 @@ public class ByteCodeRegistry {
             methodVisitor.visitVarInsn(ISTORE, 2);
             byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
             if (right instanceof VariableExpressionExecutor) {
+                methodVisitor.visitVarInsn(ALOAD, 3);
+                methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 3);
                 methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Long");
                 methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Long", "longValue", "()J",
@@ -3020,7 +3045,6 @@ public class ByteCodeRegistry {
             methodVisitor.visitInsn(I2L);
             methodVisitor.visitVarInsn(LLOAD, 3);
             methodVisitor.visitInsn(LCMP);
-            Label l0 = new Label();
             methodVisitor.visitJumpInsn(IFGE, l0);
             methodVisitor.visitInsn(ICONST_1);
             Label l1 = new Label();
@@ -3123,7 +3147,10 @@ public class ByteCodeRegistry {
             ExpressionExecutor right = ((LessThanCompareConditionExpressionExecutorIntInt) conditionExecutor)
                     .getRightExpressionExecutor();
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
+            Label l0 = new Label();
             if (left instanceof VariableExpressionExecutor) {
+                methodVisitor.visitVarInsn(ALOAD, 2);
+                methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 2);
                 methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Integer");
                 methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Integer", "intValue", "()I",
@@ -3134,6 +3161,8 @@ public class ByteCodeRegistry {
             byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
             if (right instanceof VariableExpressionExecutor) {
                 methodVisitor.visitVarInsn(ALOAD, 3);
+                methodVisitor.visitJumpInsn(IFNULL, l0);
+                methodVisitor.visitVarInsn(ALOAD, 3);
                 methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Integer");
                 methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Integer", "intValue", "()I",
                         false);
@@ -3142,7 +3171,6 @@ public class ByteCodeRegistry {
             methodVisitor.visitVarInsn(ISTORE, 3);
             methodVisitor.visitVarInsn(ILOAD, 2);
             methodVisitor.visitVarInsn(ILOAD, 3);
-            Label l0 = new Label();
             methodVisitor.visitJumpInsn(IF_ICMPGE, l0);
             methodVisitor.visitInsn(ICONST_1);
             Label l1 = new Label();
@@ -3243,7 +3271,10 @@ public class ByteCodeRegistry {
             ExpressionExecutor right = ((LessThanCompareConditionExpressionExecutorLongInt) conditionExecutor)
                     .getRightExpressionExecutor();
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
+            Label l0 = new Label();
             if (left instanceof VariableExpressionExecutor) {
+                methodVisitor.visitVarInsn(ALOAD, 2);
+                methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 2);
                 methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Long");
                 methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Long", "longValue", "()J",
@@ -3253,6 +3284,8 @@ public class ByteCodeRegistry {
             methodVisitor.visitVarInsn(LSTORE, 4);
             byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
             if (right instanceof VariableExpressionExecutor) {
+                methodVisitor.visitVarInsn(ALOAD, 3);
+                methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 3);
                 methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Integer");
                 methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Integer", "intValue", "()I",
@@ -3264,7 +3297,6 @@ public class ByteCodeRegistry {
             methodVisitor.visitVarInsn(ILOAD, 3);
             methodVisitor.visitInsn(I2L);
             methodVisitor.visitInsn(LCMP);
-            Label l0 = new Label();
             methodVisitor.visitJumpInsn(IFGE, l0);
             methodVisitor.visitInsn(ICONST_1);
             Label l1 = new Label();
@@ -3367,7 +3399,10 @@ public class ByteCodeRegistry {
             ExpressionExecutor right = ((LessThanCompareConditionExpressionExecutorIntFloat) conditionExecutor)
                     .getRightExpressionExecutor();
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
+            Label l0 = new Label();
             if (left instanceof VariableExpressionExecutor) {
+                methodVisitor.visitVarInsn(ALOAD, 2);
+                methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 2);
                 methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Integer");
                 methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Integer", "intValue", "()I",
@@ -3377,6 +3412,8 @@ public class ByteCodeRegistry {
             methodVisitor.visitVarInsn(ISTORE, 2);
             byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
             if (right instanceof VariableExpressionExecutor) {
+                methodVisitor.visitVarInsn(ALOAD, 3);
+                methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 3);
                 methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Float");
                 methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Float", "floatValue", "()F",
@@ -3388,7 +3425,6 @@ public class ByteCodeRegistry {
             methodVisitor.visitInsn(I2F);
             methodVisitor.visitVarInsn(FLOAD, 3);
             methodVisitor.visitInsn(FCMPL);
-            Label l0 = new Label();
             methodVisitor.visitJumpInsn(IFGE, l0);
             methodVisitor.visitInsn(ICONST_1);
             Label l1 = new Label();
@@ -3491,7 +3527,10 @@ public class ByteCodeRegistry {
             ExpressionExecutor right = ((LessThanCompareConditionExpressionExecutorLongFloat) conditionExecutor)
                     .getRightExpressionExecutor();
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
+            Label l0 = new Label();
             if (left instanceof VariableExpressionExecutor) {
+                methodVisitor.visitVarInsn(ALOAD, 2);
+                methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 2);
                 methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Long");
                 methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Long", "longValue", "()J",
@@ -3501,6 +3540,8 @@ public class ByteCodeRegistry {
             methodVisitor.visitVarInsn(LSTORE, 4);
             byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
             if (right instanceof VariableExpressionExecutor) {
+                methodVisitor.visitVarInsn(ALOAD, 3);
+                methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 3);
                 methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Float");
                 methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Float", "floatValue", "()F",
@@ -3512,7 +3553,6 @@ public class ByteCodeRegistry {
             methodVisitor.visitInsn(L2F);
             methodVisitor.visitVarInsn(FLOAD, 3);
             methodVisitor.visitInsn(FCMPL);
-            Label l0 = new Label();
             methodVisitor.visitJumpInsn(IFGE, l0);
             methodVisitor.visitInsn(ICONST_1);
             Label l1 = new Label();
@@ -3615,7 +3655,10 @@ public class ByteCodeRegistry {
             ExpressionExecutor right = ((LessThanCompareConditionExpressionExecutorFloatInt) conditionExecutor)
                     .getRightExpressionExecutor();
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
+            Label l0 = new Label();
             if (left instanceof VariableExpressionExecutor) {
+                methodVisitor.visitVarInsn(ALOAD, 2);
+                methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 2);
                 methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Float");
                 methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Float", "floatValue", "()F",
@@ -3625,6 +3668,8 @@ public class ByteCodeRegistry {
             methodVisitor.visitVarInsn(FSTORE, 2);
             byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
             if (right instanceof VariableExpressionExecutor) {
+                methodVisitor.visitVarInsn(ALOAD, 3);
+                methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 3);
                 methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Integer");
                 methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Integer", "intValue", "()I",
@@ -3636,7 +3681,6 @@ public class ByteCodeRegistry {
             methodVisitor.visitVarInsn(ILOAD, 3);
             methodVisitor.visitInsn(I2F);
             methodVisitor.visitInsn(FCMPL);
-            Label l0 = new Label();
             methodVisitor.visitJumpInsn(IFGE, l0);
             methodVisitor.visitInsn(ICONST_1);
             Label l1 = new Label();
@@ -3739,7 +3783,10 @@ public class ByteCodeRegistry {
             ExpressionExecutor right = ((LessThanCompareConditionExpressionExecutorFloatFloat) conditionExecutor)
                     .getRightExpressionExecutor();
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
+            Label l0 = new Label();
             if (left instanceof VariableExpressionExecutor) {
+                methodVisitor.visitVarInsn(ALOAD, 2);
+                methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 2);
                 methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Float");
                 methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Float", "floatValue", "()F",
@@ -3750,6 +3797,8 @@ public class ByteCodeRegistry {
             byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
             if (right instanceof VariableExpressionExecutor) {
                 methodVisitor.visitVarInsn(ALOAD, 3);
+                methodVisitor.visitJumpInsn(IFNULL, l0);
+                methodVisitor.visitVarInsn(ALOAD, 3);
                 methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Float");
                 methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Float", "floatValue", "()F",
                         false);
@@ -3759,7 +3808,6 @@ public class ByteCodeRegistry {
             methodVisitor.visitVarInsn(FLOAD, 2);
             methodVisitor.visitVarInsn(FLOAD, 3);
             methodVisitor.visitInsn(FCMPL);
-            Label l0 = new Label();
             methodVisitor.visitJumpInsn(IFGE, l0);
             methodVisitor.visitInsn(ICONST_1);
             Label l1 = new Label();
@@ -3861,7 +3909,10 @@ public class ByteCodeRegistry {
             ExpressionExecutor right = ((LessThanCompareConditionExpressionExecutorDoubleDouble) conditionExecutor)
                     .getRightExpressionExecutor();
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
+            Label l0 = new Label();
             if (left instanceof VariableExpressionExecutor) {
+                methodVisitor.visitVarInsn(ALOAD, 2);
+                methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 2);
                 methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Double");
                 methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Double", "doubleValue", "()D",
@@ -3872,6 +3923,8 @@ public class ByteCodeRegistry {
             byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
             if (right instanceof VariableExpressionExecutor) {
                 methodVisitor.visitVarInsn(ALOAD, 3);
+                methodVisitor.visitJumpInsn(IFNULL, l0);
+                methodVisitor.visitVarInsn(ALOAD, 3);
                 methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Double");
                 methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Double", "doubleValue", "()D",
                         false);
@@ -3881,7 +3934,6 @@ public class ByteCodeRegistry {
             methodVisitor.visitVarInsn(DLOAD, 4);
             methodVisitor.visitVarInsn(DLOAD, 6);
             methodVisitor.visitInsn(DCMPL);
-            Label l0 = new Label();
             methodVisitor.visitJumpInsn(IFGE, l0);
             methodVisitor.visitInsn(ICONST_1);
             Label l1 = new Label();
@@ -3983,7 +4035,10 @@ public class ByteCodeRegistry {
             ExpressionExecutor right = ((LessThanCompareConditionExpressionExecutorDoubleLong) conditionExecutor)
                     .getRightExpressionExecutor();
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
+            Label l0 = new Label();
             if (left instanceof VariableExpressionExecutor) {
+                methodVisitor.visitVarInsn(ALOAD, 2);
+                methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 2);
                 methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Double");
                 methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Double", "doubleValue", "()D",
@@ -3993,6 +4048,8 @@ public class ByteCodeRegistry {
             methodVisitor.visitVarInsn(DSTORE, 4);
             byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
             if (right instanceof VariableExpressionExecutor) {
+                methodVisitor.visitVarInsn(ALOAD, 3);
+                methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 3);
                 methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Long");
                 methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Long", "longValue", "()J",
@@ -4004,7 +4061,6 @@ public class ByteCodeRegistry {
             methodVisitor.visitVarInsn(LLOAD, 6);
             methodVisitor.visitInsn(L2D);
             methodVisitor.visitInsn(DCMPL);
-            Label l0 = new Label();
             methodVisitor.visitJumpInsn(IFGE, l0);
             methodVisitor.visitInsn(ICONST_1);
             Label l1 = new Label();
@@ -4107,7 +4163,10 @@ public class ByteCodeRegistry {
             ExpressionExecutor right = ((LessThanCompareConditionExpressionExecutorDoubleInt) conditionExecutor)
                     .getRightExpressionExecutor();
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
+            Label l0 = new Label();
             if (left instanceof VariableExpressionExecutor) {
+                methodVisitor.visitVarInsn(ALOAD, 2);
+                methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 2);
                 methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Double");
                 methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Double", "doubleValue", "()D",
@@ -4117,6 +4176,8 @@ public class ByteCodeRegistry {
             methodVisitor.visitVarInsn(DSTORE, 4);
             byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
             if (right instanceof VariableExpressionExecutor) {
+                methodVisitor.visitVarInsn(ALOAD, 3);
+                methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 3);
                 methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Integer");
                 methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Integer", "intValue", "()I",
@@ -4128,7 +4189,6 @@ public class ByteCodeRegistry {
             methodVisitor.visitVarInsn(ILOAD, 3);
             methodVisitor.visitInsn(I2D);
             methodVisitor.visitInsn(DCMPL);
-            Label l0 = new Label();
             methodVisitor.visitJumpInsn(IFGE, l0);
             methodVisitor.visitInsn(ICONST_1);
             Label l1 = new Label();
@@ -4231,7 +4291,10 @@ public class ByteCodeRegistry {
             ExpressionExecutor right = ((LessThanCompareConditionExpressionExecutorDoubleFloat) conditionExecutor)
                     .getRightExpressionExecutor();
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
+            Label l0 = new Label();
             if (left instanceof VariableExpressionExecutor) {
+                methodVisitor.visitVarInsn(ALOAD, 2);
+                methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 2);
                 methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Double");
                 methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Double", "doubleValue", "()D",
@@ -4241,6 +4304,8 @@ public class ByteCodeRegistry {
             methodVisitor.visitVarInsn(DSTORE, 4);
             byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
             if (right instanceof VariableExpressionExecutor) {
+                methodVisitor.visitVarInsn(ALOAD, 3);
+                methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 3);
                 methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Float");
                 methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Float", "floatValue", "()F",
@@ -4252,7 +4317,6 @@ public class ByteCodeRegistry {
             methodVisitor.visitVarInsn(FLOAD, 3);
             methodVisitor.visitInsn(F2D);
             methodVisitor.visitInsn(DCMPL);
-            Label l0 = new Label();
             methodVisitor.visitJumpInsn(IFGE, l0);
             methodVisitor.visitInsn(ICONST_1);
             Label l1 = new Label();

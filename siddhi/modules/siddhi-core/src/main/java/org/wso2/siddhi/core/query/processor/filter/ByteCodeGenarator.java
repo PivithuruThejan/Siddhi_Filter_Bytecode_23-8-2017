@@ -85,13 +85,10 @@ public class ByteCodeGenarator {
                 byteCode.new PrivateGreaterThanCompareConditionExpressionExecutorFloatLongBytecodeEmitter());
         byteCodegenerators.put(GreaterThanCompareConditionExpressionExecutorLongFloat.class,
                 byteCode.new PrivateGreaterThanCompareConditionExpressionExecutorLongFloatBytecodeEmitter());
-
         byteCodegenerators.put(GreaterThanCompareConditionExpressionExecutorIntLong.class,
                 byteCode.new PrivateGreaterThanCompareConditionExpressionExecutorIntegerLongBytecodeEmitter());
-
         byteCodegenerators.put(GreaterThanCompareConditionExpressionExecutorLongInt.class,
                 byteCode.new PrivateGreaterThanCompareConditionExpressionExecutorLongIntegerBytecodeEmitter());
-
         byteCodegenerators.put(GreaterThanCompareConditionExpressionExecutorLongLong.class,
                 byteCode.new PrivateGreaterThanCompareConditionExpressionExecutorLongLongBytecodeEmitter());
 
@@ -110,8 +107,10 @@ public class ByteCodeGenarator {
                 byteCode.new PrivateLessThanCompareConditionExpressionExecutorIntegerDoubleBytecodeEmitter());
         byteCodegenerators.put(LessThanCompareConditionExpressionExecutorIntFloat.class,
                 byteCode.new PrivateLessThanCompareConditionExpressionExecutorIntegerFloatBytecodeEmitter());
+
         byteCodegenerators.put(LessThanCompareConditionExpressionExecutorFloatInt.class,
                 byteCode.new PrivateLessThanCompareConditionExpressionExecutorFloatIntegerBytecodeEmitter());
+
         byteCodegenerators.put(LessThanCompareConditionExpressionExecutorLongLong.class,
                 byteCode.new PrivateLessThanCompareConditionExpressionExecutorLongLongBytecodeEmitter());
         byteCodegenerators.put(LessThanCompareConditionExpressionExecutorIntLong.class,
