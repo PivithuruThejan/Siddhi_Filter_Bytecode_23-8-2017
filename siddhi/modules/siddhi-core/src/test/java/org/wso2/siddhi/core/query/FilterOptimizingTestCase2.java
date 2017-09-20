@@ -4658,8 +4658,8 @@ public class FilterOptimizingTestCase2 {
                 true, false};
         Object[] o9 = new Object[]{"Hashim Amla", "South Africa", 47.8, 47.5f, 52.5f, 86.5f, 26.3f, 127.3f, "RHB", false,
                 false};
-        Object[] o10 = new Object[]{"Virat Kholi", "India", 52.0, 66.5f, 53.5f, 89.5f, 30.3f, 136.3f, "RHB", true, false};
-        Object[] o11 = new Object[]{"Rohit Sharma", "India", 32.0, 62.5f, 42.5f, 93.5f, 26.3f, 141.3f, "RHB", true, false};
+        Object[] o10 = new Object[]{"Virat Kholi", "India", 52.0, 66.5f, 53.5f, 89.5f, 30.3f, 136.3f, "RHB", null, false};
+        Object[] o11 = new Object[]{"Rohit Sharma", "India", 32.0, 62.5f, 42.5f, 93.5f, 26.3f, 141.3f, "RHB", true, null};
         for (int i = 1; i <= COUNT; i++) {
             inputHandler.send(o1);
             inputHandler.send(o2);
@@ -4707,8 +4707,8 @@ public class FilterOptimizingTestCase2 {
         siddhiAppRuntime.start();
         long start = System.currentTimeMillis();
         Object[] o1 = new Object[]{"Upul Tharanga", "Sri Lanka", 33.0, 33.0, 32.5f, 80.5f, 16.3f, 116.3f, "LHB"};
-        Object[] o2 = new Object[]{"Anjelo Mathews", "Sri Lanka", 47.6, 65.3, 42.1f, 83.4f, 26.3f, 136.3f, "RHB",};
-        Object[] o3 = new Object[]{"Asela Gunaratne", "Sri Lanka", 53.7, 57.4, 36.5f, 85.5f, 36.3f, 146.7f, "RHB",};
+        Object[] o2 = new Object[]{"Anjelo Mathews", "Sri Lanka", null, 65.3, 42.1f, 83.4f, 26.3f, 136.3f, "RHB",};
+        Object[] o3 = new Object[]{"Asela Gunaratne", "Sri Lanka", 53.7, null, 36.5f, 85.5f, 36.3f, 146.7f, "RHB",};
         Object[] o4 = new Object[]{"Joe Root", "England", 55.8, 52.5, 52.7f, 88.3f, 24.9f, 128.3f, "RHB"};
         Object[] o5 = new Object[]{"Ben Stokes", "England", 41.2, 72.5, 43.6f, 90.7f, 22.3f, 133.8f, "LHB"};
         Object[] o6 = new Object[]{"Kane Williamson", "New Zealand", 54.2, 48.7, 45.1f, 79.3f, 29.3f, 119.3f, "RHB"};
@@ -4821,8 +4821,8 @@ public class FilterOptimizingTestCase2 {
         siddhiAppRuntime.start();
         long start = System.currentTimeMillis();
         Object[] o1 = new Object[]{"Upul Tharanga", "Sri Lanka", 33, 33.0, 32.5f, 80.5f, 16.3f, 116.3f, "LHB"};
-        Object[] o2 = new Object[]{"Anjelo Mathews", "Sri Lanka", 47, 65.3, 42.1f, 83.4f, 26.3f, 136.3f, "RHB",};
-        Object[] o3 = new Object[]{"Asela Gunaratne", "Sri Lanka", 53, 57.4, 36.5f, 85.5f, 36.3f, 146.7f, "RHB",};
+        Object[] o2 = new Object[]{"Anjelo Mathews", "Sri Lanka", null, 65.3, 42.1f, 83.4f, 26.3f, 136.3f, "RHB",};
+        Object[] o3 = new Object[]{"Asela Gunaratne", "Sri Lanka", 53, null, 36.5f, 85.5f, 36.3f, 146.7f, "RHB",};
         Object[] o4 = new Object[]{"Joe Root", "England", 55, 52.5, 52.7f, 88.3f, 24.9f, 128.3f, "RHB"};
         Object[] o5 = new Object[]{"Ben Stokes", "England", 41, 72.5, 43.6f, 90.7f, 22.3f, 133.8f, "LHB"};
         Object[] o6 = new Object[]{"Kane Williamson", "New Zealand", 54, 48.7, 45.1f, 79.3f, 29.3f, 119.3f, "RHB"};
@@ -4935,8 +4935,8 @@ public class FilterOptimizingTestCase2 {
         siddhiAppRuntime.start();
         long start = System.currentTimeMillis();
         Object[] o1 = new Object[]{"Upul Tharanga", "Sri Lanka", 33l, 33.0, 32.5f, 80.5f, 16.3f, 116.3f, "LHB"};
-        Object[] o2 = new Object[]{"Anjelo Mathews", "Sri Lanka", 47l, 65.3, 42.1f, 83.4f, 26.3f, 136.3f, "RHB",};
-        Object[] o3 = new Object[]{"Asela Gunaratne", "Sri Lanka", 53l, 57.4, 36.5f, 85.5f, 36.3f, 146.7f, "RHB",};
+        Object[] o2 = new Object[]{"Anjelo Mathews", "Sri Lanka", null, 65.3, 42.1f, 83.4f, 26.3f, 136.3f, "RHB",};
+        Object[] o3 = new Object[]{"Asela Gunaratne", "Sri Lanka", 53l, null, 36.5f, 85.5f, 36.3f, 146.7f, "RHB",};
         Object[] o4 = new Object[]{"Joe Root", "England", 55l, 52.5, 52.7f, 88.3f, 24.9f, 128.3f, "RHB"};
         Object[] o5 = new Object[]{"Ben Stokes", "England", 41l, 72.5, 43.6f, 90.7f, 22.3f, 133.8f, "LHB"};
         Object[] o6 = new Object[]{"Kane Williamson", "New Zealand", 54l, 48.7, 45.1f, 79.3f, 29.3f, 119.3f, "RHB"};
@@ -5049,8 +5049,8 @@ public class FilterOptimizingTestCase2 {
         siddhiAppRuntime.start();
         long start = System.currentTimeMillis();
         Object[] o1 = new Object[]{"Upul Tharanga", "Sri Lanka", 33l, 33.0, 33f, 80.5f, 16.3f, 116.3f, "LHB"};
-        Object[] o2 = new Object[]{"Anjelo Mathews", "Sri Lanka", 47l, 65.3, 42.1f, 83.4f, 26.3f, 136.3f, "RHB",};
-        Object[] o3 = new Object[]{"Asela Gunaratne", "Sri Lanka", 53l, 57.4, 36.5f, 85.5f, 36.3f, 146.7f, "RHB",};
+        Object[] o2 = new Object[]{"Anjelo Mathews", "Sri Lanka", null, 65.3, 42.1f, 83.4f, 26.3f, 136.3f, "RHB",};
+        Object[] o3 = new Object[]{"Asela Gunaratne", "Sri Lanka", 53l, 57.4, null, 85.5f, 36.3f, 146.7f, "RHB",};
         Object[] o4 = new Object[]{"Joe Root", "England", 55l, 52.5, 52.7f, 88.3f, 24.9f, 128.3f, "RHB"};
         Object[] o5 = new Object[]{"Ben Stokes", "England", 41l, 72.5, 43.6f, 90.7f, 22.3f, 133.8f, "LHB"};
         Object[] o6 = new Object[]{"Kane Williamson", "New Zealand", 54l, 48.7, 45.1f, 79.3f, 29.3f, 119.3f, "RHB"};
@@ -5163,8 +5163,8 @@ public class FilterOptimizingTestCase2 {
         siddhiAppRuntime.start();
         long start = System.currentTimeMillis();
         Object[] o1 = new Object[]{"Upul Tharanga", "Sri Lanka", 33l, 33.0, 33, 80.5f, 16.3f, 116.3f, "LHB"};
-        Object[] o2 = new Object[]{"Anjelo Mathews", "Sri Lanka", 47l, 65.3, 42, 83.4f, 26.3f, 136.3f, "RHB",};
-        Object[] o3 = new Object[]{"Asela Gunaratne", "Sri Lanka", 53l, 57.4, 36, 85.5f, 36.3f, 146.7f, "RHB",};
+        Object[] o2 = new Object[]{"Anjelo Mathews", "Sri Lanka", null, 65.3, 42, 83.4f, 26.3f, 136.3f, "RHB",};
+        Object[] o3 = new Object[]{"Asela Gunaratne", "Sri Lanka", 53l, 57.4, null, 85.5f, 36.3f, 146.7f, "RHB",};
         Object[] o4 = new Object[]{"Joe Root", "England", 55l, 52.5, 52, 88.3f, 24.9f, 128.3f, "RHB"};
         Object[] o5 = new Object[]{"Ben Stokes", "England", 41l, 72.5, 43, 90.7f, 22.3f, 133.8f, "LHB"};
         Object[] o6 = new Object[]{"Kane Williamson", "New Zealand", 54l, 48.7, 45, 79.3f, 29.3f, 119.3f, "RHB"};
@@ -5277,8 +5277,8 @@ public class FilterOptimizingTestCase2 {
         siddhiAppRuntime.start();
         long start = System.currentTimeMillis();
         Object[] o1 = new Object[]{"Upul Tharanga", "Sri Lanka", 33l, 33.0, 33l, 80.5f, 16.3f, 116.3f, "LHB"};
-        Object[] o2 = new Object[]{"Anjelo Mathews", "Sri Lanka", 47l, 65.3, 42l, 83.4f, 26.3f, 136.3f, "RHB",};
-        Object[] o3 = new Object[]{"Asela Gunaratne", "Sri Lanka", 53l, 57.4, 36l, 85.5f, 36.3f, 146.7f, "RHB",};
+        Object[] o2 = new Object[]{"Anjelo Mathews", "Sri Lanka", null, 65.3, 42l, 83.4f, 26.3f, 136.3f, "RHB",};
+        Object[] o3 = new Object[]{"Asela Gunaratne", "Sri Lanka", 53l, 57.4, null, 85.5f, 36.3f, 146.7f, "RHB",};
         Object[] o4 = new Object[]{"Joe Root", "England", 55l, 52.5, 52l, 88.3f, 24.9f, 128.3f, "RHB"};
         Object[] o5 = new Object[]{"Ben Stokes", "England", 41l, 72.5, 43l, 90.7f, 22.3f, 133.8f, "LHB"};
         Object[] o6 = new Object[]{"Kane Williamson", "New Zealand", 54l, 48.7, 45l, 79.3f, 29.3f, 119.3f, "RHB"};
@@ -5407,9 +5407,6 @@ public class FilterOptimizingTestCase2 {
                 } else if (CHECK == 9) {
                     Assert.assertEquals("Virat Kholi", inEvents[0].getData()[0]);
                     CHECK++;
-                } else if (CHECK == 10) {
-                    Assert.assertEquals("Rohit Sharma", inEvents[0].getData()[0]);
-                    CHECK++;
                 }
             }
 
@@ -5429,7 +5426,7 @@ public class FilterOptimizingTestCase2 {
         Object[] o9 = new Object[]{"Hashim Amla", "South Africa", 47l, 47.5, 52l, 86.5f, 26.3f, 127.3f, "RHB",
                 "South Africa"};
         Object[] o10 = new Object[]{"Virat Kholi", "India", 52l, 66.5, 53l, 89.5f, 30.3f, 136.3f, "RHB", "India"};
-        Object[] o11 = new Object[]{"Rohit Sharma", "India", 32l, 62.5, 42l, 93.5f, 26.3f, 141.3f, "RHB", "India"};
+        Object[] o11 = new Object[]{"Rohit Sharma", "India", 32l, 62.5, 42l, 93.5f, 26.3f, 141.3f, "RHB", null};
         for (int i = 1; i <= COUNT; i++) {
             inputHandler.send(o1);
             inputHandler.send(o2);
@@ -5563,8 +5560,8 @@ public class FilterOptimizingTestCase2 {
         siddhiAppRuntime.start();
         long start = System.currentTimeMillis();
         Object[] o1 = new Object[]{"Upul Tharanga", "Sri Lanka", 33, 33.0, 33f, 80.5f, 16.3f, 116.3f, "LHB"};
-        Object[] o2 = new Object[]{"Anjelo Mathews", "Sri Lanka", 47, 65.3, 42.1f, 83.4f, 26.3f, 136.3f, "RHB",};
-        Object[] o3 = new Object[]{"Asela Gunaratne", "Sri Lanka", 53, 57.4, 36.5f, 85.5f, 36.3f, 146.7f, "RHB",};
+        Object[] o2 = new Object[]{"Anjelo Mathews", "Sri Lanka", null, 65.3, 42.1f, 83.4f, 26.3f, 136.3f, "RHB",};
+        Object[] o3 = new Object[]{"Asela Gunaratne", "Sri Lanka", 53, 57.4, null, 85.5f, 36.3f, 146.7f, "RHB",};
         Object[] o4 = new Object[]{"Joe Root", "England", 55, 52.5, 52.7f, 88.3f, 24.9f, 128.3f, "RHB"};
         Object[] o5 = new Object[]{"Ben Stokes", "England", 41, 72.5, 43.6f, 90.7f, 22.3f, 133.8f, "LHB"};
         Object[] o6 = new Object[]{"Kane Williamson", "New Zealand", 54, 48.7, 45.1f, 79.3f, 29.3f, 119.3f, "RHB"};
@@ -5677,8 +5674,8 @@ public class FilterOptimizingTestCase2 {
         siddhiAppRuntime.start();
         long start = System.currentTimeMillis();
         Object[] o1 = new Object[]{"Upul Tharanga", "Sri Lanka", 33, 33.0, 33, 80.5f, 16.3f, 116.3f, "LHB"};
-        Object[] o2 = new Object[]{"Anjelo Mathews", "Sri Lanka", 47, 65.3, 42, 83.4f, 26.3f, 136.3f, "RHB",};
-        Object[] o3 = new Object[]{"Asela Gunaratne", "Sri Lanka", 53, 57.4, 36, 85.5f, 36.3f, 146.7f, "RHB",};
+        Object[] o2 = new Object[]{"Anjelo Mathews", "Sri Lanka", null, 65.3, 42, 83.4f, 26.3f, 136.3f, "RHB",};
+        Object[] o3 = new Object[]{"Asela Gunaratne", "Sri Lanka", 53, 57.4, null, 85.5f, 36.3f, 146.7f, "RHB",};
         Object[] o4 = new Object[]{"Joe Root", "England", 55, 52.5, 52, 88.3f, 24.9f, 128.3f, "RHB"};
         Object[] o5 = new Object[]{"Ben Stokes", "England", 41, 72.5, 43, 90.7f, 22.3f, 133.8f, "LHB"};
         Object[] o6 = new Object[]{"Kane Williamson", "New Zealand", 54, 48.7, 45, 79.3f, 29.3f, 119.3f, "RHB"};
@@ -5791,8 +5788,8 @@ public class FilterOptimizingTestCase2 {
         siddhiAppRuntime.start();
         long start = System.currentTimeMillis();
         Object[] o1 = new Object[]{"Upul Tharanga", "Sri Lanka", 33, 33.0, 33l, 80.5f, 16.3f, 116.3f, "LHB"};
-        Object[] o2 = new Object[]{"Anjelo Mathews", "Sri Lanka", 47, 65.3, 42l, 83.4f, 26.3f, 136.3f, "RHB",};
-        Object[] o3 = new Object[]{"Asela Gunaratne", "Sri Lanka", 53, 57.4, 36l, 85.5f, 36.3f, 146.7f, "RHB",};
+        Object[] o2 = new Object[]{"Anjelo Mathews", "Sri Lanka", null, 65.3, 42l, 83.4f, 26.3f, 136.3f, "RHB",};
+        Object[] o3 = new Object[]{"Asela Gunaratne", "Sri Lanka", 53, 57.4, null, 85.5f, 36.3f, 146.7f, "RHB",};
         Object[] o4 = new Object[]{"Joe Root", "England", 55, 52.5, 52l, 88.3f, 24.9f, 128.3f, "RHB"};
         Object[] o5 = new Object[]{"Ben Stokes", "England", 41, 72.5, 43l, 90.7f, 22.3f, 133.8f, "LHB"};
         Object[] o6 = new Object[]{"Kane Williamson", "New Zealand", 54, 48.7, 45l, 79.3f, 29.3f, 119.3f, "RHB"};
@@ -5905,8 +5902,8 @@ public class FilterOptimizingTestCase2 {
         siddhiAppRuntime.start();
         long start = System.currentTimeMillis();
         Object[] o1 = new Object[]{"Upul Tharanga", "Sri Lanka", 33.0, 32.5, 32.5f, 80.5f, 16.3f, 116.3f, "LHB"};
-        Object[] o2 = new Object[]{"Anjelo Mathews", "Sri Lanka", 47.6, 65.3, 42.1f, 83.4f, 26.3f, 136.3f, "RHB",};
-        Object[] o3 = new Object[]{"Asela Gunaratne", "Sri Lanka", 53.7, 57.4, 36.5f, 85.5f, 36.3f, 146.7f, "RHB",};
+        Object[] o2 = new Object[]{"Anjelo Mathews", "Sri Lanka", null, 65.3, 42.1f, 83.4f, 26.3f, 136.3f, "RHB",};
+        Object[] o3 = new Object[]{"Asela Gunaratne", "Sri Lanka", 53.7, null, 36.5f, 85.5f, 36.3f, 146.7f, "RHB",};
         Object[] o4 = new Object[]{"Joe Root", "England", 55.8, 52.5, 52.7f, 88.3f, 24.9f, 128.3f, "RHB"};
         Object[] o5 = new Object[]{"Ben Stokes", "England", 41.2, 72.5, 43.6f, 90.7f, 22.3f, 133.8f, "LHB"};
         Object[] o6 = new Object[]{"Kane Williamson", "New Zealand", 54.2, 48.7, 45.1f, 79.3f, 29.3f, 119.3f, "RHB"};
@@ -6020,8 +6017,8 @@ public class FilterOptimizingTestCase2 {
         siddhiAppRuntime.start();
         long start = System.currentTimeMillis();
         Object[] o1 = new Object[]{"Upul Tharanga", "Sri Lanka", 33.0, 32.5, 32.5f, 32.5f, 16.3f, 116.3f, "LHB"};
-        Object[] o2 = new Object[]{"Anjelo Mathews", "Sri Lanka", 47.6, 65.3, 42.1f, 83.4f, 26.3f, 136.3f, "RHB",};
-        Object[] o3 = new Object[]{"Asela Gunaratne", "Sri Lanka", 53.7, 57.4, 36.5f, 85.5f, 36.3f, 146.7f, "RHB",};
+        Object[] o2 = new Object[]{"Anjelo Mathews", "Sri Lanka", 47.6, 65.3, null, 83.4f, 26.3f, 136.3f, "RHB",};
+        Object[] o3 = new Object[]{"Asela Gunaratne", "Sri Lanka", 53.7, 57.4, 36.5f, null, 36.3f, 146.7f, "RHB",};
         Object[] o4 = new Object[]{"Joe Root", "England", 55.8, 52.5, 52.7f, 88.3f, 24.9f, 128.3f, "RHB"};
         Object[] o5 = new Object[]{"Ben Stokes", "England", 41.2, 72.5, 43.6f, 90.7f, 22.3f, 133.8f, "LHB"};
         Object[] o6 = new Object[]{"Kane Williamson", "New Zealand", 54.2, 48.7, 45.1f, 79.3f, 29.3f, 119.3f, "RHB"};
@@ -6191,8 +6188,8 @@ public class FilterOptimizingTestCase2 {
         siddhiAppRuntime.start();
         long start = System.currentTimeMillis();
         Object[] o1 = new Object[]{"Upul Tharanga", "Sri Lanka", 33.0, 33.0, 33, 80.5f, 16.3f, 116.3f, "LHB"};
-        Object[] o2 = new Object[]{"Anjelo Mathews", "Sri Lanka", 47.6, 65.3, 42, 83.4f, 26.3f, 136.3f, "RHB",};
-        Object[] o3 = new Object[]{"Asela Gunaratne", "Sri Lanka", 53.7, 57.4, 36, 85.5f, 36.3f, 146.7f, "RHB",};
+        Object[] o2 = new Object[]{"Anjelo Mathews", "Sri Lanka", null, 65.3, 42, 83.4f, 26.3f, 136.3f, "RHB",};
+        Object[] o3 = new Object[]{"Asela Gunaratne", "Sri Lanka", 53.7, null, 36, 85.5f, 36.3f, 146.7f, "RHB",};
         Object[] o4 = new Object[]{"Joe Root", "England", 55.8, 52.5, 52, 88.3f, 24.9f, 128.3f, "RHB"};
         Object[] o5 = new Object[]{"Ben Stokes", "England", 41.2, 72.5, 43, 90.7f, 22.3f, 133.8f, "LHB"};
         Object[] o6 = new Object[]{"Kane Williamson", "New Zealand", 54.2, 48.7, 45, 79.3f, 29.3f, 119.3f, "RHB"};
@@ -6305,8 +6302,8 @@ public class FilterOptimizingTestCase2 {
         siddhiAppRuntime.start();
         long start = System.currentTimeMillis();
         Object[] o1 = new Object[]{"Upul Tharanga", "Sri Lanka", 33.0, 33.0, 33l, 80.5f, 16.3f, 116.3f, "LHB"};
-        Object[] o2 = new Object[]{"Anjelo Mathews", "Sri Lanka", 47.6, 65.3, 42l, 83.4f, 26.3f, 136.3f, "RHB",};
-        Object[] o3 = new Object[]{"Asela Gunaratne", "Sri Lanka", 53.7, 57.4, 36l, 85.5f, 36.3f, 146.7f, "RHB",};
+        Object[] o2 = new Object[]{"Anjelo Mathews", "Sri Lanka", null, 65.3, 42l, 83.4f, 26.3f, 136.3f, "RHB",};
+        Object[] o3 = new Object[]{"Asela Gunaratne", "Sri Lanka", 53.7, null, 36l, 85.5f, 36.3f, 146.7f, "RHB",};
         Object[] o4 = new Object[]{"Joe Root", "England", 55.8, 52.5, 52l, 88.3f, 24.9f, 128.3f, "RHB"};
         Object[] o5 = new Object[]{"Ben Stokes", "England", 41.2, 72.5, 43l, 90.7f, 22.3f, 133.8f, "LHB"};
         Object[] o6 = new Object[]{"Kane Williamson", "New Zealand", 54.2, 48.7, 45l, 79.3f, 29.3f, 119.3f, "RHB"};
@@ -6419,8 +6416,8 @@ public class FilterOptimizingTestCase2 {
         siddhiAppRuntime.start();
         long start = System.currentTimeMillis();
         Object[] o1 = new Object[]{"Upul Tharanga", "Sri Lanka", 33.0, 33.0, 33l, 33.0f, 16.3f, 116.3f, "LHB"};
-        Object[] o2 = new Object[]{"Anjelo Mathews", "Sri Lanka", 47.6, 65.3, 42l, 83.4f, 26.3f, 136.3f, "RHB",};
-        Object[] o3 = new Object[]{"Asela Gunaratne", "Sri Lanka", 53.7, 57.4, 36l, 85.5f, 36.3f, 146.7f, "RHB",};
+        Object[] o2 = new Object[]{"Anjelo Mathews", "Sri Lanka", 47.6, 65.3, null, 83.4f, 26.3f, 136.3f, "RHB",};
+        Object[] o3 = new Object[]{"Asela Gunaratne", "Sri Lanka", 53.7, 57.4, 36l, null, 36.3f, 146.7f, "RHB",};
         Object[] o4 = new Object[]{"Joe Root", "England", 55.8, 52.5, 52l, 88.3f, 24.9f, 128.3f, "RHB"};
         Object[] o5 = new Object[]{"Ben Stokes", "England", 41.2, 72.5, 43l, 90.7f, 22.3f, 133.8f, "LHB"};
         Object[] o6 = new Object[]{"Kane Williamson", "New Zealand", 54.2, 48.7, 45l, 79.3f, 29.3f, 119.3f, "RHB"};
@@ -6533,8 +6530,8 @@ public class FilterOptimizingTestCase2 {
         siddhiAppRuntime.start();
         long start = System.currentTimeMillis();
         Object[] o1 = new Object[]{"Upul Tharanga", "Sri Lanka", 33.0, 33.0, 33.0f, 80.5f, 16.3f, 116.3f, "LHB"};
-        Object[] o2 = new Object[]{"Anjelo Mathews", "Sri Lanka", 47.6, 65.3, 42.1f, 83.4f, 26.3f, 136.3f, "RHB",};
-        Object[] o3 = new Object[]{"Asela Gunaratne", "Sri Lanka", 53.7, 57.4, 36.5f, 85.5f, 36.3f, 146.7f, "RHB",};
+        Object[] o2 = new Object[]{"Anjelo Mathews", "Sri Lanka", null, 65.3, 42.1f, 83.4f, 26.3f, 136.3f, "RHB",};
+        Object[] o3 = new Object[]{"Asela Gunaratne", "Sri Lanka", 53.7, null, 36.5f, 85.5f, 36.3f, 146.7f, "RHB",};
         Object[] o4 = new Object[]{"Joe Root", "England", 55.8, 52.5, 52.7f, 88.3f, 24.9f, 128.3f, "RHB"};
         Object[] o5 = new Object[]{"Ben Stokes", "England", 41.2, 72.5, 43.6f, 90.7f, 22.3f, 133.8f, "LHB"};
         Object[] o6 = new Object[]{"Kane Williamson", "New Zealand", 54.2, 48.7, 45.1f, 79.3f, 29.3f, 119.3f, "RHB"};
