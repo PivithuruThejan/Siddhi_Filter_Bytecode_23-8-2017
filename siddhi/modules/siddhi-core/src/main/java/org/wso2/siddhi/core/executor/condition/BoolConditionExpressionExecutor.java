@@ -51,6 +51,10 @@ public class BoolConditionExpressionExecutor extends ConditionExpressionExecutor
         }
     }
 
+    public ExpressionExecutor getConditionExecutor() {
+        return conditionExecutor;
+    }
+
     @Override
     public ExpressionExecutor cloneExecutor(String key) {
         return new BoolConditionExpressionExecutor(conditionExecutor.cloneExecutor(key));

@@ -24,6 +24,7 @@ import org.wso2.siddhi.core.executor.ConstantExpressionExecutor;
 import org.wso2.siddhi.core.executor.ExpressionExecutor;
 import org.wso2.siddhi.core.executor.VariableExpressionExecutor;
 import org.wso2.siddhi.core.executor.condition.AndConditionExpressionExecutor;
+import org.wso2.siddhi.core.executor.condition.IsNullConditionExpressionExecutor;
 import org.wso2.siddhi.core.executor.condition.NotConditionExpressionExecutor;
 import org.wso2.siddhi.core.executor.condition.OrConditionExpressionExecutor;
 import org.wso2.siddhi.core.executor.condition.compare.equal.*;
@@ -48,6 +49,7 @@ public class ByteCodeGenarator {
     static {
         byteCodegenerators = new HashMap<Class<? extends ExpressionExecutor>, ByteCodeEmitter>();
         ByteCodeRegistry byteCode = new ByteCodeRegistry();
+        // Condition Executors.
         byteCodegenerators.put(AndConditionExpressionExecutor.class, byteCode.
                 new PrivateANDExpressionExecutorBytecodeEmitter());
         byteCodegenerators.put(OrConditionExpressionExecutor.class, byteCode.
@@ -58,7 +60,9 @@ public class ByteCodeGenarator {
                 new PrivateVariableExpressionExecutorBytecodeEmitter());
         byteCodegenerators.put(ConstantExpressionExecutor.class, byteCode.
                 new PrivateConstantExpressionExecutorBytecodeEmitter());
-        // Greater Than Operator
+        byteCodegenerators.put(IsNullConditionExpressionExecutor.class,
+                byteCode.new PrivateIsNullExpressionExecutorBytecodeEmitter());
+        // Greater Than Operator.
         byteCodegenerators.put(GreaterThanCompareConditionExpressionExecutorFloatFloat.class,
                 byteCode.new PrivateGreaterThanCompareConditionExpressionExecutorFloatFloatBytecodeEmitter());
         byteCodegenerators.put(GreaterThanCompareConditionExpressionExecutorFloatDouble.class,
@@ -107,10 +111,8 @@ public class ByteCodeGenarator {
                 byteCode.new PrivateLessThanCompareConditionExpressionExecutorIntegerDoubleBytecodeEmitter());
         byteCodegenerators.put(LessThanCompareConditionExpressionExecutorIntFloat.class,
                 byteCode.new PrivateLessThanCompareConditionExpressionExecutorIntegerFloatBytecodeEmitter());
-
         byteCodegenerators.put(LessThanCompareConditionExpressionExecutorFloatInt.class,
                 byteCode.new PrivateLessThanCompareConditionExpressionExecutorFloatIntegerBytecodeEmitter());
-
         byteCodegenerators.put(LessThanCompareConditionExpressionExecutorLongLong.class,
                 byteCode.new PrivateLessThanCompareConditionExpressionExecutorLongLongBytecodeEmitter());
         byteCodegenerators.put(LessThanCompareConditionExpressionExecutorIntLong.class,
@@ -160,7 +162,7 @@ public class ByteCodeGenarator {
                 byteCode.new PrivateGreaterThanEqualCompareConditionExpressionExecutorLongIntegerBytecodeEmitter());
         byteCodegenerators.put(GreaterThanEqualCompareConditionExpressionExecutorLongLong.class,
                 byteCode.new PrivateGreaterThanEqualCompareConditionExpressionExecutorLongLongBytecodeEmitter());
-        //Less Than Equal Operator
+        //Less Than Equal Operator.
         byteCodegenerators.put(LessThanEqualCompareConditionExpressionExecutorDoubleDouble.class,
                 byteCode.new PrivateLessThanEqualCompareConditionExpressionExecutorDoubleDoubleBytecodeEmitter());
         byteCodegenerators.put(LessThanEqualCompareConditionExpressionExecutorDoubleFloat.class,
@@ -290,7 +292,6 @@ public class ByteCodeGenarator {
         this.byteCodeHelper.end(classWriter, methodVisitor);
         return ByteCodeGenarator.expressionExecutor;
     }
-
 
 
     /**

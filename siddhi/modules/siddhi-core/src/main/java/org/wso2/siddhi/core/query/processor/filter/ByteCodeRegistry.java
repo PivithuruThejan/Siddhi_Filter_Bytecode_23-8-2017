@@ -17,15 +17,14 @@
  */
 package org.wso2.siddhi.core.query.processor.filter;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.mvel2.asm.Label;
 import org.mvel2.asm.MethodVisitor;
 import org.mvel2.asm.Opcodes;
 import org.wso2.siddhi.core.executor.ConstantExpressionExecutor;
 import org.wso2.siddhi.core.executor.ExpressionExecutor;
 import org.wso2.siddhi.core.executor.VariableExpressionExecutor;
-import org.wso2.siddhi.core.executor.condition.AndConditionExpressionExecutor;
-import org.wso2.siddhi.core.executor.condition.NotConditionExpressionExecutor;
-import org.wso2.siddhi.core.executor.condition.OrConditionExpressionExecutor;
+import org.wso2.siddhi.core.executor.condition.*;
 import org.wso2.siddhi.core.executor.condition.compare.equal.*;
 import org.wso2.siddhi.core.executor.condition.compare.greaterthan.*;
 import org.wso2.siddhi.core.executor.condition.compare.greaterthanequal.*;
@@ -237,6 +236,46 @@ public class ByteCodeRegistry {
                     methodVisitor.visitVarInsn(ISTORE, 2);
                 }
                 methodVisitor.visitLabel(l1);
+            }
+        }
+    }
+
+    /**
+     * This class generates byte code for "IsNull" operator.
+     */
+    class PrivateIsNullExpressionExecutorBytecodeEmitter implements ByteCodeEmitter {
+
+        /**
+         * This method overrides the interface method.
+         *
+         * @param conditionExecutor
+         * @param status
+         * @param parent
+         * @param specialCase
+         * @param parentStatus
+         * @param methodVisitor
+         * @param byteCodeGenarator
+         */
+        @Override
+        public void generate(ExpressionExecutor conditionExecutor, int status, int parent,
+                             Label specialCase, int parentStatus,
+                             MethodVisitor methodVisitor, ByteCodeGenarator byteCodeGenarator) {
+            ExpressionExecutor condition = ((IsNullConditionExpressionExecutor) conditionExecutor).getConditionExecutor();
+            byteCodeGenarator.execute(condition, 1, 0, null, status, methodVisitor,
+                    byteCodeGenarator);
+            Label l0 = new Label();
+            Label l1 = new Label();
+            methodVisitor.visitVarInsn(ALOAD, 2);
+            methodVisitor.visitJumpInsn(IFNONNULL, l0);
+            methodVisitor.visitInsn(ICONST_1);
+            methodVisitor.visitJumpInsn(GOTO, l1);
+            methodVisitor.visitLabel(l0);
+            methodVisitor.visitInsn(ICONST_0);
+            methodVisitor.visitLabel(l1);
+            if (status == 2) {
+                methodVisitor.visitVarInsn(ISTORE, 3);
+            } else {
+                methodVisitor.visitVarInsn(ISTORE, 2);
             }
         }
     }

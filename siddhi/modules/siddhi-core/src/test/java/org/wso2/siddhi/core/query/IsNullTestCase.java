@@ -95,6 +95,7 @@ public class IsNullTestCase {
     }
 
     @Test
+    //This testcase fails due to no IsNullStreamConditionExecutor.
     public void isNullTest2() throws InterruptedException, IllegalAccessException, InvocationTargetException, InstantiationException, IOException {
         log.info("isNull test2");
 
