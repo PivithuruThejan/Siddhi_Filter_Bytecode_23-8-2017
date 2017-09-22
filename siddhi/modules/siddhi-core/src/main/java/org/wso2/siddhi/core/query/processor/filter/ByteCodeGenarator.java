@@ -23,10 +23,7 @@ import org.mvel2.asm.MethodVisitor;
 import org.wso2.siddhi.core.executor.ConstantExpressionExecutor;
 import org.wso2.siddhi.core.executor.ExpressionExecutor;
 import org.wso2.siddhi.core.executor.VariableExpressionExecutor;
-import org.wso2.siddhi.core.executor.condition.AndConditionExpressionExecutor;
-import org.wso2.siddhi.core.executor.condition.IsNullConditionExpressionExecutor;
-import org.wso2.siddhi.core.executor.condition.NotConditionExpressionExecutor;
-import org.wso2.siddhi.core.executor.condition.OrConditionExpressionExecutor;
+import org.wso2.siddhi.core.executor.condition.*;
 import org.wso2.siddhi.core.executor.condition.compare.equal.*;
 import org.wso2.siddhi.core.executor.condition.compare.greaterthan.*;
 import org.wso2.siddhi.core.executor.condition.compare.greaterthanequal.*;
@@ -62,6 +59,8 @@ public class ByteCodeGenarator {
                 new PrivateConstantExpressionExecutorBytecodeEmitter());
         byteCodegenerators.put(IsNullConditionExpressionExecutor.class,
                 byteCode.new PrivateIsNullExpressionExecutorBytecodeEmitter());
+        byteCodegenerators.put(IsNullStreamConditionExpressionExecutor.class,
+                byteCode.new PrivateIsNullStreamExpressionExecutorBytecodeEmitter());
         // Greater Than Operator.
         byteCodegenerators.put(GreaterThanCompareConditionExpressionExecutorFloatFloat.class,
                 byteCode.new PrivateGreaterThanCompareConditionExpressionExecutorFloatFloatBytecodeEmitter());

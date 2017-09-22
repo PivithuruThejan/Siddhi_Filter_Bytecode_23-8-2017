@@ -281,6 +281,76 @@ public class ByteCodeRegistry {
     }
 
     /**
+     * This class generates byte code for "IsNullStream" operator.
+     */
+    class PrivateIsNullStreamExpressionExecutorBytecodeEmitter implements ByteCodeEmitter {
+
+        /**
+         * This method overrides the interface method.
+         *
+         * @param conditionExecutor
+         * @param status
+         * @param parent
+         * @param specialCase
+         * @param parentStatus
+         * @param methodVisitor
+         * @param byteCodeGenarator
+         */
+        @Override
+        public void generate(ExpressionExecutor conditionExecutor, int status, int parent,
+                             Label specialCase, int parentStatus,
+                             MethodVisitor methodVisitor, ByteCodeGenarator byteCodeGenarator) {
+            int[] eventPosition = ((IsNullStreamConditionExpressionExecutor) conditionExecutor).getEventPosition();
+            Label l0 = new Label();
+            Label l1 = new Label();
+            if (eventPosition == null) {
+                methodVisitor.visitVarInsn(ALOAD, 1);
+                methodVisitor.visitJumpInsn(IFNONNULL, l0);
+                methodVisitor.visitInsn(ICONST_1);
+                methodVisitor.visitJumpInsn(GOTO, l1);
+            } else {
+                methodVisitor.visitInsn(ICONST_2);
+                methodVisitor.visitIntInsn(NEWARRAY, T_INT);
+                for (int i = 0; i < 2; i++) {
+                    methodVisitor.visitInsn(DUP);
+                    methodVisitor.visitIntInsn(BIPUSH, i);
+                    methodVisitor.visitIntInsn(BIPUSH, eventPosition[i]);
+                    methodVisitor.visitInsn(IASTORE);
+                }
+
+                if (status == 2) {
+                    methodVisitor.visitVarInsn(ASTORE, 3);
+                    methodVisitor.visitVarInsn(ALOAD, 1);
+                    methodVisitor.visitTypeInsn(CHECKCAST, "org/wso2/siddhi/core/event/state/StateEvent");
+                    methodVisitor.visitVarInsn(ALOAD, 3);
+                    methodVisitor.visitMethodInsn(INVOKEVIRTUAL, "org/wso2/siddhi/core/event/state/StateEvent",
+                            "getStreamEvent", "([I)Lorg/wso2/siddhi/core/event/stream/StreamEvent;", false);
+                } else {
+                    methodVisitor.visitVarInsn(ASTORE, 2);
+                    methodVisitor.visitVarInsn(ALOAD, 1);
+                    methodVisitor.visitTypeInsn(CHECKCAST, "org/wso2/siddhi/core/event/state/StateEvent");
+                    methodVisitor.visitVarInsn(ALOAD, 2);
+                    methodVisitor.visitMethodInsn(INVOKEVIRTUAL, "org/wso2/siddhi/core/event/state/StateEvent",
+                            "getStreamEvent", "([I)Lorg/wso2/siddhi/core/event/stream/StreamEvent;", false);
+                }
+
+                methodVisitor.visitJumpInsn(IFNONNULL, l0);
+                methodVisitor.visitInsn(ICONST_1);
+                methodVisitor.visitJumpInsn(GOTO, l1);
+            }
+
+            methodVisitor.visitLabel(l0);
+            methodVisitor.visitInsn(ICONST_0);
+            methodVisitor.visitLabel(l1);
+            if (status == 2) {
+                methodVisitor.visitVarInsn(ISTORE, 3);
+            } else {
+                methodVisitor.visitVarInsn(ISTORE, 2);
+            }
+        }
+    }
+
+    /**
      * This class generates byte code to take data from an event.
      */
     class PrivateVariableExpressionExecutorBytecodeEmitter implements ByteCodeEmitter {
@@ -299,8 +369,7 @@ public class ByteCodeRegistry {
         public void generate(ExpressionExecutor conditionExecutor, int status, int parent,
                              Label specialCase, int parentStatus,
                              MethodVisitor methodVisitor, ByteCodeGenarator byteCodeGenarator) {
-            VariableExpressionExecutor variableExpressionExecutor = (VariableExpressionExecutor) conditionExecutor;
-            int[] variablePosition = variableExpressionExecutor.getPosition();
+            int[] variablePosition = ((VariableExpressionExecutor) conditionExecutor).getPosition();
             methodVisitor.visitInsn(ICONST_4);
             methodVisitor.visitIntInsn(NEWARRAY, T_INT);
             for (int i = 0; i < 4; i++) {
@@ -347,8 +416,7 @@ public class ByteCodeRegistry {
         public void generate(ExpressionExecutor conditionExecutor, int status, int parent,
                              Label specialCase, int parentStatus,
                              MethodVisitor methodVisitor, ByteCodeGenarator byteCodeGenarator) {
-            ConstantExpressionExecutor constantExpressionExecutor = (ConstantExpressionExecutor) conditionExecutor;
-            Object constantVariable = constantExpressionExecutor.getValue();
+            Object constantVariable = ((ConstantExpressionExecutor) conditionExecutor).getValue();
             methodVisitor.visitLdcInsn(constantVariable);
         }
     }
