@@ -30,6 +30,7 @@ import org.wso2.siddhi.core.executor.condition.compare.greaterthanequal.*;
 import org.wso2.siddhi.core.executor.condition.compare.lessthan.*;
 import org.wso2.siddhi.core.executor.condition.compare.lessthanequal.*;
 import org.wso2.siddhi.core.executor.condition.compare.notequal.*;
+import org.wso2.siddhi.core.executor.math.add.AddExpressionExecutorDouble;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -268,6 +269,9 @@ public class ByteCodeGenarator {
                 byteCode.new PrivateNotEqualCompareConditionExpressionExecutorLongLongBytecodeEmitter());
         byteCodegenerators.put(NotEqualCompareConditionExpressionExecutorStringString.class,
                 byteCode.new PrivateNotEqualCompareConditionExpressionExecutorStringStringBytecodeEmitter());
+        //Mathematical Operators.
+        byteCodegenerators.put(AddExpressionExecutorDouble.class,
+                byteCode.new PrivateAddExpressionExecutorDoubleBytecodeEmitter());
     }
 
     private ClassWriter classWriter;

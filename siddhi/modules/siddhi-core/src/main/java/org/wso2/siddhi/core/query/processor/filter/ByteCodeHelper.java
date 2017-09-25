@@ -79,7 +79,7 @@ public class ByteCodeHelper {
         methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Boolean", "valueOf",
                 "(Z)Ljava/lang/Boolean;", false);
         methodVisitor.visitInsn(ARETURN);
-        methodVisitor.visitMaxs(4, 8);
+        methodVisitor.visitMaxs(4, 12);
         methodVisitor.visitEnd();
         classWriter.visitEnd();
         ByteCodeGenarator.byteArray = classWriter.toByteArray();
