@@ -35,10 +35,21 @@ import org.wso2.siddhi.core.executor.math.add.AddExpressionExecutorFloat;
 import org.wso2.siddhi.core.executor.math.add.AddExpressionExecutorInt;
 import org.wso2.siddhi.core.executor.math.add.AddExpressionExecutorLong;
 import org.wso2.siddhi.core.executor.math.divide.DivideExpressionExecutorDouble;
+import org.wso2.siddhi.core.executor.math.divide.DivideExpressionExecutorFloat;
+import org.wso2.siddhi.core.executor.math.divide.DivideExpressionExecutorInt;
+import org.wso2.siddhi.core.executor.math.divide.DivideExpressionExecutorLong;
+import org.wso2.siddhi.core.executor.math.mod.ModExpressionExecutorDouble;
+import org.wso2.siddhi.core.executor.math.mod.ModExpressionExecutorFloat;
+import org.wso2.siddhi.core.executor.math.mod.ModExpressionExecutorInt;
+import org.wso2.siddhi.core.executor.math.mod.ModExpressionExecutorLong;
 import org.wso2.siddhi.core.executor.math.multiply.MultiplyExpressionExecutorDouble;
 import org.wso2.siddhi.core.executor.math.multiply.MultiplyExpressionExecutorFloat;
 import org.wso2.siddhi.core.executor.math.multiply.MultiplyExpressionExecutorInt;
 import org.wso2.siddhi.core.executor.math.multiply.MultiplyExpressionExecutorLong;
+import org.wso2.siddhi.core.executor.math.subtract.SubtractExpressionExecutorDouble;
+import org.wso2.siddhi.core.executor.math.subtract.SubtractExpressionExecutorFloat;
+import org.wso2.siddhi.core.executor.math.subtract.SubtractExpressionExecutorInt;
+import org.wso2.siddhi.core.executor.math.subtract.SubtractExpressionExecutorLong;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -295,6 +306,28 @@ public class ByteCodeGenarator {
                 byteCode.new PrivateMultiplyExpressionExecutorLongBytecodeEmitter());
         byteCodegenerators.put(DivideExpressionExecutorDouble.class,
                 byteCode.new PrivateDivideExpressionExecutorDoubleBytecodeEmitter());
+        byteCodegenerators.put(DivideExpressionExecutorFloat.class,
+                byteCode.new PrivateDivideExpressionExecutorFloatBytecodeEmitter());
+        byteCodegenerators.put(DivideExpressionExecutorInt.class,
+                byteCode.new PrivateDivideExpressionExecutorIntegerBytecodeEmitter());
+        byteCodegenerators.put(DivideExpressionExecutorLong.class,
+                byteCode.new PrivateDivideExpressionExecutorLongBytecodeEmitter());
+        byteCodegenerators.put(ModExpressionExecutorDouble.class,
+                byteCode.new PrivateModExpressionExecutorDoubleBytecodeEmitter());
+        byteCodegenerators.put(ModExpressionExecutorFloat.class,
+                byteCode.new PrivateModExpressionExecutorFloatBytecodeEmitter());
+        byteCodegenerators.put(ModExpressionExecutorInt.class,
+                byteCode.new PrivateModExpressionExecutorIntegerBytecodeEmitter());
+        byteCodegenerators.put(ModExpressionExecutorLong.class,
+                byteCode.new PrivateModExpressionExecutorLongBytecodeEmitter());
+        byteCodegenerators.put(SubtractExpressionExecutorDouble.class,
+                byteCode.new PrivateSubtractExpressionExecutorDoubleBytecodeEmitter());
+        byteCodegenerators.put(SubtractExpressionExecutorFloat.class,
+                byteCode.new PrivateSubtractExpressionExecutorFloatBytecodeEmitter());
+        byteCodegenerators.put(SubtractExpressionExecutorInt.class,
+                byteCode.new PrivateSubtractExpressionExecutorIntBytecodeEmitter());
+        byteCodegenerators.put(SubtractExpressionExecutorLong.class,
+                byteCode.new PrivateSubtractExpressionExecutorLongBytecodeEmitter());
     }
 
     private ClassWriter classWriter;

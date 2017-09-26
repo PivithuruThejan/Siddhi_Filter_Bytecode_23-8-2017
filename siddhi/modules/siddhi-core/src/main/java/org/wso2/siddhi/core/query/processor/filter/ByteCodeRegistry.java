@@ -35,10 +35,21 @@ import org.wso2.siddhi.core.executor.math.add.AddExpressionExecutorFloat;
 import org.wso2.siddhi.core.executor.math.add.AddExpressionExecutorInt;
 import org.wso2.siddhi.core.executor.math.add.AddExpressionExecutorLong;
 import org.wso2.siddhi.core.executor.math.divide.DivideExpressionExecutorDouble;
+import org.wso2.siddhi.core.executor.math.divide.DivideExpressionExecutorFloat;
+import org.wso2.siddhi.core.executor.math.divide.DivideExpressionExecutorInt;
+import org.wso2.siddhi.core.executor.math.divide.DivideExpressionExecutorLong;
+import org.wso2.siddhi.core.executor.math.mod.ModExpressionExecutorDouble;
+import org.wso2.siddhi.core.executor.math.mod.ModExpressionExecutorFloat;
+import org.wso2.siddhi.core.executor.math.mod.ModExpressionExecutorInt;
+import org.wso2.siddhi.core.executor.math.mod.ModExpressionExecutorLong;
 import org.wso2.siddhi.core.executor.math.multiply.MultiplyExpressionExecutorDouble;
 import org.wso2.siddhi.core.executor.math.multiply.MultiplyExpressionExecutorFloat;
 import org.wso2.siddhi.core.executor.math.multiply.MultiplyExpressionExecutorInt;
 import org.wso2.siddhi.core.executor.math.multiply.MultiplyExpressionExecutorLong;
+import org.wso2.siddhi.core.executor.math.subtract.SubtractExpressionExecutorDouble;
+import org.wso2.siddhi.core.executor.math.subtract.SubtractExpressionExecutorFloat;
+import org.wso2.siddhi.core.executor.math.subtract.SubtractExpressionExecutorInt;
+import org.wso2.siddhi.core.executor.math.subtract.SubtractExpressionExecutorLong;
 
 import static org.mvel2.asm.Opcodes.*;
 import static org.mvel2.asm.Opcodes.ISTORE;
@@ -484,7 +495,7 @@ public class ByteCodeRegistry {
 
     /**
      * This class generates byte code to add 2 doubles.
-    **/
+     */
      class PrivateAddExpressionExecutorDoubleBytecodeEmitter implements ByteCodeEmitter {
         /**
          * This method overrides interface method.
@@ -587,8 +598,114 @@ public class ByteCodeRegistry {
     }
 
     /**
+     * This class generates byte code to subtract 2 doubles.
+     */
+    class PrivateSubtractExpressionExecutorDoubleBytecodeEmitter implements ByteCodeEmitter {
+        /**
+         * This method overrides interface method.
+         *
+         * @param conditionExecutor
+         * @param status
+         * @param parent
+         * @param specialCase
+         * @param parentStatus
+         * @param methodVisitor
+         * @param byteCodeGenarator
+         **/
+        @Override
+        public void generate(ExpressionExecutor conditionExecutor, int status, int parent,
+                             Label specialCase, int parentStatus,
+                             MethodVisitor methodVisitor, ByteCodeGenarator byteCodeGenarator) {
+            ExpressionExecutor left = ((SubtractExpressionExecutorDouble) conditionExecutor).getLeftExpressionExecutor();
+            ExpressionExecutor right = ((SubtractExpressionExecutorDouble) conditionExecutor).getRightExpressionExecutor();
+            byteCodeGenarator.execute(left, status, 0, null, status, methodVisitor, byteCodeGenarator);
+            Label l0 = new Label();
+            Label l1 = new Label();
+            int index = 2;
+            if (status == 2) {
+                index = 3;
+            }
+            if(!(left instanceof ConstantExpressionExecutor)) {
+                methodVisitor.visitVarInsn(ALOAD, index);
+                methodVisitor.visitJumpInsn(IFNULL, l0);
+                methodVisitor.visitVarInsn(ALOAD, index);
+            }else{
+                Object constantVariable = ((ConstantExpressionExecutor) left).getValue();
+                if (constantVariable instanceof Integer) {
+                    methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Integer", "valueOf",
+                            "(I)Ljava/lang/Integer;", false);
+                } else if (constantVariable instanceof Double) {
+                    methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Double", "valueOf",
+                            "(D)Ljava/lang/Double;", false);
+                } else if (constantVariable instanceof Float) {
+                    methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Float", "valueOf",
+                            "(F)Ljava/lang/Float;", false);
+                } else if (constantVariable instanceof Long) {
+                    methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Long", "valueOf",
+                            "(J)Ljava/lang/Long;", false);
+                }
+            }
+
+            methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+            methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "doubleValue", "()D",
+                    false);
+            if (status == 2) {
+                methodVisitor.visitVarInsn(DSTORE, 6);
+            } else {
+                methodVisitor.visitVarInsn(DSTORE, 4);
+            }
+
+            byteCodeGenarator.execute(right, status, 0, null, status, methodVisitor, byteCodeGenarator);
+            if(!(right instanceof ConstantExpressionExecutor)) {
+                methodVisitor.visitVarInsn(ALOAD, index);
+                methodVisitor.visitJumpInsn(IFNULL, l0);
+                methodVisitor.visitVarInsn(ALOAD, index);
+            }else{
+                Object constantVariable = ((ConstantExpressionExecutor) right).getValue();
+                if (constantVariable instanceof Integer) {
+                    methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Integer", "valueOf",
+                            "(I)Ljava/lang/Integer;", false);
+                } else if (constantVariable instanceof Double) {
+                    methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Double", "valueOf",
+                            "(D)Ljava/lang/Double;", false);
+                } else if (constantVariable instanceof Float) {
+                    methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Float", "valueOf",
+                            "(F)Ljava/lang/Float;", false);
+                } else if (constantVariable instanceof Long) {
+                    methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Long", "valueOf",
+                            "(J)Ljava/lang/Long;", false);
+                }
+            }
+
+            methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+            methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "doubleValue", "()D",
+                    false);
+            methodVisitor.visitVarInsn(DSTORE, 8);
+            if (status == 2) {
+                methodVisitor.visitVarInsn(DLOAD, 6);
+            } else {
+                methodVisitor.visitVarInsn(DLOAD, 4);
+            }
+
+            methodVisitor.visitVarInsn(DLOAD, 8);
+            methodVisitor.visitInsn(DSUB);
+            methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Double", "valueOf",
+                    "(D)Ljava/lang/Double;", false);
+            methodVisitor.visitJumpInsn(GOTO, l1);
+            methodVisitor.visitLabel(l0);
+            methodVisitor.visitInsn(ACONST_NULL);
+            methodVisitor.visitLabel(l1);
+            if (status == 2) {
+                methodVisitor.visitVarInsn(ASTORE, 3);
+            } else {
+                methodVisitor.visitVarInsn(ASTORE, 2);
+            }
+        }
+    }
+
+    /**
      * This class generates byte code to divide 2 doubles.
-     **/
+     */
     class PrivateDivideExpressionExecutorDoubleBytecodeEmitter implements ByteCodeEmitter {
         /**
          * This method overrides interface method.
@@ -699,8 +816,792 @@ public class ByteCodeRegistry {
     }
 
     /**
+     * This class generates byte code to mod 2 doubles.
+     */
+    class PrivateModExpressionExecutorDoubleBytecodeEmitter implements ByteCodeEmitter {
+        /**
+         * This method overrides interface method.
+         *
+         * @param conditionExecutor
+         * @param status
+         * @param parent
+         * @param specialCase
+         * @param parentStatus
+         * @param methodVisitor
+         * @param byteCodeGenarator
+         **/
+        @Override
+        public void generate(ExpressionExecutor conditionExecutor, int status, int parent,
+                             Label specialCase, int parentStatus,
+                             MethodVisitor methodVisitor, ByteCodeGenarator byteCodeGenarator) {
+            ExpressionExecutor left = ((ModExpressionExecutorDouble) conditionExecutor).getLeftExpressionExecutor();
+            ExpressionExecutor right = ((ModExpressionExecutorDouble) conditionExecutor).getRightExpressionExecutor();
+            byteCodeGenarator.execute(left, status, 0, null, status, methodVisitor, byteCodeGenarator);
+            Label l0 = new Label();
+            Label l1 = new Label();
+            int index = 2;
+            if (status == 2) {
+                index = 3;
+            }
+            if(!(left instanceof ConstantExpressionExecutor)) {
+                methodVisitor.visitVarInsn(ALOAD, index);
+                methodVisitor.visitJumpInsn(IFNULL, l0);
+                methodVisitor.visitVarInsn(ALOAD, index);
+            }else{
+                Object constantVariable = ((ConstantExpressionExecutor) left).getValue();
+                if (constantVariable instanceof Integer) {
+                    methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Integer", "valueOf",
+                            "(I)Ljava/lang/Integer;", false);
+                } else if (constantVariable instanceof Double) {
+                    methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Double", "valueOf",
+                            "(D)Ljava/lang/Double;", false);
+                } else if (constantVariable instanceof Float) {
+                    methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Float", "valueOf",
+                            "(F)Ljava/lang/Float;", false);
+                } else if (constantVariable instanceof Long) {
+                    methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Long", "valueOf",
+                            "(J)Ljava/lang/Long;", false);
+                }
+            }
+
+            methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+            methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "doubleValue", "()D",
+                    false);
+            if (status == 2) {
+                methodVisitor.visitVarInsn(DSTORE, 6);
+            } else {
+                methodVisitor.visitVarInsn(DSTORE, 4);
+            }
+
+            byteCodeGenarator.execute(right, status, 0, null, status, methodVisitor, byteCodeGenarator);
+            if(!(right instanceof ConstantExpressionExecutor)) {
+                methodVisitor.visitVarInsn(ALOAD, index);
+                methodVisitor.visitJumpInsn(IFNULL, l0);
+                methodVisitor.visitVarInsn(ALOAD, index);
+            }else{
+                Object constantVariable = ((ConstantExpressionExecutor) right).getValue();
+                if (constantVariable instanceof Integer) {
+                    methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Integer", "valueOf",
+                            "(I)Ljava/lang/Integer;", false);
+                } else if (constantVariable instanceof Double) {
+                    methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Double", "valueOf",
+                            "(D)Ljava/lang/Double;", false);
+                } else if (constantVariable instanceof Float) {
+                    methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Float", "valueOf",
+                            "(F)Ljava/lang/Float;", false);
+                } else if (constantVariable instanceof Long) {
+                    methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Long", "valueOf",
+                            "(J)Ljava/lang/Long;", false);
+                }
+            }
+
+            methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+            methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "doubleValue", "()D",
+                    false);
+            methodVisitor.visitVarInsn(DSTORE, 8);
+            methodVisitor.visitVarInsn(DLOAD, 8);
+            methodVisitor.visitInsn(DCONST_0);
+            methodVisitor.visitInsn(DCMPL);
+            methodVisitor.visitJumpInsn(IFEQ, l0);
+
+
+            if (status == 2) {
+                methodVisitor.visitVarInsn(DLOAD, 6);
+            } else {
+                methodVisitor.visitVarInsn(DLOAD, 4);
+            }
+
+            methodVisitor.visitVarInsn(DLOAD, 8);
+            methodVisitor.visitInsn(DREM);
+            methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Double", "valueOf",
+                    "(D)Ljava/lang/Double;", false);
+            methodVisitor.visitJumpInsn(GOTO, l1);
+            methodVisitor.visitLabel(l0);
+            methodVisitor.visitInsn(ACONST_NULL);
+            methodVisitor.visitLabel(l1);
+            if (status == 2) {
+                methodVisitor.visitVarInsn(ASTORE, 3);
+            } else {
+                methodVisitor.visitVarInsn(ASTORE, 2);
+            }
+        }
+    }
+
+    /**
+     * This class generates byte code to divide 2 floats.
+     */
+    class PrivateDivideExpressionExecutorFloatBytecodeEmitter implements ByteCodeEmitter {
+        /**
+         * This method overrides interface method.
+         *
+         * @param conditionExecutor
+         * @param status
+         * @param parent
+         * @param specialCase
+         * @param parentStatus
+         * @param methodVisitor
+         * @param byteCodeGenarator
+         **/
+        @Override
+        public void generate(ExpressionExecutor conditionExecutor, int status, int parent,
+                             Label specialCase, int parentStatus,
+                             MethodVisitor methodVisitor, ByteCodeGenarator byteCodeGenarator) {
+            ExpressionExecutor left = ((DivideExpressionExecutorFloat) conditionExecutor).getLeftExpressionExecutor();
+            ExpressionExecutor right = ((DivideExpressionExecutorFloat) conditionExecutor).getRightExpressionExecutor();
+            byteCodeGenarator.execute(left, status, 0, null, status, methodVisitor, byteCodeGenarator);
+            Label l0 = new Label();
+            Label l1 = new Label();
+            int index = 2;
+            if (status == 2) {
+                index = 3;
+            }
+
+            if(!(left instanceof ConstantExpressionExecutor)) {
+                methodVisitor.visitVarInsn(ALOAD, index);
+                methodVisitor.visitJumpInsn(IFNULL, l0);
+                methodVisitor.visitVarInsn(ALOAD, index);
+            }else{
+                Object constantVariable = ((ConstantExpressionExecutor) left).getValue();
+                if (constantVariable instanceof Integer) {
+                    methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Integer", "valueOf",
+                            "(I)Ljava/lang/Integer;", false);
+                } else if (constantVariable instanceof Double) {
+                    methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Double", "valueOf",
+                            "(D)Ljava/lang/Double;", false);
+                } else if (constantVariable instanceof Float) {
+                    methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Float", "valueOf",
+                            "(F)Ljava/lang/Float;", false);
+                } else if (constantVariable instanceof Long) {
+                    methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Long", "valueOf",
+                            "(J)Ljava/lang/Long;", false);
+                }
+            }
+
+            methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+            methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "floatValue", "()F",
+                    false);
+            if (status == 2) {
+                methodVisitor.visitVarInsn(FSTORE, 6);
+            } else {
+                methodVisitor.visitVarInsn(FSTORE, 4);
+            }
+
+            byteCodeGenarator.execute(right, status, 0, null, status, methodVisitor, byteCodeGenarator);
+            if(!(right instanceof ConstantExpressionExecutor)) {
+                methodVisitor.visitVarInsn(ALOAD, index);
+                methodVisitor.visitJumpInsn(IFNULL, l0);
+                methodVisitor.visitVarInsn(ALOAD, index);
+            }else{
+                Object constantVariable = ((ConstantExpressionExecutor) right).getValue();
+                if (constantVariable instanceof Integer) {
+                    methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Integer", "valueOf",
+                            "(I)Ljava/lang/Integer;", false);
+                } else if (constantVariable instanceof Double) {
+                    methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Double", "valueOf",
+                            "(D)Ljava/lang/Double;", false);
+                } else if (constantVariable instanceof Float) {
+                    methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Float", "valueOf",
+                            "(F)Ljava/lang/Float;", false);
+                } else if (constantVariable instanceof Long) {
+                    methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Long", "valueOf",
+                            "(J)Ljava/lang/Long;", false);
+                }
+            }
+
+            methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+            methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "floatValue", "()F",
+                    false);
+            methodVisitor.visitVarInsn(FSTORE, 8);
+            methodVisitor.visitVarInsn(FLOAD, 8);
+            methodVisitor.visitInsn(FCONST_0);
+            methodVisitor.visitInsn(FCMPL);
+            methodVisitor.visitJumpInsn(IFEQ, l0);
+
+            if (status == 2) {
+                methodVisitor.visitVarInsn(FLOAD, 6);
+            } else {
+                methodVisitor.visitVarInsn(FLOAD, 4);
+            }
+
+            methodVisitor.visitVarInsn(FLOAD, 8);
+            methodVisitor.visitInsn(FDIV);
+            methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Float", "valueOf",
+                    "(F)Ljava/lang/Float;", false);
+            methodVisitor.visitJumpInsn(GOTO, l1);
+            methodVisitor.visitLabel(l0);
+            methodVisitor.visitInsn(ACONST_NULL);
+            methodVisitor.visitLabel(l1);
+            if (status == 2) {
+                methodVisitor.visitVarInsn(ASTORE, 3);
+            } else {
+                methodVisitor.visitVarInsn(ASTORE, 2);
+            }
+        }
+    }
+
+    /**
+     * This class generates byte code to mod 2 floats.
+     */
+    class PrivateModExpressionExecutorFloatBytecodeEmitter implements ByteCodeEmitter {
+        /**
+         * This method overrides interface method.
+         *
+         * @param conditionExecutor
+         * @param status
+         * @param parent
+         * @param specialCase
+         * @param parentStatus
+         * @param methodVisitor
+         * @param byteCodeGenarator
+         **/
+        @Override
+        public void generate(ExpressionExecutor conditionExecutor, int status, int parent,
+                             Label specialCase, int parentStatus,
+                             MethodVisitor methodVisitor, ByteCodeGenarator byteCodeGenarator) {
+            ExpressionExecutor left = ((ModExpressionExecutorFloat) conditionExecutor).getLeftExpressionExecutor();
+            ExpressionExecutor right = ((ModExpressionExecutorFloat) conditionExecutor).getRightExpressionExecutor();
+            byteCodeGenarator.execute(left, status, 0, null, status, methodVisitor, byteCodeGenarator);
+            Label l0 = new Label();
+            Label l1 = new Label();
+            int index = 2;
+            if (status == 2) {
+                index = 3;
+            }
+
+            if(!(left instanceof ConstantExpressionExecutor)) {
+                methodVisitor.visitVarInsn(ALOAD, index);
+                methodVisitor.visitJumpInsn(IFNULL, l0);
+                methodVisitor.visitVarInsn(ALOAD, index);
+            }else{
+                Object constantVariable = ((ConstantExpressionExecutor) left).getValue();
+                if (constantVariable instanceof Integer) {
+                    methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Integer", "valueOf",
+                            "(I)Ljava/lang/Integer;", false);
+                } else if (constantVariable instanceof Double) {
+                    methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Double", "valueOf",
+                            "(D)Ljava/lang/Double;", false);
+                } else if (constantVariable instanceof Float) {
+                    methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Float", "valueOf",
+                            "(F)Ljava/lang/Float;", false);
+                } else if (constantVariable instanceof Long) {
+                    methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Long", "valueOf",
+                            "(J)Ljava/lang/Long;", false);
+                }
+            }
+
+            methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+            methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "floatValue", "()F",
+                    false);
+            if (status == 2) {
+                methodVisitor.visitVarInsn(FSTORE, 6);
+            } else {
+                methodVisitor.visitVarInsn(FSTORE, 4);
+            }
+
+            byteCodeGenarator.execute(right, status, 0, null, status, methodVisitor, byteCodeGenarator);
+            if(!(right instanceof ConstantExpressionExecutor)) {
+                methodVisitor.visitVarInsn(ALOAD, index);
+                methodVisitor.visitJumpInsn(IFNULL, l0);
+                methodVisitor.visitVarInsn(ALOAD, index);
+            }else{
+                Object constantVariable = ((ConstantExpressionExecutor) right).getValue();
+                if (constantVariable instanceof Integer) {
+                    methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Integer", "valueOf",
+                            "(I)Ljava/lang/Integer;", false);
+                } else if (constantVariable instanceof Double) {
+                    methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Double", "valueOf",
+                            "(D)Ljava/lang/Double;", false);
+                } else if (constantVariable instanceof Float) {
+                    methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Float", "valueOf",
+                            "(F)Ljava/lang/Float;", false);
+                } else if (constantVariable instanceof Long) {
+                    methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Long", "valueOf",
+                            "(J)Ljava/lang/Long;", false);
+                }
+            }
+
+            methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+            methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "floatValue", "()F",
+                    false);
+            methodVisitor.visitVarInsn(FSTORE, 8);
+            methodVisitor.visitVarInsn(FLOAD, 8);
+            methodVisitor.visitInsn(FCONST_0);
+            methodVisitor.visitInsn(FCMPL);
+            methodVisitor.visitJumpInsn(IFEQ, l0);
+
+            if (status == 2) {
+                methodVisitor.visitVarInsn(FLOAD, 6);
+            } else {
+                methodVisitor.visitVarInsn(FLOAD, 4);
+            }
+
+            methodVisitor.visitVarInsn(FLOAD, 8);
+            methodVisitor.visitInsn(FREM);
+            methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Float", "valueOf",
+                    "(F)Ljava/lang/Float;", false);
+            methodVisitor.visitJumpInsn(GOTO, l1);
+            methodVisitor.visitLabel(l0);
+            methodVisitor.visitInsn(ACONST_NULL);
+            methodVisitor.visitLabel(l1);
+            if (status == 2) {
+                methodVisitor.visitVarInsn(ASTORE, 3);
+            } else {
+                methodVisitor.visitVarInsn(ASTORE, 2);
+            }
+        }
+    }
+
+    /**
+     * This class generates byte code to divide 2 long values.
+     */
+    class PrivateDivideExpressionExecutorLongBytecodeEmitter implements ByteCodeEmitter {
+        /**
+         * This method overrides interface method.
+         *
+         * @param conditionExecutor
+         * @param status
+         * @param parent
+         * @param specialCase
+         * @param parentStatus
+         * @param methodVisitor
+         * @param byteCodeGenarator
+         **/
+        @Override
+        public void generate(ExpressionExecutor conditionExecutor, int status, int parent,
+                             Label specialCase, int parentStatus,
+                             MethodVisitor methodVisitor, ByteCodeGenarator byteCodeGenarator) {
+            ExpressionExecutor left = ((DivideExpressionExecutorLong) conditionExecutor).getLeftExpressionExecutor();
+            ExpressionExecutor right = ((DivideExpressionExecutorLong) conditionExecutor).getRightExpressionExecutor();
+            byteCodeGenarator.execute(left, status, 0, null, status, methodVisitor, byteCodeGenarator);
+            Label l0 = new Label();
+            Label l1 = new Label();
+            int index = 2;
+            if (status == 2) {
+                index = 3;
+            }
+
+            if(!(left instanceof ConstantExpressionExecutor)) {
+                methodVisitor.visitVarInsn(ALOAD, index);
+                methodVisitor.visitJumpInsn(IFNULL, l0);
+                methodVisitor.visitVarInsn(ALOAD, index);
+            }else{
+                Object constantVariable = ((ConstantExpressionExecutor) left).getValue();
+                if (constantVariable instanceof Integer) {
+                    methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Integer", "valueOf",
+                            "(I)Ljava/lang/Integer;", false);
+                } else if (constantVariable instanceof Double) {
+                    methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Double", "valueOf",
+                            "(D)Ljava/lang/Double;", false);
+                } else if (constantVariable instanceof Float) {
+                    methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Float", "valueOf",
+                            "(F)Ljava/lang/Float;", false);
+                } else if (constantVariable instanceof Long) {
+                    methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Long", "valueOf",
+                            "(J)Ljava/lang/Long;", false);
+                }
+            }
+
+            methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+            methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "longValue", "()J",
+                    false);
+            if (status == 2) {
+                methodVisitor.visitVarInsn(LSTORE, 6);
+            } else {
+                methodVisitor.visitVarInsn(LSTORE, 4);
+            }
+
+            byteCodeGenarator.execute(right, status, 0, null, status, methodVisitor, byteCodeGenarator);
+            if(!(right instanceof ConstantExpressionExecutor)) {
+                methodVisitor.visitVarInsn(ALOAD, index);
+                methodVisitor.visitJumpInsn(IFNULL, l0);
+                methodVisitor.visitVarInsn(ALOAD, index);
+            }else{
+                Object constantVariable = ((ConstantExpressionExecutor) right).getValue();
+                if (constantVariable instanceof Integer) {
+                    methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Integer", "valueOf",
+                            "(I)Ljava/lang/Integer;", false);
+                } else if (constantVariable instanceof Double) {
+                    methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Double", "valueOf",
+                            "(D)Ljava/lang/Double;", false);
+                } else if (constantVariable instanceof Float) {
+                    methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Float", "valueOf",
+                            "(F)Ljava/lang/Float;", false);
+                } else if (constantVariable instanceof Long) {
+                    methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Long", "valueOf",
+                            "(J)Ljava/lang/Long;", false);
+                }
+            }
+
+            methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+            methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "longValue", "()J",
+                    false);
+            methodVisitor.visitVarInsn(LSTORE, 8);
+            methodVisitor.visitVarInsn(LLOAD, 8);
+            methodVisitor.visitInsn(LCONST_0);
+            methodVisitor.visitInsn(LCMP);
+            methodVisitor.visitJumpInsn(IFEQ, l0);
+
+            if (status == 2) {
+                methodVisitor.visitVarInsn(LLOAD, 6);
+            } else {
+                methodVisitor.visitVarInsn(LLOAD, 4);
+            }
+
+            methodVisitor.visitVarInsn(LLOAD, 8);
+            methodVisitor.visitInsn(LDIV);
+            methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Long", "valueOf",
+                    "(J)Ljava/lang/Long;", false);
+            methodVisitor.visitJumpInsn(GOTO, l1);
+            methodVisitor.visitLabel(l0);
+            methodVisitor.visitInsn(ACONST_NULL);
+            methodVisitor.visitLabel(l1);
+            if (status == 2) {
+                methodVisitor.visitVarInsn(ASTORE, 3);
+            } else {
+                methodVisitor.visitVarInsn(ASTORE, 2);
+            }
+        }
+    }
+
+    /**
+     * This class generates byte code to mod 2 long values.
+     */
+    class PrivateModExpressionExecutorLongBytecodeEmitter implements ByteCodeEmitter {
+        /**
+         * This method overrides interface method.
+         *
+         * @param conditionExecutor
+         * @param status
+         * @param parent
+         * @param specialCase
+         * @param parentStatus
+         * @param methodVisitor
+         * @param byteCodeGenarator
+         **/
+        @Override
+        public void generate(ExpressionExecutor conditionExecutor, int status, int parent,
+                             Label specialCase, int parentStatus,
+                             MethodVisitor methodVisitor, ByteCodeGenarator byteCodeGenarator) {
+            ExpressionExecutor left = ((ModExpressionExecutorLong) conditionExecutor).getLeftExpressionExecutor();
+            ExpressionExecutor right = ((ModExpressionExecutorLong) conditionExecutor).getRightExpressionExecutor();
+            byteCodeGenarator.execute(left, status, 0, null, status, methodVisitor, byteCodeGenarator);
+            Label l0 = new Label();
+            Label l1 = new Label();
+            int index = 2;
+            if (status == 2) {
+                index = 3;
+            }
+
+            if(!(left instanceof ConstantExpressionExecutor)) {
+                methodVisitor.visitVarInsn(ALOAD, index);
+                methodVisitor.visitJumpInsn(IFNULL, l0);
+                methodVisitor.visitVarInsn(ALOAD, index);
+            }else{
+                Object constantVariable = ((ConstantExpressionExecutor) left).getValue();
+                if (constantVariable instanceof Integer) {
+                    methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Integer", "valueOf",
+                            "(I)Ljava/lang/Integer;", false);
+                } else if (constantVariable instanceof Double) {
+                    methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Double", "valueOf",
+                            "(D)Ljava/lang/Double;", false);
+                } else if (constantVariable instanceof Float) {
+                    methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Float", "valueOf",
+                            "(F)Ljava/lang/Float;", false);
+                } else if (constantVariable instanceof Long) {
+                    methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Long", "valueOf",
+                            "(J)Ljava/lang/Long;", false);
+                }
+            }
+
+            methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+            methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "longValue", "()J",
+                    false);
+            if (status == 2) {
+                methodVisitor.visitVarInsn(LSTORE, 6);
+            } else {
+                methodVisitor.visitVarInsn(LSTORE, 4);
+            }
+
+            byteCodeGenarator.execute(right, status, 0, null, status, methodVisitor, byteCodeGenarator);
+            if(!(right instanceof ConstantExpressionExecutor)) {
+                methodVisitor.visitVarInsn(ALOAD, index);
+                methodVisitor.visitJumpInsn(IFNULL, l0);
+                methodVisitor.visitVarInsn(ALOAD, index);
+            }else{
+                Object constantVariable = ((ConstantExpressionExecutor) right).getValue();
+                if (constantVariable instanceof Integer) {
+                    methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Integer", "valueOf",
+                            "(I)Ljava/lang/Integer;", false);
+                } else if (constantVariable instanceof Double) {
+                    methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Double", "valueOf",
+                            "(D)Ljava/lang/Double;", false);
+                } else if (constantVariable instanceof Float) {
+                    methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Float", "valueOf",
+                            "(F)Ljava/lang/Float;", false);
+                } else if (constantVariable instanceof Long) {
+                    methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Long", "valueOf",
+                            "(J)Ljava/lang/Long;", false);
+                }
+            }
+
+            methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+            methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "longValue", "()J",
+                    false);
+            methodVisitor.visitVarInsn(LSTORE, 8);
+            methodVisitor.visitVarInsn(LLOAD, 8);
+            methodVisitor.visitInsn(LCONST_0);
+            methodVisitor.visitInsn(LCMP);
+            methodVisitor.visitJumpInsn(IFEQ, l0);
+
+            if (status == 2) {
+                methodVisitor.visitVarInsn(LLOAD, 6);
+            } else {
+                methodVisitor.visitVarInsn(LLOAD, 4);
+            }
+
+            methodVisitor.visitVarInsn(LLOAD, 8);
+            methodVisitor.visitInsn(LREM);
+            methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Long", "valueOf",
+                    "(J)Ljava/lang/Long;", false);
+            methodVisitor.visitJumpInsn(GOTO, l1);
+            methodVisitor.visitLabel(l0);
+            methodVisitor.visitInsn(ACONST_NULL);
+            methodVisitor.visitLabel(l1);
+            if (status == 2) {
+                methodVisitor.visitVarInsn(ASTORE, 3);
+            } else {
+                methodVisitor.visitVarInsn(ASTORE, 2);
+            }
+        }
+    }
+
+    /**
+     * This class generates byte code to divide 2 Integers.
+     */
+    class PrivateDivideExpressionExecutorIntegerBytecodeEmitter implements ByteCodeEmitter {
+        /**
+         * This method overrides interface method.
+         *
+         * @param conditionExecutor
+         * @param status
+         * @param parent
+         * @param specialCase
+         * @param parentStatus
+         * @param methodVisitor
+         * @param byteCodeGenarator
+         **/
+        @Override
+        public void generate(ExpressionExecutor conditionExecutor, int status, int parent,
+                             Label specialCase, int parentStatus,
+                             MethodVisitor methodVisitor, ByteCodeGenarator byteCodeGenarator) {
+            ExpressionExecutor left = ((DivideExpressionExecutorInt) conditionExecutor).getLeftExpressionExecutor();
+            ExpressionExecutor right = ((DivideExpressionExecutorInt) conditionExecutor).getRightExpressionExecutor();
+            byteCodeGenarator.execute(left, status, 0, null, status, methodVisitor, byteCodeGenarator);
+            Label l0 = new Label();
+            Label l1 = new Label();
+            int index = 2;
+            if (status == 2) {
+                index = 3;
+            }
+
+            if(!(left instanceof ConstantExpressionExecutor)) {
+                methodVisitor.visitVarInsn(ALOAD, index);
+                methodVisitor.visitJumpInsn(IFNULL, l0);
+                methodVisitor.visitVarInsn(ALOAD, index);
+            }else{
+                Object constantVariable = ((ConstantExpressionExecutor) left).getValue();
+                if (constantVariable instanceof Integer) {
+                    methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Integer", "valueOf",
+                            "(I)Ljava/lang/Integer;", false);
+                } else if (constantVariable instanceof Double) {
+                    methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Double", "valueOf",
+                            "(D)Ljava/lang/Double;", false);
+                } else if (constantVariable instanceof Float) {
+                    methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Float", "valueOf",
+                            "(F)Ljava/lang/Float;", false);
+                } else if (constantVariable instanceof Long) {
+                    methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Long", "valueOf",
+                            "(J)Ljava/lang/Long;", false);
+                }
+            }
+
+            methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+            methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "intValue", "()I",
+                    false);
+            if (status == 2) {
+                methodVisitor.visitVarInsn(ISTORE, 6);
+            } else {
+                methodVisitor.visitVarInsn(ISTORE, 4);
+            }
+
+            byteCodeGenarator.execute(right, status, 0, null, status, methodVisitor, byteCodeGenarator);
+            if(!(right instanceof ConstantExpressionExecutor)) {
+                methodVisitor.visitVarInsn(ALOAD, index);
+                methodVisitor.visitJumpInsn(IFNULL, l0);
+                methodVisitor.visitVarInsn(ALOAD, index);
+            }else{
+                Object constantVariable = ((ConstantExpressionExecutor) right).getValue();
+                if (constantVariable instanceof Integer) {
+                    methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Integer", "valueOf",
+                            "(I)Ljava/lang/Integer;", false);
+                } else if (constantVariable instanceof Double) {
+                    methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Double", "valueOf",
+                            "(D)Ljava/lang/Double;", false);
+                } else if (constantVariable instanceof Float) {
+                    methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Float", "valueOf",
+                            "(F)Ljava/lang/Float;", false);
+                } else if (constantVariable instanceof Long) {
+                    methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Long", "valueOf",
+                            "(J)Ljava/lang/Long;", false);
+                }
+            }
+
+            methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+            methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "intValue", "()I",
+                    false);
+            methodVisitor.visitVarInsn(ISTORE, 8);
+            methodVisitor.visitVarInsn(ILOAD, 8);
+            methodVisitor.visitInsn(ICONST_0);
+            //methodVisitor.visitInsn(FCMPL);
+            methodVisitor.visitJumpInsn(IF_ICMPEQ, l0);
+
+            if (status == 2) {
+                methodVisitor.visitVarInsn(ILOAD, 6);
+            } else {
+                methodVisitor.visitVarInsn(ILOAD, 4);
+            }
+
+            methodVisitor.visitVarInsn(ILOAD, 8);
+            methodVisitor.visitInsn(IDIV);
+            methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Integer", "valueOf",
+                    "(I)Ljava/lang/Integer;", false);
+            methodVisitor.visitJumpInsn(GOTO, l1);
+            methodVisitor.visitLabel(l0);
+            methodVisitor.visitInsn(ACONST_NULL);
+            methodVisitor.visitLabel(l1);
+            if (status == 2) {
+                methodVisitor.visitVarInsn(ASTORE, 3);
+            } else {
+                methodVisitor.visitVarInsn(ASTORE, 2);
+            }
+        }
+    }
+
+    /**
+     * This class generates byte code to mod 2 Integers.
+     */
+    class PrivateModExpressionExecutorIntegerBytecodeEmitter implements ByteCodeEmitter {
+        /**
+         * This method overrides interface method.
+         *
+         * @param conditionExecutor
+         * @param status
+         * @param parent
+         * @param specialCase
+         * @param parentStatus
+         * @param methodVisitor
+         * @param byteCodeGenarator
+         **/
+        @Override
+        public void generate(ExpressionExecutor conditionExecutor, int status, int parent,
+                             Label specialCase, int parentStatus,
+                             MethodVisitor methodVisitor, ByteCodeGenarator byteCodeGenarator) {
+            ExpressionExecutor left = ((ModExpressionExecutorInt) conditionExecutor).getLeftExpressionExecutor();
+            ExpressionExecutor right = ((ModExpressionExecutorInt) conditionExecutor).getRightExpressionExecutor();
+            byteCodeGenarator.execute(left, status, 0, null, status, methodVisitor, byteCodeGenarator);
+            Label l0 = new Label();
+            Label l1 = new Label();
+            int index = 2;
+            if (status == 2) {
+                index = 3;
+            }
+
+            if(!(left instanceof ConstantExpressionExecutor)) {
+                methodVisitor.visitVarInsn(ALOAD, index);
+                methodVisitor.visitJumpInsn(IFNULL, l0);
+                methodVisitor.visitVarInsn(ALOAD, index);
+            }else{
+                Object constantVariable = ((ConstantExpressionExecutor) left).getValue();
+                if (constantVariable instanceof Integer) {
+                    methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Integer", "valueOf",
+                            "(I)Ljava/lang/Integer;", false);
+                } else if (constantVariable instanceof Double) {
+                    methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Double", "valueOf",
+                            "(D)Ljava/lang/Double;", false);
+                } else if (constantVariable instanceof Float) {
+                    methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Float", "valueOf",
+                            "(F)Ljava/lang/Float;", false);
+                } else if (constantVariable instanceof Long) {
+                    methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Long", "valueOf",
+                            "(J)Ljava/lang/Long;", false);
+                }
+            }
+
+            methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+            methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "intValue", "()I",
+                    false);
+            if (status == 2) {
+                methodVisitor.visitVarInsn(ISTORE, 6);
+            } else {
+                methodVisitor.visitVarInsn(ISTORE, 4);
+            }
+
+            byteCodeGenarator.execute(right, status, 0, null, status, methodVisitor, byteCodeGenarator);
+            if(!(right instanceof ConstantExpressionExecutor)) {
+                methodVisitor.visitVarInsn(ALOAD, index);
+                methodVisitor.visitJumpInsn(IFNULL, l0);
+                methodVisitor.visitVarInsn(ALOAD, index);
+            }else{
+                Object constantVariable = ((ConstantExpressionExecutor) right).getValue();
+                if (constantVariable instanceof Integer) {
+                    methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Integer", "valueOf",
+                            "(I)Ljava/lang/Integer;", false);
+                } else if (constantVariable instanceof Double) {
+                    methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Double", "valueOf",
+                            "(D)Ljava/lang/Double;", false);
+                } else if (constantVariable instanceof Float) {
+                    methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Float", "valueOf",
+                            "(F)Ljava/lang/Float;", false);
+                } else if (constantVariable instanceof Long) {
+                    methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Long", "valueOf",
+                            "(J)Ljava/lang/Long;", false);
+                }
+            }
+
+            methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+            methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "intValue", "()I",
+                    false);
+            methodVisitor.visitVarInsn(ISTORE, 8);
+            methodVisitor.visitVarInsn(ILOAD, 8);
+            methodVisitor.visitInsn(ICONST_0);
+            //methodVisitor.visitInsn(FCMPL);
+            methodVisitor.visitJumpInsn(IF_ICMPEQ, l0);
+
+            if (status == 2) {
+                methodVisitor.visitVarInsn(ILOAD, 6);
+            } else {
+                methodVisitor.visitVarInsn(ILOAD, 4);
+            }
+
+            methodVisitor.visitVarInsn(ILOAD, 8);
+            methodVisitor.visitInsn(IREM);
+            methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Integer", "valueOf",
+                    "(I)Ljava/lang/Integer;", false);
+            methodVisitor.visitJumpInsn(GOTO, l1);
+            methodVisitor.visitLabel(l0);
+            methodVisitor.visitInsn(ACONST_NULL);
+            methodVisitor.visitLabel(l1);
+            if (status == 2) {
+                methodVisitor.visitVarInsn(ASTORE, 3);
+            } else {
+                methodVisitor.visitVarInsn(ASTORE, 2);
+            }
+        }
+    }
+
+    /**
      * This class generates byte code to multiply 2 doubles.
-     **/
+     */
     class PrivateMultiplyExpressionExecutorDoubleBytecodeEmitter implements ByteCodeEmitter {
         /**
          * This method overrides interface method.
@@ -804,7 +1705,7 @@ public class ByteCodeRegistry {
 
     /**
      * This class generates byte code to add 2 floats.
-     **/
+     */
      class PrivateAddExpressionExecutorFloatBytecodeEmitter implements ByteCodeEmitter {
         /**
          * This method overrides interface method.
@@ -908,8 +1809,115 @@ public class ByteCodeRegistry {
     }
 
     /**
+     * This class generates byte code to subtract 2 floats.
+     */
+    class PrivateSubtractExpressionExecutorFloatBytecodeEmitter implements ByteCodeEmitter {
+        /**
+         * This method overrides interface method.
+         *
+         * @param conditionExecutor
+         * @param status
+         * @param parent
+         * @param specialCase
+         * @param parentStatus
+         * @param methodVisitor
+         * @param byteCodeGenarator
+         **/
+        @Override
+        public void generate(ExpressionExecutor conditionExecutor, int status, int parent,
+                             Label specialCase, int parentStatus,
+                             MethodVisitor methodVisitor, ByteCodeGenarator byteCodeGenarator) {
+            ExpressionExecutor left = ((SubtractExpressionExecutorFloat) conditionExecutor).getLeftExpressionExecutor();
+            ExpressionExecutor right = ((SubtractExpressionExecutorFloat) conditionExecutor).getRightExpressionExecutor();
+            byteCodeGenarator.execute(left, status, 0, null, status, methodVisitor, byteCodeGenarator);
+            Label l0 = new Label();
+            Label l1 = new Label();
+            int index = 2;
+            if (status == 2) {
+                index = 3;
+            }
+
+            if(!(left instanceof ConstantExpressionExecutor)) {
+                methodVisitor.visitVarInsn(ALOAD, index);
+                methodVisitor.visitJumpInsn(IFNULL, l0);
+                methodVisitor.visitVarInsn(ALOAD, index);
+            }else{
+                Object constantVariable = ((ConstantExpressionExecutor) left).getValue();
+                if (constantVariable instanceof Integer) {
+                    methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Integer", "valueOf",
+                            "(I)Ljava/lang/Integer;", false);
+                } else if (constantVariable instanceof Double) {
+                    methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Double", "valueOf",
+                            "(D)Ljava/lang/Double;", false);
+                } else if (constantVariable instanceof Float) {
+                    methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Float", "valueOf",
+                            "(F)Ljava/lang/Float;", false);
+                } else if (constantVariable instanceof Long) {
+                    methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Long", "valueOf",
+                            "(J)Ljava/lang/Long;", false);
+                }
+            }
+
+            methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+            methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "floatValue", "()F",
+                    false);
+            if (status == 2) {
+                methodVisitor.visitVarInsn(FSTORE, 6);
+            } else {
+                methodVisitor.visitVarInsn(FSTORE, 4);
+            }
+
+            byteCodeGenarator.execute(right, status, 0, null, status, methodVisitor, byteCodeGenarator);
+            if(!(right instanceof ConstantExpressionExecutor)) {
+                methodVisitor.visitVarInsn(ALOAD, index);
+                methodVisitor.visitJumpInsn(IFNULL, l0);
+                methodVisitor.visitVarInsn(ALOAD, index);
+            }else{
+                Object constantVariable = ((ConstantExpressionExecutor) right).getValue();
+                if (constantVariable instanceof Integer) {
+                    methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Integer", "valueOf",
+                            "(I)Ljava/lang/Integer;", false);
+                } else if (constantVariable instanceof Double) {
+                    methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Double", "valueOf",
+                            "(D)Ljava/lang/Double;", false);
+                } else if (constantVariable instanceof Float) {
+                    methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Float", "valueOf",
+                            "(F)Ljava/lang/Float;", false);
+                } else if (constantVariable instanceof Long) {
+                    methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Long", "valueOf",
+                            "(J)Ljava/lang/Long;", false);
+                }
+            }
+
+            methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+            methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "floatValue", "()F",
+                    false);
+            methodVisitor.visitVarInsn(FSTORE, 8);
+            if (status == 2) {
+                methodVisitor.visitVarInsn(FLOAD, 6);
+            } else {
+                methodVisitor.visitVarInsn(FLOAD, 4);
+            }
+
+            methodVisitor.visitVarInsn(FLOAD, 8);
+            methodVisitor.visitInsn(FSUB);
+            methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Float", "valueOf",
+                    "(F)Ljava/lang/Float;", false);
+            methodVisitor.visitJumpInsn(GOTO, l1);
+            methodVisitor.visitLabel(l0);
+            methodVisitor.visitInsn(ACONST_NULL);
+            methodVisitor.visitLabel(l1);
+            if (status == 2) {
+                methodVisitor.visitVarInsn(ASTORE, 3);
+            } else {
+                methodVisitor.visitVarInsn(ASTORE, 2);
+            }
+        }
+    }
+
+    /**
      * This class generates byte code to multiply 2 floats.
-     **/
+     */
     class PrivateMultiplyExpressionExecutorFloatBytecodeEmitter implements ByteCodeEmitter {
         /**
          * This method overrides interface method.
@@ -1014,7 +2022,7 @@ public class ByteCodeRegistry {
 
     /**
      * This class generates byte code to add 2 Integers.
-     **/
+     */
     class PrivateAddExpressionExecutorIntBytecodeEmitter implements ByteCodeEmitter {
         /**
          * This method overrides interface method.
@@ -1118,8 +2126,115 @@ public class ByteCodeRegistry {
     }
 
     /**
+     * This class generates byte code to subtract 2 Integers.
+     */
+    class PrivateSubtractExpressionExecutorIntBytecodeEmitter implements ByteCodeEmitter {
+        /**
+         * This method overrides interface method.
+         *
+         * @param conditionExecutor
+         * @param status
+         * @param parent
+         * @param specialCase
+         * @param parentStatus
+         * @param methodVisitor
+         * @param byteCodeGenarator
+         **/
+        @Override
+        public void generate(ExpressionExecutor conditionExecutor, int status, int parent,
+                             Label specialCase, int parentStatus,
+                             MethodVisitor methodVisitor, ByteCodeGenarator byteCodeGenarator) {
+            ExpressionExecutor left = ((SubtractExpressionExecutorInt) conditionExecutor).getLeftExpressionExecutor();
+            ExpressionExecutor right = ((SubtractExpressionExecutorInt) conditionExecutor).getRightExpressionExecutor();
+            byteCodeGenarator.execute(left, status, 0, null, status, methodVisitor, byteCodeGenarator);
+            Label l0 = new Label();
+            Label l1 = new Label();
+            int index = 2;
+            if (status == 2) {
+                index = 3;
+            }
+
+            if(!(left instanceof ConstantExpressionExecutor)) {
+                methodVisitor.visitVarInsn(ALOAD, index);
+                methodVisitor.visitJumpInsn(IFNULL, l0);
+                methodVisitor.visitVarInsn(ALOAD, index);
+            }else{
+                Object constantVariable = ((ConstantExpressionExecutor) left).getValue();
+                if (constantVariable instanceof Integer) {
+                    methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Integer", "valueOf",
+                            "(I)Ljava/lang/Integer;", false);
+                } else if (constantVariable instanceof Double) {
+                    methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Double", "valueOf",
+                            "(D)Ljava/lang/Double;", false);
+                } else if (constantVariable instanceof Float) {
+                    methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Float", "valueOf",
+                            "(F)Ljava/lang/Float;", false);
+                } else if (constantVariable instanceof Long) {
+                    methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Long", "valueOf",
+                            "(J)Ljava/lang/Long;", false);
+                }
+            }
+
+            methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+            methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "intValue", "()I",
+                    false);
+            if (status == 2) {
+                methodVisitor.visitVarInsn(ISTORE, 6);
+            } else {
+                methodVisitor.visitVarInsn(ISTORE, 4);
+            }
+
+            byteCodeGenarator.execute(right, status, 0, null, status, methodVisitor, byteCodeGenarator);
+            if(!(right instanceof ConstantExpressionExecutor)) {
+                methodVisitor.visitVarInsn(ALOAD, index);
+                methodVisitor.visitJumpInsn(IFNULL, l0);
+                methodVisitor.visitVarInsn(ALOAD, index);
+            }else{
+                Object constantVariable = ((ConstantExpressionExecutor) right).getValue();
+                if (constantVariable instanceof Integer) {
+                    methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Integer", "valueOf",
+                            "(I)Ljava/lang/Integer;", false);
+                } else if (constantVariable instanceof Double) {
+                    methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Double", "valueOf",
+                            "(D)Ljava/lang/Double;", false);
+                } else if (constantVariable instanceof Float) {
+                    methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Float", "valueOf",
+                            "(F)Ljava/lang/Float;", false);
+                } else if (constantVariable instanceof Long) {
+                    methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Long", "valueOf",
+                            "(J)Ljava/lang/Long;", false);
+                }
+            }
+
+            methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+            methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "intValue", "()I",
+                    false);
+            methodVisitor.visitVarInsn(ISTORE, 8);
+            if (status == 2) {
+                methodVisitor.visitVarInsn(ILOAD, 6);
+            } else {
+                methodVisitor.visitVarInsn(ILOAD, 4);
+            }
+
+            methodVisitor.visitVarInsn(ILOAD, 8);
+            methodVisitor.visitInsn(ISUB);
+            methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Integer", "valueOf",
+                    "(I)Ljava/lang/Integer;", false);
+            methodVisitor.visitJumpInsn(GOTO, l1);
+            methodVisitor.visitLabel(l0);
+            methodVisitor.visitInsn(ACONST_NULL);
+            methodVisitor.visitLabel(l1);
+            if (status == 2) {
+                methodVisitor.visitVarInsn(ASTORE, 3);
+            } else {
+                methodVisitor.visitVarInsn(ASTORE, 2);
+            }
+        }
+    }
+
+    /**
      * This class generates byte code to multiply 2 Integers.
-     **/
+     */
     class PrivateMultiplyExpressionExecutorIntBytecodeEmitter implements ByteCodeEmitter {
         /**
          * This method overrides interface method.
@@ -1224,7 +2339,7 @@ public class ByteCodeRegistry {
 
     /**
      * This class generates byte code to add 2 Long values.
-     **/
+     */
     class PrivateAddExpressionExecutorLongBytecodeEmitter implements ByteCodeEmitter {
         /**
          * This method overrides interface method.
@@ -1327,8 +2442,114 @@ public class ByteCodeRegistry {
     }
 
     /**
+     * This class generates byte code to subtract 2 Long values.
+     */
+    class PrivateSubtractExpressionExecutorLongBytecodeEmitter implements ByteCodeEmitter {
+        /**
+         * This method overrides interface method.
+         *
+         * @param conditionExecutor
+         * @param status
+         * @param parent
+         * @param specialCase
+         * @param parentStatus
+         * @param methodVisitor
+         * @param byteCodeGenarator
+         **/
+        @Override
+        public void generate(ExpressionExecutor conditionExecutor, int status, int parent,
+                             Label specialCase, int parentStatus,
+                             MethodVisitor methodVisitor, ByteCodeGenarator byteCodeGenarator) {
+            ExpressionExecutor left = ((SubtractExpressionExecutorLong) conditionExecutor).getLeftExpressionExecutor();
+            ExpressionExecutor right = ((SubtractExpressionExecutorLong) conditionExecutor).getRightExpressionExecutor();
+            byteCodeGenarator.execute(left, status, 0, null, status, methodVisitor, byteCodeGenarator);
+            Label l0 = new Label();
+            Label l1 = new Label();
+            int index = 2;
+            if (status == 2) {
+                index = 3;
+            }
+
+            if(!(left instanceof ConstantExpressionExecutor)) {
+                methodVisitor.visitVarInsn(ALOAD, index);
+                methodVisitor.visitJumpInsn(IFNULL, l0);
+                methodVisitor.visitVarInsn(ALOAD, index);
+            }else{
+                Object constantVariable = ((ConstantExpressionExecutor) left).getValue();
+                if (constantVariable instanceof Integer) {
+                    methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Integer", "valueOf",
+                            "(I)Ljava/lang/Integer;", false);
+                } else if (constantVariable instanceof Double) {
+                    methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Double", "valueOf",
+                            "(D)Ljava/lang/Double;", false);
+                } else if (constantVariable instanceof Float) {
+                    methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Float", "valueOf",
+                            "(F)Ljava/lang/Float;", false);
+                } else if (constantVariable instanceof Long) {
+                    methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Long", "valueOf",
+                            "(J)Ljava/lang/Long;", false);
+                }
+            }
+
+            methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+            methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "longValue", "()J",
+                    false);
+            if (status == 2) {
+                methodVisitor.visitVarInsn(LSTORE, 6);
+            } else {
+                methodVisitor.visitVarInsn(LSTORE, 4);
+            }
+
+            byteCodeGenarator.execute(right, status, 0, null, status, methodVisitor, byteCodeGenarator);
+            if(!(right instanceof ConstantExpressionExecutor)) {
+                methodVisitor.visitVarInsn(ALOAD, index);
+                methodVisitor.visitJumpInsn(IFNULL, l0);
+                methodVisitor.visitVarInsn(ALOAD, index);
+            }else{
+                Object constantVariable = ((ConstantExpressionExecutor) right).getValue();
+                if (constantVariable instanceof Integer) {
+                    methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Integer", "valueOf",
+                            "(I)Ljava/lang/Integer;", false);
+                } else if (constantVariable instanceof Double) {
+                    methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Double", "valueOf",
+                            "(D)Ljava/lang/Double;", false);
+                } else if (constantVariable instanceof Float) {
+                    methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Float", "valueOf",
+                            "(F)Ljava/lang/Float;", false);
+                } else if (constantVariable instanceof Long) {
+                    methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Long", "valueOf",
+                            "(J)Ljava/lang/Long;", false);
+                }
+            }
+            methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+            methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "longValue", "()J",
+                    false);
+            methodVisitor.visitVarInsn(LSTORE, 8);
+            if (status == 2) {
+                methodVisitor.visitVarInsn(LLOAD, 6);
+            } else {
+                methodVisitor.visitVarInsn(LLOAD, 4);
+            }
+
+            methodVisitor.visitVarInsn(LLOAD, 8);
+            methodVisitor.visitInsn(LSUB);
+            methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Long", "valueOf",
+                    "(J)Ljava/lang/Long;", false);
+            methodVisitor.visitJumpInsn(GOTO, l1);
+            methodVisitor.visitLabel(l0);
+            methodVisitor.visitInsn(ACONST_NULL);
+            methodVisitor.visitLabel(l1);
+            if (status == 2) {
+                methodVisitor.visitVarInsn(ASTORE, 3);
+            } else {
+                methodVisitor.visitVarInsn(ASTORE, 2);
+            }
+        }
+    }
+
+    /**
      * This class generates byte code to multiply 2 Long values.
-     **/
+     */
     class PrivateMultiplyExpressionExecutorLongBytecodeEmitter implements ByteCodeEmitter {
         /**
          * This method overrides interface method.

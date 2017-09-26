@@ -58,4 +58,11 @@ public class SubtractExpressionExecutorDouble implements ExpressionExecutor {
                 rightExpressionExecutor.cloneExecutor(key));
     }
 
+    public ExpressionExecutor getLeftExpressionExecutor() {
+        return leftExpressionExecutor;
+    }
+
+    public ExpressionExecutor getRightExpressionExecutor() {
+        return rightExpressionExecutor;
+    }
 }
