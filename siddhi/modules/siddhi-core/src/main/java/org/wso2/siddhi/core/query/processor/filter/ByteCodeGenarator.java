@@ -31,6 +31,14 @@ import org.wso2.siddhi.core.executor.condition.compare.lessthan.*;
 import org.wso2.siddhi.core.executor.condition.compare.lessthanequal.*;
 import org.wso2.siddhi.core.executor.condition.compare.notequal.*;
 import org.wso2.siddhi.core.executor.math.add.AddExpressionExecutorDouble;
+import org.wso2.siddhi.core.executor.math.add.AddExpressionExecutorFloat;
+import org.wso2.siddhi.core.executor.math.add.AddExpressionExecutorInt;
+import org.wso2.siddhi.core.executor.math.add.AddExpressionExecutorLong;
+import org.wso2.siddhi.core.executor.math.divide.DivideExpressionExecutorDouble;
+import org.wso2.siddhi.core.executor.math.multiply.MultiplyExpressionExecutorDouble;
+import org.wso2.siddhi.core.executor.math.multiply.MultiplyExpressionExecutorFloat;
+import org.wso2.siddhi.core.executor.math.multiply.MultiplyExpressionExecutorInt;
+import org.wso2.siddhi.core.executor.math.multiply.MultiplyExpressionExecutorLong;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -95,7 +103,6 @@ public class ByteCodeGenarator {
                 byteCode.new PrivateGreaterThanCompareConditionExpressionExecutorLongIntegerBytecodeEmitter());
         byteCodegenerators.put(GreaterThanCompareConditionExpressionExecutorLongLong.class,
                 byteCode.new PrivateGreaterThanCompareConditionExpressionExecutorLongLongBytecodeEmitter());
-
         // Less Than Operator.
         byteCodegenerators.put(LessThanCompareConditionExpressionExecutorFloatFloat.class,
                 byteCode.new PrivateLessThanCompareConditionExpressionExecutorFloatFloatBytecodeEmitter());
@@ -272,6 +279,22 @@ public class ByteCodeGenarator {
         //Mathematical Operators.
         byteCodegenerators.put(AddExpressionExecutorDouble.class,
                 byteCode.new PrivateAddExpressionExecutorDoubleBytecodeEmitter());
+        byteCodegenerators.put(AddExpressionExecutorFloat.class,
+                byteCode.new PrivateAddExpressionExecutorFloatBytecodeEmitter());
+        byteCodegenerators.put(AddExpressionExecutorInt.class,
+                byteCode.new PrivateAddExpressionExecutorIntBytecodeEmitter());
+        byteCodegenerators.put(AddExpressionExecutorLong.class,
+                byteCode.new PrivateAddExpressionExecutorLongBytecodeEmitter());
+        byteCodegenerators.put(MultiplyExpressionExecutorDouble.class,
+                byteCode.new PrivateMultiplyExpressionExecutorDoubleBytecodeEmitter());
+        byteCodegenerators.put(MultiplyExpressionExecutorFloat.class,
+                byteCode.new PrivateMultiplyExpressionExecutorFloatBytecodeEmitter());
+        byteCodegenerators.put(MultiplyExpressionExecutorInt.class,
+                byteCode.new PrivateMultiplyExpressionExecutorIntBytecodeEmitter());
+        byteCodegenerators.put(MultiplyExpressionExecutorLong.class,
+                byteCode.new PrivateMultiplyExpressionExecutorLongBytecodeEmitter());
+        byteCodegenerators.put(DivideExpressionExecutorDouble.class,
+                byteCode.new PrivateDivideExpressionExecutorDoubleBytecodeEmitter());
     }
 
     private ClassWriter classWriter;
