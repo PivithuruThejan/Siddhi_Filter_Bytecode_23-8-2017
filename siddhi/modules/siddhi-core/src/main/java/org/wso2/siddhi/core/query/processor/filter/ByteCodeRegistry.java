@@ -30,6 +30,7 @@ import org.wso2.siddhi.core.executor.condition.compare.greaterthanequal.*;
 import org.wso2.siddhi.core.executor.condition.compare.lessthan.*;
 import org.wso2.siddhi.core.executor.condition.compare.lessthanequal.*;
 import org.wso2.siddhi.core.executor.condition.compare.notequal.*;
+import org.wso2.siddhi.core.executor.function.FunctionExecutor;
 import org.wso2.siddhi.core.executor.math.add.AddExpressionExecutorDouble;
 import org.wso2.siddhi.core.executor.math.add.AddExpressionExecutorFloat;
 import org.wso2.siddhi.core.executor.math.add.AddExpressionExecutorInt;
@@ -419,6 +420,75 @@ public class ByteCodeRegistry {
             } else {
                 methodVisitor.visitVarInsn(ISTORE, 2);
             }
+        }
+    }
+
+    /**
+     * This class generates byte code for "Bool" operator.
+     */
+    class PrivateBoolExpressionExecutorBytecodeEmitter implements ByteCodeEmitter {
+
+        /**
+         * This method overrides the interface method.
+         *
+         * @param conditionExecutor
+         * @param status
+         * @param parent
+         * @param specialCase
+         * @param parentStatus
+         * @param methodVisitor
+         * @param byteCodeGenarator
+         */
+        @Override
+        public void generate(ExpressionExecutor conditionExecutor, int status, int parent,
+                             Label specialCase, int parentStatus,
+                             MethodVisitor methodVisitor, ByteCodeGenarator byteCodeGenarator) {
+            ExpressionExecutor condition = ((BoolConditionExpressionExecutor) conditionExecutor).getConditionExecutor();
+            byteCodeGenarator.execute(condition, 1, 0, null, status, methodVisitor,
+                    byteCodeGenarator);
+            Label l0 = new Label();
+            Label l1 = new Label();
+            if(!(condition instanceof ConstantExpressionExecutor)) {
+                methodVisitor.visitVarInsn(ALOAD, 2);
+                methodVisitor.visitJumpInsn(IFNONNULL, l0);
+                methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Boolean");
+                methodVisitor.visitMethodInsn(INVOKEVIRTUAL, "java/lang/Boolean", "booleanValue", "()Z",
+                        false);
+            }
+
+            methodVisitor.visitJumpInsn(GOTO, l1);
+            methodVisitor.visitLabel(l0);
+            methodVisitor.visitInsn(ICONST_0);
+            methodVisitor.visitLabel(l1);
+            if (status == 2) {
+                methodVisitor.visitVarInsn(ISTORE, 3);
+            } else {
+                methodVisitor.visitVarInsn(ISTORE, 2);
+            }
+        }
+    }
+
+    /**
+     * This class generates byte code for extensions which extends FunctionExecutor.
+     */
+    class PrivateFunctionExecutorBytecodeEmitter implements ByteCodeEmitter {
+
+        /**
+         * This method overrides the interface method.
+         *
+         * @param conditionExecutor
+         * @param status
+         * @param parent
+         * @param specialCase
+         * @param parentStatus
+         * @param methodVisitor
+         * @param byteCodeGenarator
+         */
+        @Override
+        public void generate(ExpressionExecutor conditionExecutor, int status, int parent,
+                             Label specialCase, int parentStatus,
+                             MethodVisitor methodVisitor, ByteCodeGenarator byteCodeGenarator) {
+
         }
     }
 

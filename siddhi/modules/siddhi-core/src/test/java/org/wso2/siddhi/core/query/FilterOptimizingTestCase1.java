@@ -1575,7 +1575,7 @@ public class FilterOptimizingTestCase1 {
         String definition = "@config(async = 'true') define stream players(playerName string,country string,TestAverage" +
                 " long,TestStrikeRate float,ODIAverage float,ODIStrikeRate float,T20Average float,T20StrikeRate float," +
                 "BattingStyle string);";
-        String query = "@info(name = 'query1') from players[(TestAverage % 50l >2)]" +
+        String query = "@info(name = 'query1') from players[(TestAverage % 5l >2)]" +
                 " select playerName, BattingStyle, TestAverage % 5.0f as newAverage, TestAverage  insert into sqaud;";
         SiddhiManager siddhiManager = new SiddhiManager();
         SiddhiAppRuntime siddhiAppRuntime = siddhiManager.createSiddhiAppRuntime(definition + query);

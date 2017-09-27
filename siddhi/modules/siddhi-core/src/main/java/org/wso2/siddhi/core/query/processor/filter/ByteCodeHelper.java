@@ -42,6 +42,7 @@ public class ByteCodeHelper {
                 "java/lang/Object", new String[]
                         {"org/wso2/siddhi/core/executor/ExpressionExecutor"});
         classWriter.visitSource("ByteCodeRegistry.java", null);
+
         {
             methodVisitor = classWriter.visitMethod(ACC_PUBLIC, "<init>", "()V", null, null);
             methodVisitor.visitCode();

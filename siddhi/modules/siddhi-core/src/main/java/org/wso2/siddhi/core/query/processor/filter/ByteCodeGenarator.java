@@ -30,6 +30,8 @@ import org.wso2.siddhi.core.executor.condition.compare.greaterthanequal.*;
 import org.wso2.siddhi.core.executor.condition.compare.lessthan.*;
 import org.wso2.siddhi.core.executor.condition.compare.lessthanequal.*;
 import org.wso2.siddhi.core.executor.condition.compare.notequal.*;
+import org.wso2.siddhi.core.executor.function.FunctionExecutor;
+import org.wso2.siddhi.core.executor.function.InstanceOfBooleanFunctionExecutor;
 import org.wso2.siddhi.core.executor.math.add.AddExpressionExecutorDouble;
 import org.wso2.siddhi.core.executor.math.add.AddExpressionExecutorFloat;
 import org.wso2.siddhi.core.executor.math.add.AddExpressionExecutorInt;
@@ -81,6 +83,8 @@ public class ByteCodeGenarator {
                 byteCode.new PrivateIsNullExpressionExecutorBytecodeEmitter());
         byteCodegenerators.put(IsNullStreamConditionExpressionExecutor.class,
                 byteCode.new PrivateIsNullStreamExpressionExecutorBytecodeEmitter());
+        byteCodegenerators.put(BoolConditionExpressionExecutor.class,
+                byteCode.new PrivateBoolExpressionExecutorBytecodeEmitter());
         // Greater Than Operator.
         byteCodegenerators.put(GreaterThanCompareConditionExpressionExecutorFloatFloat.class,
                 byteCode.new PrivateGreaterThanCompareConditionExpressionExecutorFloatFloatBytecodeEmitter());
@@ -328,6 +332,9 @@ public class ByteCodeGenarator {
                 byteCode.new PrivateSubtractExpressionExecutorIntBytecodeEmitter());
         byteCodegenerators.put(SubtractExpressionExecutorLong.class,
                 byteCode.new PrivateSubtractExpressionExecutorLongBytecodeEmitter());
+        //FunctionExecutor.
+        byteCodegenerators.put( InstanceOfBooleanFunctionExecutor.class ,
+                byteCode.new PrivateFunctionExecutorBytecodeEmitter());
     }
 
     private ClassWriter classWriter;
