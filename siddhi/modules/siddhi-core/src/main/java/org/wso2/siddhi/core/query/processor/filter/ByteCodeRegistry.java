@@ -448,7 +448,7 @@ public class ByteCodeRegistry {
                     byteCodeGenarator);
             Label l0 = new Label();
             Label l1 = new Label();
-            if(!(condition instanceof ConstantExpressionExecutor)) {
+            if (!(condition instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 2);
                 methodVisitor.visitJumpInsn(IFNONNULL, l0);
                 methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Boolean");
@@ -488,6 +488,7 @@ public class ByteCodeRegistry {
         public void generate(ExpressionExecutor conditionExecutor, int status, int parent,
                              Label specialCase, int parentStatus,
                              MethodVisitor methodVisitor, ByteCodeGenarator byteCodeGenarator) {
+            byteCodeGenarator.unknownExpressionExecutors.add(conditionExecutor);
 
         }
     }
@@ -566,7 +567,7 @@ public class ByteCodeRegistry {
     /**
      * This class generates byte code to add 2 doubles.
      */
-     class PrivateAddExpressionExecutorDoubleBytecodeEmitter implements ByteCodeEmitter {
+    class PrivateAddExpressionExecutorDoubleBytecodeEmitter implements ByteCodeEmitter {
         /**
          * This method overrides interface method.
          *
@@ -591,30 +592,36 @@ public class ByteCodeRegistry {
             if (status == 2) {
                 index = 3;
             }
-            if(!(left instanceof ConstantExpressionExecutor)) {
+            if (!(left instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, index);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, index);
-            }else{
+                methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number",
+                        "doubleValue", "()D", false);
+            } else {
                 Object constantVariable = ((ConstantExpressionExecutor) left).getValue();
                 if (constantVariable instanceof Integer) {
                     methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Integer", "valueOf",
                             "(I)Ljava/lang/Integer;", false);
-                } else if (constantVariable instanceof Double) {
-                    methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Double", "valueOf",
-                            "(D)Ljava/lang/Double;", false);
+                    methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                    methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number",
+                            "doubleValue", "()D", false);
                 } else if (constantVariable instanceof Float) {
                     methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Float", "valueOf",
                             "(F)Ljava/lang/Float;", false);
+                    methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                    methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number",
+                            "doubleValue", "()D", false);
                 } else if (constantVariable instanceof Long) {
                     methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Long", "valueOf",
                             "(J)Ljava/lang/Long;", false);
+                    methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                    methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number",
+                            "doubleValue", "()D", false);
                 }
             }
 
-            methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
-            methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "doubleValue", "()D",
-                    false);
             if (status == 2) {
                 methodVisitor.visitVarInsn(DSTORE, 6);
             } else {
@@ -622,30 +629,36 @@ public class ByteCodeRegistry {
             }
 
             byteCodeGenarator.execute(right, status, 0, null, status, methodVisitor, byteCodeGenarator);
-            if(!(right instanceof ConstantExpressionExecutor)) {
+            if (!(right instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, index);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, index);
-            }else{
+                methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "doubleValue", "()D",
+                        false);
+            } else {
                 Object constantVariable = ((ConstantExpressionExecutor) right).getValue();
                 if (constantVariable instanceof Integer) {
                     methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Integer", "valueOf",
                             "(I)Ljava/lang/Integer;", false);
-                } else if (constantVariable instanceof Double) {
-                    methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Double", "valueOf",
-                            "(D)Ljava/lang/Double;", false);
+                    methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                    methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "doubleValue",
+                            "()D", false);
                 } else if (constantVariable instanceof Float) {
                     methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Float", "valueOf",
                             "(F)Ljava/lang/Float;", false);
+                    methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                    methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "doubleValue",
+                            "()D", false);
                 } else if (constantVariable instanceof Long) {
                     methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Long", "valueOf",
                             "(J)Ljava/lang/Long;", false);
+                    methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                    methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "doubleValue",
+                            "()D", false);
                 }
             }
 
-            methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
-            methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "doubleValue", "()D",
-                    false);
             if (status == 2) {
                 methodVisitor.visitVarInsn(DLOAD, 6);
             } else {
@@ -695,30 +708,36 @@ public class ByteCodeRegistry {
             if (status == 2) {
                 index = 3;
             }
-            if(!(left instanceof ConstantExpressionExecutor)) {
+            if (!(left instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, index);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, index);
-            }else{
+                methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "doubleValue", "()D",
+                        false);
+            } else {
                 Object constantVariable = ((ConstantExpressionExecutor) left).getValue();
                 if (constantVariable instanceof Integer) {
                     methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Integer", "valueOf",
                             "(I)Ljava/lang/Integer;", false);
-                } else if (constantVariable instanceof Double) {
-                    methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Double", "valueOf",
-                            "(D)Ljava/lang/Double;", false);
+                    methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                    methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "doubleValue",
+                            "()D", false);
                 } else if (constantVariable instanceof Float) {
                     methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Float", "valueOf",
                             "(F)Ljava/lang/Float;", false);
+                    methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                    methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "doubleValue",
+                            "()D", false);
                 } else if (constantVariable instanceof Long) {
                     methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Long", "valueOf",
                             "(J)Ljava/lang/Long;", false);
+                    methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                    methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "doubleValue",
+                            "()D", false);
                 }
             }
 
-            methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
-            methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "doubleValue", "()D",
-                    false);
             if (status == 2) {
                 methodVisitor.visitVarInsn(DSTORE, 6);
             } else {
@@ -726,30 +745,36 @@ public class ByteCodeRegistry {
             }
 
             byteCodeGenarator.execute(right, status, 0, null, status, methodVisitor, byteCodeGenarator);
-            if(!(right instanceof ConstantExpressionExecutor)) {
+            if (!(right instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, index);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, index);
-            }else{
+                methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "doubleValue", "()D",
+                        false);
+            } else {
                 Object constantVariable = ((ConstantExpressionExecutor) right).getValue();
                 if (constantVariable instanceof Integer) {
                     methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Integer", "valueOf",
                             "(I)Ljava/lang/Integer;", false);
-                } else if (constantVariable instanceof Double) {
-                    methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Double", "valueOf",
-                            "(D)Ljava/lang/Double;", false);
+                    methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                    methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "doubleValue",
+                            "()D", false);
                 } else if (constantVariable instanceof Float) {
                     methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Float", "valueOf",
                             "(F)Ljava/lang/Float;", false);
+                    methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                    methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "doubleValue",
+                            "()D", false);
                 } else if (constantVariable instanceof Long) {
                     methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Long", "valueOf",
                             "(J)Ljava/lang/Long;", false);
+                    methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                    methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "doubleValue",
+                            "()D", false);
                 }
             }
 
-            methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
-            methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "doubleValue", "()D",
-                    false);
             methodVisitor.visitVarInsn(DSTORE, 8);
             if (status == 2) {
                 methodVisitor.visitVarInsn(DLOAD, 6);
@@ -801,30 +826,36 @@ public class ByteCodeRegistry {
             if (status == 2) {
                 index = 3;
             }
-            if(!(left instanceof ConstantExpressionExecutor)) {
+            if (!(left instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, index);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, index);
-            }else{
+                methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "doubleValue", "()D",
+                        false);
+            } else {
                 Object constantVariable = ((ConstantExpressionExecutor) left).getValue();
                 if (constantVariable instanceof Integer) {
                     methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Integer", "valueOf",
                             "(I)Ljava/lang/Integer;", false);
-                } else if (constantVariable instanceof Double) {
-                    methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Double", "valueOf",
-                            "(D)Ljava/lang/Double;", false);
+                    methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                    methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "doubleValue",
+                            "()D", false);
                 } else if (constantVariable instanceof Float) {
                     methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Float", "valueOf",
                             "(F)Ljava/lang/Float;", false);
+                    methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                    methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "doubleValue",
+                            "()D", false);
                 } else if (constantVariable instanceof Long) {
                     methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Long", "valueOf",
                             "(J)Ljava/lang/Long;", false);
+                    methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                    methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "doubleValue",
+                            "()D", false);
                 }
             }
 
-            methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
-            methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "doubleValue", "()D",
-                    false);
             if (status == 2) {
                 methodVisitor.visitVarInsn(DSTORE, 6);
             } else {
@@ -832,30 +863,36 @@ public class ByteCodeRegistry {
             }
 
             byteCodeGenarator.execute(right, status, 0, null, status, methodVisitor, byteCodeGenarator);
-            if(!(right instanceof ConstantExpressionExecutor)) {
+            if (!(right instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, index);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, index);
-            }else{
+                methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "doubleValue", "()D",
+                        false);
+            } else {
                 Object constantVariable = ((ConstantExpressionExecutor) right).getValue();
                 if (constantVariable instanceof Integer) {
                     methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Integer", "valueOf",
                             "(I)Ljava/lang/Integer;", false);
-                } else if (constantVariable instanceof Double) {
-                    methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Double", "valueOf",
-                            "(D)Ljava/lang/Double;", false);
+                    methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                    methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "doubleValue",
+                            "()D", false);
                 } else if (constantVariable instanceof Float) {
                     methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Float", "valueOf",
                             "(F)Ljava/lang/Float;", false);
+                    methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                    methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "doubleValue",
+                            "()D", false);
                 } else if (constantVariable instanceof Long) {
                     methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Long", "valueOf",
                             "(J)Ljava/lang/Long;", false);
+                    methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                    methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "doubleValue",
+                            "()D", false);
                 }
             }
 
-            methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
-            methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "doubleValue", "()D",
-                    false);
             methodVisitor.visitVarInsn(DSTORE, 8);
             methodVisitor.visitVarInsn(DLOAD, 8);
             methodVisitor.visitInsn(DCONST_0);
@@ -913,30 +950,36 @@ public class ByteCodeRegistry {
             if (status == 2) {
                 index = 3;
             }
-            if(!(left instanceof ConstantExpressionExecutor)) {
+            if (!(left instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, index);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, index);
-            }else{
+                methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "doubleValue", "()D",
+                        false);
+            } else {
                 Object constantVariable = ((ConstantExpressionExecutor) left).getValue();
                 if (constantVariable instanceof Integer) {
                     methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Integer", "valueOf",
                             "(I)Ljava/lang/Integer;", false);
-                } else if (constantVariable instanceof Double) {
-                    methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Double", "valueOf",
-                            "(D)Ljava/lang/Double;", false);
+                    methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                    methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "doubleValue",
+                            "()D", false);
                 } else if (constantVariable instanceof Float) {
                     methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Float", "valueOf",
                             "(F)Ljava/lang/Float;", false);
+                    methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                    methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "doubleValue",
+                            "()D", false);
                 } else if (constantVariable instanceof Long) {
                     methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Long", "valueOf",
                             "(J)Ljava/lang/Long;", false);
+                    methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                    methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "doubleValue",
+                            "()D", false);
                 }
             }
 
-            methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
-            methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "doubleValue", "()D",
-                    false);
             if (status == 2) {
                 methodVisitor.visitVarInsn(DSTORE, 6);
             } else {
@@ -944,30 +987,36 @@ public class ByteCodeRegistry {
             }
 
             byteCodeGenarator.execute(right, status, 0, null, status, methodVisitor, byteCodeGenarator);
-            if(!(right instanceof ConstantExpressionExecutor)) {
+            if (!(right instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, index);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, index);
-            }else{
+                methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "doubleValue", "()D",
+                        false);
+            } else {
                 Object constantVariable = ((ConstantExpressionExecutor) right).getValue();
                 if (constantVariable instanceof Integer) {
                     methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Integer", "valueOf",
                             "(I)Ljava/lang/Integer;", false);
-                } else if (constantVariable instanceof Double) {
-                    methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Double", "valueOf",
-                            "(D)Ljava/lang/Double;", false);
+                    methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                    methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "doubleValue",
+                            "()D", false);
                 } else if (constantVariable instanceof Float) {
                     methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Float", "valueOf",
                             "(F)Ljava/lang/Float;", false);
+                    methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                    methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "doubleValue",
+                            "()D", false);
                 } else if (constantVariable instanceof Long) {
                     methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Long", "valueOf",
                             "(J)Ljava/lang/Long;", false);
+                    methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                    methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "doubleValue",
+                            "()D", false);
                 }
             }
 
-            methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
-            methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "doubleValue", "()D",
-                    false);
             methodVisitor.visitVarInsn(DSTORE, 8);
             methodVisitor.visitVarInsn(DLOAD, 8);
             methodVisitor.visitInsn(DCONST_0);
@@ -1026,30 +1075,36 @@ public class ByteCodeRegistry {
                 index = 3;
             }
 
-            if(!(left instanceof ConstantExpressionExecutor)) {
+            if (!(left instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, index);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, index);
-            }else{
+                methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "floatValue", "()F",
+                        false);
+            } else {
                 Object constantVariable = ((ConstantExpressionExecutor) left).getValue();
                 if (constantVariable instanceof Integer) {
                     methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Integer", "valueOf",
                             "(I)Ljava/lang/Integer;", false);
+                    methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                    methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "floatValue",
+                            "()F", false);
                 } else if (constantVariable instanceof Double) {
                     methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Double", "valueOf",
                             "(D)Ljava/lang/Double;", false);
-                } else if (constantVariable instanceof Float) {
-                    methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Float", "valueOf",
-                            "(F)Ljava/lang/Float;", false);
+                    methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                    methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "floatValue",
+                            "()F", false);
                 } else if (constantVariable instanceof Long) {
                     methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Long", "valueOf",
                             "(J)Ljava/lang/Long;", false);
+                    methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                    methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "floatValue",
+                            "()F", false);
                 }
             }
 
-            methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
-            methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "floatValue", "()F",
-                    false);
             if (status == 2) {
                 methodVisitor.visitVarInsn(FSTORE, 6);
             } else {
@@ -1057,30 +1112,36 @@ public class ByteCodeRegistry {
             }
 
             byteCodeGenarator.execute(right, status, 0, null, status, methodVisitor, byteCodeGenarator);
-            if(!(right instanceof ConstantExpressionExecutor)) {
+            if (!(right instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, index);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, index);
-            }else{
+                methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "floatValue", "()F",
+                        false);
+            } else {
                 Object constantVariable = ((ConstantExpressionExecutor) right).getValue();
                 if (constantVariable instanceof Integer) {
                     methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Integer", "valueOf",
                             "(I)Ljava/lang/Integer;", false);
+                    methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                    methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "floatValue",
+                            "()F", false);
                 } else if (constantVariable instanceof Double) {
                     methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Double", "valueOf",
                             "(D)Ljava/lang/Double;", false);
-                } else if (constantVariable instanceof Float) {
-                    methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Float", "valueOf",
-                            "(F)Ljava/lang/Float;", false);
+                    methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                    methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "floatValue",
+                            "()F", false);
                 } else if (constantVariable instanceof Long) {
                     methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Long", "valueOf",
                             "(J)Ljava/lang/Long;", false);
+                    methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                    methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "floatValue",
+                            "()F", false);
                 }
             }
 
-            methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
-            methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "floatValue", "()F",
-                    false);
             methodVisitor.visitVarInsn(FSTORE, 8);
             methodVisitor.visitVarInsn(FLOAD, 8);
             methodVisitor.visitInsn(FCONST_0);
@@ -1138,30 +1199,36 @@ public class ByteCodeRegistry {
                 index = 3;
             }
 
-            if(!(left instanceof ConstantExpressionExecutor)) {
+            if (!(left instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, index);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, index);
-            }else{
+                methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "floatValue", "()F",
+                        false);
+            } else {
                 Object constantVariable = ((ConstantExpressionExecutor) left).getValue();
                 if (constantVariable instanceof Integer) {
                     methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Integer", "valueOf",
                             "(I)Ljava/lang/Integer;", false);
+                    methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                    methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "floatValue",
+                            "()F", false);
                 } else if (constantVariable instanceof Double) {
                     methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Double", "valueOf",
                             "(D)Ljava/lang/Double;", false);
-                } else if (constantVariable instanceof Float) {
-                    methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Float", "valueOf",
-                            "(F)Ljava/lang/Float;", false);
+                    methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                    methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "floatValue",
+                            "()F", false);
                 } else if (constantVariable instanceof Long) {
                     methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Long", "valueOf",
                             "(J)Ljava/lang/Long;", false);
+                    methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                    methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "floatValue",
+                            "()F", false);
                 }
             }
 
-            methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
-            methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "floatValue", "()F",
-                    false);
             if (status == 2) {
                 methodVisitor.visitVarInsn(FSTORE, 6);
             } else {
@@ -1169,30 +1236,36 @@ public class ByteCodeRegistry {
             }
 
             byteCodeGenarator.execute(right, status, 0, null, status, methodVisitor, byteCodeGenarator);
-            if(!(right instanceof ConstantExpressionExecutor)) {
+            if (!(right instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, index);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, index);
-            }else{
+                methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "floatValue", "()F",
+                        false);
+            } else {
                 Object constantVariable = ((ConstantExpressionExecutor) right).getValue();
                 if (constantVariable instanceof Integer) {
                     methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Integer", "valueOf",
                             "(I)Ljava/lang/Integer;", false);
+                    methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                    methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "floatValue",
+                            "()F", false);
                 } else if (constantVariable instanceof Double) {
                     methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Double", "valueOf",
                             "(D)Ljava/lang/Double;", false);
-                } else if (constantVariable instanceof Float) {
-                    methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Float", "valueOf",
-                            "(F)Ljava/lang/Float;", false);
+                    methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                    methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "floatValue",
+                            "()F", false);
                 } else if (constantVariable instanceof Long) {
                     methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Long", "valueOf",
                             "(J)Ljava/lang/Long;", false);
+                    methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                    methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "floatValue",
+                            "()F", false);
                 }
             }
 
-            methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
-            methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "floatValue", "()F",
-                    false);
             methodVisitor.visitVarInsn(FSTORE, 8);
             methodVisitor.visitVarInsn(FLOAD, 8);
             methodVisitor.visitInsn(FCONST_0);
@@ -1250,30 +1323,36 @@ public class ByteCodeRegistry {
                 index = 3;
             }
 
-            if(!(left instanceof ConstantExpressionExecutor)) {
+            if (!(left instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, index);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, index);
-            }else{
+                methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "longValue", "()J",
+                        false);
+            } else {
                 Object constantVariable = ((ConstantExpressionExecutor) left).getValue();
                 if (constantVariable instanceof Integer) {
                     methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Integer", "valueOf",
                             "(I)Ljava/lang/Integer;", false);
+                    methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                    methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "longValue",
+                            "()J", false);
                 } else if (constantVariable instanceof Double) {
                     methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Double", "valueOf",
                             "(D)Ljava/lang/Double;", false);
+                    methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                    methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "longValue",
+                            "()J", false);
                 } else if (constantVariable instanceof Float) {
                     methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Float", "valueOf",
                             "(F)Ljava/lang/Float;", false);
-                } else if (constantVariable instanceof Long) {
-                    methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Long", "valueOf",
-                            "(J)Ljava/lang/Long;", false);
+                    methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                    methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "longValue",
+                            "()J", false);
                 }
             }
 
-            methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
-            methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "longValue", "()J",
-                    false);
             if (status == 2) {
                 methodVisitor.visitVarInsn(LSTORE, 6);
             } else {
@@ -1281,30 +1360,36 @@ public class ByteCodeRegistry {
             }
 
             byteCodeGenarator.execute(right, status, 0, null, status, methodVisitor, byteCodeGenarator);
-            if(!(right instanceof ConstantExpressionExecutor)) {
+            if (!(right instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, index);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, index);
-            }else{
+                methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "longValue", "()J",
+                        false);
+            } else {
                 Object constantVariable = ((ConstantExpressionExecutor) right).getValue();
                 if (constantVariable instanceof Integer) {
                     methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Integer", "valueOf",
                             "(I)Ljava/lang/Integer;", false);
+                    methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                    methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "longValue",
+                            "()J", false);
                 } else if (constantVariable instanceof Double) {
                     methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Double", "valueOf",
                             "(D)Ljava/lang/Double;", false);
+                    methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                    methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "longValue",
+                            "()J", false);
                 } else if (constantVariable instanceof Float) {
                     methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Float", "valueOf",
                             "(F)Ljava/lang/Float;", false);
-                } else if (constantVariable instanceof Long) {
-                    methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Long", "valueOf",
-                            "(J)Ljava/lang/Long;", false);
+                    methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                    methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "longValue",
+                            "()J", false);
                 }
             }
 
-            methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
-            methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "longValue", "()J",
-                    false);
             methodVisitor.visitVarInsn(LSTORE, 8);
             methodVisitor.visitVarInsn(LLOAD, 8);
             methodVisitor.visitInsn(LCONST_0);
@@ -1362,30 +1447,36 @@ public class ByteCodeRegistry {
                 index = 3;
             }
 
-            if(!(left instanceof ConstantExpressionExecutor)) {
+            if (!(left instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, index);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, index);
-            }else{
+                methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "longValue", "()J",
+                        false);
+            } else {
                 Object constantVariable = ((ConstantExpressionExecutor) left).getValue();
                 if (constantVariable instanceof Integer) {
                     methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Integer", "valueOf",
                             "(I)Ljava/lang/Integer;", false);
+                    methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                    methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "longValue",
+                            "()J", false);
                 } else if (constantVariable instanceof Double) {
                     methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Double", "valueOf",
                             "(D)Ljava/lang/Double;", false);
+                    methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                    methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "longValue",
+                            "()J", false);
                 } else if (constantVariable instanceof Float) {
                     methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Float", "valueOf",
                             "(F)Ljava/lang/Float;", false);
-                } else if (constantVariable instanceof Long) {
-                    methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Long", "valueOf",
-                            "(J)Ljava/lang/Long;", false);
+                    methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                    methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "longValue",
+                            "()J", false);
                 }
             }
 
-            methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
-            methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "longValue", "()J",
-                    false);
             if (status == 2) {
                 methodVisitor.visitVarInsn(LSTORE, 6);
             } else {
@@ -1393,30 +1484,36 @@ public class ByteCodeRegistry {
             }
 
             byteCodeGenarator.execute(right, status, 0, null, status, methodVisitor, byteCodeGenarator);
-            if(!(right instanceof ConstantExpressionExecutor)) {
+            if (!(right instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, index);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, index);
-            }else{
+                methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "longValue", "()J",
+                        false);
+            } else {
                 Object constantVariable = ((ConstantExpressionExecutor) right).getValue();
                 if (constantVariable instanceof Integer) {
                     methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Integer", "valueOf",
                             "(I)Ljava/lang/Integer;", false);
+                    methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                    methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "longValue",
+                            "()J", false);
                 } else if (constantVariable instanceof Double) {
                     methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Double", "valueOf",
                             "(D)Ljava/lang/Double;", false);
+                    methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                    methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "longValue",
+                            "()J", false);
                 } else if (constantVariable instanceof Float) {
                     methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Float", "valueOf",
                             "(F)Ljava/lang/Float;", false);
-                } else if (constantVariable instanceof Long) {
-                    methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Long", "valueOf",
-                            "(J)Ljava/lang/Long;", false);
+                    methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                    methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "longValue",
+                            "()J", false);
                 }
             }
 
-            methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
-            methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "longValue", "()J",
-                    false);
             methodVisitor.visitVarInsn(LSTORE, 8);
             methodVisitor.visitVarInsn(LLOAD, 8);
             methodVisitor.visitInsn(LCONST_0);
@@ -1474,30 +1571,36 @@ public class ByteCodeRegistry {
                 index = 3;
             }
 
-            if(!(left instanceof ConstantExpressionExecutor)) {
+            if (!(left instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, index);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, index);
-            }else{
+                methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "intValue", "()I",
+                        false);
+            } else {
                 Object constantVariable = ((ConstantExpressionExecutor) left).getValue();
-                if (constantVariable instanceof Integer) {
-                    methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Integer", "valueOf",
-                            "(I)Ljava/lang/Integer;", false);
-                } else if (constantVariable instanceof Double) {
+                if (constantVariable instanceof Double) {
                     methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Double", "valueOf",
                             "(D)Ljava/lang/Double;", false);
+                    methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                    methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "intValue",
+                            "()I", false);
                 } else if (constantVariable instanceof Float) {
                     methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Float", "valueOf",
                             "(F)Ljava/lang/Float;", false);
+                    methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                    methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "intValue",
+                            "()I", false);
                 } else if (constantVariable instanceof Long) {
                     methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Long", "valueOf",
                             "(J)Ljava/lang/Long;", false);
+                    methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                    methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "intValue",
+                            "()I", false);
                 }
             }
 
-            methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
-            methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "intValue", "()I",
-                    false);
             if (status == 2) {
                 methodVisitor.visitVarInsn(ISTORE, 6);
             } else {
@@ -1505,30 +1608,36 @@ public class ByteCodeRegistry {
             }
 
             byteCodeGenarator.execute(right, status, 0, null, status, methodVisitor, byteCodeGenarator);
-            if(!(right instanceof ConstantExpressionExecutor)) {
+            if (!(right instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, index);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, index);
-            }else{
+                methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "intValue", "()I",
+                        false);
+            } else {
                 Object constantVariable = ((ConstantExpressionExecutor) right).getValue();
-                if (constantVariable instanceof Integer) {
-                    methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Integer", "valueOf",
-                            "(I)Ljava/lang/Integer;", false);
-                } else if (constantVariable instanceof Double) {
+                if (constantVariable instanceof Double) {
                     methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Double", "valueOf",
                             "(D)Ljava/lang/Double;", false);
+                    methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                    methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "intValue",
+                            "()I", false);
                 } else if (constantVariable instanceof Float) {
                     methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Float", "valueOf",
                             "(F)Ljava/lang/Float;", false);
+                    methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                    methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "intValue",
+                            "()I", false);
                 } else if (constantVariable instanceof Long) {
                     methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Long", "valueOf",
                             "(J)Ljava/lang/Long;", false);
+                    methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                    methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "intValue",
+                            "()I", false);
                 }
             }
 
-            methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
-            methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "intValue", "()I",
-                    false);
             methodVisitor.visitVarInsn(ISTORE, 8);
             methodVisitor.visitVarInsn(ILOAD, 8);
             methodVisitor.visitInsn(ICONST_0);
@@ -1586,30 +1695,36 @@ public class ByteCodeRegistry {
                 index = 3;
             }
 
-            if(!(left instanceof ConstantExpressionExecutor)) {
+            if (!(left instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, index);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, index);
-            }else{
+                methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "intValue", "()I",
+                        false);
+            } else {
                 Object constantVariable = ((ConstantExpressionExecutor) left).getValue();
-                if (constantVariable instanceof Integer) {
-                    methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Integer", "valueOf",
-                            "(I)Ljava/lang/Integer;", false);
-                } else if (constantVariable instanceof Double) {
+                if (constantVariable instanceof Double) {
                     methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Double", "valueOf",
                             "(D)Ljava/lang/Double;", false);
+                    methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                    methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "intValue",
+                            "()I", false);
                 } else if (constantVariable instanceof Float) {
                     methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Float", "valueOf",
                             "(F)Ljava/lang/Float;", false);
+                    methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                    methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "intValue",
+                            "()I", false);
                 } else if (constantVariable instanceof Long) {
                     methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Long", "valueOf",
                             "(J)Ljava/lang/Long;", false);
+                    methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                    methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "intValue",
+                            "()I", false);
                 }
             }
 
-            methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
-            methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "intValue", "()I",
-                    false);
             if (status == 2) {
                 methodVisitor.visitVarInsn(ISTORE, 6);
             } else {
@@ -1617,30 +1732,36 @@ public class ByteCodeRegistry {
             }
 
             byteCodeGenarator.execute(right, status, 0, null, status, methodVisitor, byteCodeGenarator);
-            if(!(right instanceof ConstantExpressionExecutor)) {
+            if (!(right instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, index);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, index);
-            }else{
+                methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "intValue", "()I",
+                        false);
+            } else {
                 Object constantVariable = ((ConstantExpressionExecutor) right).getValue();
-                if (constantVariable instanceof Integer) {
-                    methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Integer", "valueOf",
-                            "(I)Ljava/lang/Integer;", false);
-                } else if (constantVariable instanceof Double) {
+                if (constantVariable instanceof Double) {
                     methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Double", "valueOf",
                             "(D)Ljava/lang/Double;", false);
+                    methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                    methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "intValue",
+                            "()I", false);
                 } else if (constantVariable instanceof Float) {
                     methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Float", "valueOf",
                             "(F)Ljava/lang/Float;", false);
+                    methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                    methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "intValue",
+                            "()I", false);
                 } else if (constantVariable instanceof Long) {
                     methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Long", "valueOf",
                             "(J)Ljava/lang/Long;", false);
+                    methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                    methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "intValue",
+                            "()I", false);
                 }
             }
 
-            methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
-            methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "intValue", "()I",
-                    false);
             methodVisitor.visitVarInsn(ISTORE, 8);
             methodVisitor.visitVarInsn(ILOAD, 8);
             methodVisitor.visitInsn(ICONST_0);
@@ -1697,30 +1818,36 @@ public class ByteCodeRegistry {
             if (status == 2) {
                 index = 3;
             }
-            if(!(left instanceof ConstantExpressionExecutor)) {
+            if (!(left instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, index);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, index);
-            }else{
+                methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "doubleValue", "()D",
+                        false);
+            } else {
                 Object constantVariable = ((ConstantExpressionExecutor) left).getValue();
                 if (constantVariable instanceof Integer) {
                     methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Integer", "valueOf",
                             "(I)Ljava/lang/Integer;", false);
-                } else if (constantVariable instanceof Double) {
-                    methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Double", "valueOf",
-                            "(D)Ljava/lang/Double;", false);
+                    methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                    methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "doubleValue",
+                            "()D", false);
                 } else if (constantVariable instanceof Float) {
                     methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Float", "valueOf",
                             "(F)Ljava/lang/Float;", false);
+                    methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                    methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "doubleValue",
+                            "()D", false);
                 } else if (constantVariable instanceof Long) {
                     methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Long", "valueOf",
                             "(J)Ljava/lang/Long;", false);
+                    methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                    methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "doubleValue",
+                            "()D", false);
                 }
             }
 
-            methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
-            methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "doubleValue", "()D",
-                    false);
             if (status == 2) {
                 methodVisitor.visitVarInsn(DSTORE, 6);
             } else {
@@ -1728,30 +1855,36 @@ public class ByteCodeRegistry {
             }
 
             byteCodeGenarator.execute(right, status, 0, null, status, methodVisitor, byteCodeGenarator);
-            if(!(right instanceof ConstantExpressionExecutor)) {
+            if (!(right instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, index);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, index);
-            }else{
+                methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "doubleValue", "()D",
+                        false);
+            } else {
                 Object constantVariable = ((ConstantExpressionExecutor) right).getValue();
                 if (constantVariable instanceof Integer) {
                     methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Integer", "valueOf",
                             "(I)Ljava/lang/Integer;", false);
-                } else if (constantVariable instanceof Double) {
-                    methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Double", "valueOf",
-                            "(D)Ljava/lang/Double;", false);
+                    methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                    methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "doubleValue",
+                            "()D", false);
                 } else if (constantVariable instanceof Float) {
                     methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Float", "valueOf",
                             "(F)Ljava/lang/Float;", false);
+                    methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                    methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "doubleValue",
+                            "()D", false);
                 } else if (constantVariable instanceof Long) {
                     methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Long", "valueOf",
                             "(J)Ljava/lang/Long;", false);
+                    methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                    methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "doubleValue",
+                            "()D", false);
                 }
             }
 
-            methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
-            methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "doubleValue", "()D",
-                    false);
             if (status == 2) {
                 methodVisitor.visitVarInsn(DLOAD, 6);
             } else {
@@ -1776,7 +1909,7 @@ public class ByteCodeRegistry {
     /**
      * This class generates byte code to add 2 floats.
      */
-     class PrivateAddExpressionExecutorFloatBytecodeEmitter implements ByteCodeEmitter {
+    class PrivateAddExpressionExecutorFloatBytecodeEmitter implements ByteCodeEmitter {
         /**
          * This method overrides interface method.
          *
@@ -1802,30 +1935,36 @@ public class ByteCodeRegistry {
                 index = 3;
             }
 
-            if(!(left instanceof ConstantExpressionExecutor)) {
+            if (!(left instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, index);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, index);
-            }else{
+                methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "floatValue", "()F",
+                        false);
+            } else {
                 Object constantVariable = ((ConstantExpressionExecutor) left).getValue();
                 if (constantVariable instanceof Integer) {
                     methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Integer", "valueOf",
                             "(I)Ljava/lang/Integer;", false);
+                    methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                    methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "floatValue",
+                            "()F", false);
                 } else if (constantVariable instanceof Double) {
                     methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Double", "valueOf",
                             "(D)Ljava/lang/Double;", false);
-                } else if (constantVariable instanceof Float) {
-                    methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Float", "valueOf",
-                            "(F)Ljava/lang/Float;", false);
+                    methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                    methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "floatValue",
+                            "()F", false);
                 } else if (constantVariable instanceof Long) {
                     methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Long", "valueOf",
                             "(J)Ljava/lang/Long;", false);
+                    methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                    methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "floatValue",
+                            "()F", false);
                 }
             }
 
-            methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
-            methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "floatValue", "()F",
-                    false);
             if (status == 2) {
                 methodVisitor.visitVarInsn(FSTORE, 6);
             } else {
@@ -1833,30 +1972,36 @@ public class ByteCodeRegistry {
             }
 
             byteCodeGenarator.execute(right, status, 0, null, status, methodVisitor, byteCodeGenarator);
-            if(!(right instanceof ConstantExpressionExecutor)) {
+            if (!(right instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, index);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, index);
-            }else{
+                methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "floatValue",
+                        "()F", false);
+            } else {
                 Object constantVariable = ((ConstantExpressionExecutor) right).getValue();
                 if (constantVariable instanceof Integer) {
                     methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Integer", "valueOf",
                             "(I)Ljava/lang/Integer;", false);
+                    methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                    methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "floatValue",
+                            "()F", false);
                 } else if (constantVariable instanceof Double) {
                     methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Double", "valueOf",
                             "(D)Ljava/lang/Double;", false);
-                } else if (constantVariable instanceof Float) {
-                    methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Float", "valueOf",
-                            "(F)Ljava/lang/Float;", false);
+                    methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                    methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "floatValue",
+                            "()F", false);
                 } else if (constantVariable instanceof Long) {
                     methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Long", "valueOf",
                             "(J)Ljava/lang/Long;", false);
+                    methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                    methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "floatValue",
+                            "()F", false);
                 }
             }
 
-            methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
-            methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "floatValue", "()F",
-                    false);
             if (status == 2) {
                 methodVisitor.visitVarInsn(FLOAD, 6);
             } else {
@@ -1907,30 +2052,36 @@ public class ByteCodeRegistry {
                 index = 3;
             }
 
-            if(!(left instanceof ConstantExpressionExecutor)) {
+            if (!(left instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, index);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, index);
-            }else{
+                methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "floatValue", "()F",
+                        false);
+            } else {
                 Object constantVariable = ((ConstantExpressionExecutor) left).getValue();
                 if (constantVariable instanceof Integer) {
                     methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Integer", "valueOf",
                             "(I)Ljava/lang/Integer;", false);
+                    methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                    methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "floatValue",
+                            "()F", false);
                 } else if (constantVariable instanceof Double) {
                     methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Double", "valueOf",
                             "(D)Ljava/lang/Double;", false);
-                } else if (constantVariable instanceof Float) {
-                    methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Float", "valueOf",
-                            "(F)Ljava/lang/Float;", false);
+                    methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                    methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "floatValue",
+                            "()F", false);
                 } else if (constantVariable instanceof Long) {
                     methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Long", "valueOf",
                             "(J)Ljava/lang/Long;", false);
+                    methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                    methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "floatValue",
+                            "()F", false);
                 }
             }
 
-            methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
-            methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "floatValue", "()F",
-                    false);
             if (status == 2) {
                 methodVisitor.visitVarInsn(FSTORE, 6);
             } else {
@@ -1938,30 +2089,36 @@ public class ByteCodeRegistry {
             }
 
             byteCodeGenarator.execute(right, status, 0, null, status, methodVisitor, byteCodeGenarator);
-            if(!(right instanceof ConstantExpressionExecutor)) {
+            if (!(right instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, index);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, index);
-            }else{
+                methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "floatValue", "()F",
+                        false);
+            } else {
                 Object constantVariable = ((ConstantExpressionExecutor) right).getValue();
                 if (constantVariable instanceof Integer) {
                     methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Integer", "valueOf",
                             "(I)Ljava/lang/Integer;", false);
+                    methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                    methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "floatValue",
+                            "()F", false);
                 } else if (constantVariable instanceof Double) {
                     methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Double", "valueOf",
                             "(D)Ljava/lang/Double;", false);
-                } else if (constantVariable instanceof Float) {
-                    methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Float", "valueOf",
-                            "(F)Ljava/lang/Float;", false);
+                    methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                    methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "floatValue",
+                            "()F", false);
                 } else if (constantVariable instanceof Long) {
                     methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Long", "valueOf",
                             "(J)Ljava/lang/Long;", false);
+                    methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                    methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "floatValue",
+                            "()F", false);
                 }
             }
 
-            methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
-            methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "floatValue", "()F",
-                    false);
             methodVisitor.visitVarInsn(FSTORE, 8);
             if (status == 2) {
                 methodVisitor.visitVarInsn(FLOAD, 6);
@@ -2014,30 +2171,36 @@ public class ByteCodeRegistry {
                 index = 3;
             }
 
-            if(!(left instanceof ConstantExpressionExecutor)) {
+            if (!(left instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, index);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, index);
-            }else{
+                methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "floatValue", "()F",
+                        false);
+            } else {
                 Object constantVariable = ((ConstantExpressionExecutor) left).getValue();
                 if (constantVariable instanceof Integer) {
                     methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Integer", "valueOf",
                             "(I)Ljava/lang/Integer;", false);
+                    methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                    methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "floatValue",
+                            "()F", false);
                 } else if (constantVariable instanceof Double) {
                     methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Double", "valueOf",
                             "(D)Ljava/lang/Double;", false);
-                } else if (constantVariable instanceof Float) {
-                    methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Float", "valueOf",
-                            "(F)Ljava/lang/Float;", false);
+                    methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                    methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "floatValue",
+                            "()F", false);
                 } else if (constantVariable instanceof Long) {
                     methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Long", "valueOf",
                             "(J)Ljava/lang/Long;", false);
+                    methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                    methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "floatValue",
+                            "()F", false);
                 }
             }
 
-            methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
-            methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "floatValue", "()F",
-                    false);
             if (status == 2) {
                 methodVisitor.visitVarInsn(FSTORE, 6);
             } else {
@@ -2045,30 +2208,36 @@ public class ByteCodeRegistry {
             }
 
             byteCodeGenarator.execute(right, status, 0, null, status, methodVisitor, byteCodeGenarator);
-            if(!(right instanceof ConstantExpressionExecutor)) {
+            if (!(right instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, index);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, index);
-            }else{
+                methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "floatValue", "()F",
+                        false);
+            } else {
                 Object constantVariable = ((ConstantExpressionExecutor) right).getValue();
                 if (constantVariable instanceof Integer) {
                     methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Integer", "valueOf",
                             "(I)Ljava/lang/Integer;", false);
+                    methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                    methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "floatValue",
+                            "()F", false);
                 } else if (constantVariable instanceof Double) {
                     methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Double", "valueOf",
                             "(D)Ljava/lang/Double;", false);
-                } else if (constantVariable instanceof Float) {
-                    methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Float", "valueOf",
-                            "(F)Ljava/lang/Float;", false);
+                    methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                    methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "floatValue",
+                            "()F", false);
                 } else if (constantVariable instanceof Long) {
                     methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Long", "valueOf",
                             "(J)Ljava/lang/Long;", false);
+                    methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                    methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "floatValue",
+                            "()F", false);
                 }
             }
 
-            methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
-            methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "floatValue", "()F",
-                    false);
             if (status == 2) {
                 methodVisitor.visitVarInsn(FLOAD, 6);
             } else {
@@ -2119,30 +2288,36 @@ public class ByteCodeRegistry {
                 index = 3;
             }
 
-            if(!(left instanceof ConstantExpressionExecutor)) {
+            if (!(left instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, index);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, index);
-            }else{
+                methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "intValue", "()I",
+                        false);
+            } else {
                 Object constantVariable = ((ConstantExpressionExecutor) left).getValue();
-                if (constantVariable instanceof Integer) {
-                    methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Integer", "valueOf",
-                            "(I)Ljava/lang/Integer;", false);
-                } else if (constantVariable instanceof Double) {
+                if (constantVariable instanceof Double) {
                     methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Double", "valueOf",
                             "(D)Ljava/lang/Double;", false);
+                    methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                    methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "intValue",
+                            "()I", false);
                 } else if (constantVariable instanceof Float) {
                     methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Float", "valueOf",
                             "(F)Ljava/lang/Float;", false);
+                    methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                    methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "intValue",
+                            "()I", false);
                 } else if (constantVariable instanceof Long) {
                     methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Long", "valueOf",
                             "(J)Ljava/lang/Long;", false);
+                    methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                    methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "intValue",
+                            "()I", false);
                 }
             }
 
-            methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
-            methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "intValue", "()I",
-                    false);
             if (status == 2) {
                 methodVisitor.visitVarInsn(ISTORE, 6);
             } else {
@@ -2150,30 +2325,36 @@ public class ByteCodeRegistry {
             }
 
             byteCodeGenarator.execute(right, status, 0, null, status, methodVisitor, byteCodeGenarator);
-            if(!(right instanceof ConstantExpressionExecutor)) {
+            if (!(right instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, index);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, index);
-            }else{
+                methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "intValue", "()I",
+                        false);
+            } else {
                 Object constantVariable = ((ConstantExpressionExecutor) right).getValue();
-                if (constantVariable instanceof Integer) {
-                    methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Integer", "valueOf",
-                            "(I)Ljava/lang/Integer;", false);
-                } else if (constantVariable instanceof Double) {
+                if (constantVariable instanceof Double) {
                     methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Double", "valueOf",
                             "(D)Ljava/lang/Double;", false);
+                    methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                    methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "intValue",
+                            "()I", false);
                 } else if (constantVariable instanceof Float) {
                     methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Float", "valueOf",
                             "(F)Ljava/lang/Float;", false);
+                    methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                    methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "intValue",
+                            "()I", false);
                 } else if (constantVariable instanceof Long) {
                     methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Long", "valueOf",
                             "(J)Ljava/lang/Long;", false);
+                    methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                    methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "intValue",
+                            "()I", false);
                 }
             }
 
-            methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
-            methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "intValue", "()I",
-                    false);
             if (status == 2) {
                 methodVisitor.visitVarInsn(ILOAD, 6);
             } else {
@@ -2224,30 +2405,36 @@ public class ByteCodeRegistry {
                 index = 3;
             }
 
-            if(!(left instanceof ConstantExpressionExecutor)) {
+            if (!(left instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, index);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, index);
-            }else{
+                methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "intValue", "()I",
+                        false);
+            } else {
                 Object constantVariable = ((ConstantExpressionExecutor) left).getValue();
-                if (constantVariable instanceof Integer) {
-                    methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Integer", "valueOf",
-                            "(I)Ljava/lang/Integer;", false);
-                } else if (constantVariable instanceof Double) {
+                if (constantVariable instanceof Double) {
                     methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Double", "valueOf",
                             "(D)Ljava/lang/Double;", false);
+                    methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                    methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "intValue",
+                            "()I", false);
                 } else if (constantVariable instanceof Float) {
                     methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Float", "valueOf",
                             "(F)Ljava/lang/Float;", false);
+                    methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                    methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "intValue",
+                            "()I", false);
                 } else if (constantVariable instanceof Long) {
                     methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Long", "valueOf",
                             "(J)Ljava/lang/Long;", false);
+                    methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                    methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "intValue",
+                            "()I", false);
                 }
             }
 
-            methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
-            methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "intValue", "()I",
-                    false);
             if (status == 2) {
                 methodVisitor.visitVarInsn(ISTORE, 6);
             } else {
@@ -2255,30 +2442,36 @@ public class ByteCodeRegistry {
             }
 
             byteCodeGenarator.execute(right, status, 0, null, status, methodVisitor, byteCodeGenarator);
-            if(!(right instanceof ConstantExpressionExecutor)) {
+            if (!(right instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, index);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, index);
-            }else{
+                methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "intValue", "()I",
+                        false);
+            } else {
                 Object constantVariable = ((ConstantExpressionExecutor) right).getValue();
-                if (constantVariable instanceof Integer) {
-                    methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Integer", "valueOf",
-                            "(I)Ljava/lang/Integer;", false);
-                } else if (constantVariable instanceof Double) {
+                if (constantVariable instanceof Double) {
                     methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Double", "valueOf",
                             "(D)Ljava/lang/Double;", false);
+                    methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                    methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "intValue",
+                            "()I", false);
                 } else if (constantVariable instanceof Float) {
                     methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Float", "valueOf",
                             "(F)Ljava/lang/Float;", false);
+                    methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                    methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "intValue",
+                            "()I", false);
                 } else if (constantVariable instanceof Long) {
                     methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Long", "valueOf",
                             "(J)Ljava/lang/Long;", false);
+                    methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                    methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "intValue",
+                            "()I", false);
                 }
             }
 
-            methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
-            methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "intValue", "()I",
-                    false);
             methodVisitor.visitVarInsn(ISTORE, 8);
             if (status == 2) {
                 methodVisitor.visitVarInsn(ILOAD, 6);
@@ -2331,30 +2524,36 @@ public class ByteCodeRegistry {
                 index = 3;
             }
 
-            if(!(left instanceof ConstantExpressionExecutor)) {
+            if (!(left instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, index);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, index);
-            }else{
+                methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "intValue", "()I",
+                        false);
+            } else {
                 Object constantVariable = ((ConstantExpressionExecutor) left).getValue();
-                if (constantVariable instanceof Integer) {
-                    methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Integer", "valueOf",
-                            "(I)Ljava/lang/Integer;", false);
-                } else if (constantVariable instanceof Double) {
+                if (constantVariable instanceof Double) {
                     methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Double", "valueOf",
                             "(D)Ljava/lang/Double;", false);
+                    methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                    methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "intValue",
+                            "()I", false);
                 } else if (constantVariable instanceof Float) {
                     methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Float", "valueOf",
                             "(F)Ljava/lang/Float;", false);
+                    methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                    methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "intValue",
+                            "()I", false);
                 } else if (constantVariable instanceof Long) {
                     methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Long", "valueOf",
                             "(J)Ljava/lang/Long;", false);
+                    methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                    methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "intValue",
+                            "()I", false);
                 }
             }
 
-            methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
-            methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "intValue", "()I",
-                    false);
             if (status == 2) {
                 methodVisitor.visitVarInsn(ISTORE, 6);
             } else {
@@ -2362,30 +2561,36 @@ public class ByteCodeRegistry {
             }
 
             byteCodeGenarator.execute(right, status, 0, null, status, methodVisitor, byteCodeGenarator);
-            if(!(right instanceof ConstantExpressionExecutor)) {
+            if (!(right instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, index);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, index);
-            }else{
+                methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "intValue", "()I",
+                        false);
+            } else {
                 Object constantVariable = ((ConstantExpressionExecutor) right).getValue();
-                if (constantVariable instanceof Integer) {
-                    methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Integer", "valueOf",
-                            "(I)Ljava/lang/Integer;", false);
-                } else if (constantVariable instanceof Double) {
+                if (constantVariable instanceof Double) {
                     methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Double", "valueOf",
                             "(D)Ljava/lang/Double;", false);
+                    methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                    methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "intValue",
+                            "()I", false);
                 } else if (constantVariable instanceof Float) {
                     methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Float", "valueOf",
                             "(F)Ljava/lang/Float;", false);
+                    methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                    methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "intValue",
+                            "()I", false);
                 } else if (constantVariable instanceof Long) {
                     methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Long", "valueOf",
                             "(J)Ljava/lang/Long;", false);
+                    methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                    methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "intValue",
+                            "()I", false);
                 }
             }
 
-            methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
-            methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "intValue", "()I",
-                    false);
             if (status == 2) {
                 methodVisitor.visitVarInsn(ILOAD, 6);
             } else {
@@ -2436,30 +2641,36 @@ public class ByteCodeRegistry {
                 index = 3;
             }
 
-            if(!(left instanceof ConstantExpressionExecutor)) {
+            if (!(left instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, index);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, index);
-            }else{
+                methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "longValue", "()J",
+                        false);
+            } else {
                 Object constantVariable = ((ConstantExpressionExecutor) left).getValue();
                 if (constantVariable instanceof Integer) {
                     methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Integer", "valueOf",
                             "(I)Ljava/lang/Integer;", false);
+                    methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                    methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "longValue",
+                            "()J", false);
                 } else if (constantVariable instanceof Double) {
                     methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Double", "valueOf",
                             "(D)Ljava/lang/Double;", false);
+                    methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                    methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "longValue",
+                            "()J", false);
                 } else if (constantVariable instanceof Float) {
                     methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Float", "valueOf",
                             "(F)Ljava/lang/Float;", false);
-                } else if (constantVariable instanceof Long) {
-                    methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Long", "valueOf",
-                            "(J)Ljava/lang/Long;", false);
+                    methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                    methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "longValue",
+                            "()J", false);
                 }
             }
 
-            methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
-            methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "longValue", "()J",
-                    false);
             if (status == 2) {
                 methodVisitor.visitVarInsn(LSTORE, 6);
             } else {
@@ -2467,29 +2678,36 @@ public class ByteCodeRegistry {
             }
 
             byteCodeGenarator.execute(right, status, 0, null, status, methodVisitor, byteCodeGenarator);
-            if(!(right instanceof ConstantExpressionExecutor)) {
+            if (!(right instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, index);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, index);
-            }else{
+                methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "longValue", "()J",
+                        false);
+            } else {
                 Object constantVariable = ((ConstantExpressionExecutor) right).getValue();
                 if (constantVariable instanceof Integer) {
                     methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Integer", "valueOf",
                             "(I)Ljava/lang/Integer;", false);
+                    methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                    methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "longValue",
+                            "()J", false);
                 } else if (constantVariable instanceof Double) {
                     methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Double", "valueOf",
                             "(D)Ljava/lang/Double;", false);
+                    methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                    methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "longValue",
+                            "()J", false);
                 } else if (constantVariable instanceof Float) {
                     methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Float", "valueOf",
                             "(F)Ljava/lang/Float;", false);
-                } else if (constantVariable instanceof Long) {
-                    methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Long", "valueOf",
-                            "(J)Ljava/lang/Long;", false);
+                    methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                    methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "longValue",
+                            "()J", false);
                 }
             }
-            methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
-            methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "longValue", "()J",
-                    false);
+
             if (status == 2) {
                 methodVisitor.visitVarInsn(LLOAD, 6);
             } else {
@@ -2540,30 +2758,36 @@ public class ByteCodeRegistry {
                 index = 3;
             }
 
-            if(!(left instanceof ConstantExpressionExecutor)) {
+            if (!(left instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, index);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, index);
-            }else{
+                methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "longValue", "()J",
+                        false);
+            } else {
                 Object constantVariable = ((ConstantExpressionExecutor) left).getValue();
                 if (constantVariable instanceof Integer) {
                     methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Integer", "valueOf",
                             "(I)Ljava/lang/Integer;", false);
+                    methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                    methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "longValue",
+                            "()J", false);
                 } else if (constantVariable instanceof Double) {
                     methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Double", "valueOf",
                             "(D)Ljava/lang/Double;", false);
+                    methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                    methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "longValue",
+                            "()J", false);
                 } else if (constantVariable instanceof Float) {
                     methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Float", "valueOf",
                             "(F)Ljava/lang/Float;", false);
-                } else if (constantVariable instanceof Long) {
-                    methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Long", "valueOf",
-                            "(J)Ljava/lang/Long;", false);
+                    methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                    methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "longValue",
+                            "()J", false);
                 }
             }
 
-            methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
-            methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "longValue", "()J",
-                    false);
             if (status == 2) {
                 methodVisitor.visitVarInsn(LSTORE, 6);
             } else {
@@ -2571,29 +2795,36 @@ public class ByteCodeRegistry {
             }
 
             byteCodeGenarator.execute(right, status, 0, null, status, methodVisitor, byteCodeGenarator);
-            if(!(right instanceof ConstantExpressionExecutor)) {
+            if (!(right instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, index);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, index);
-            }else{
+                methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "longValue", "()J",
+                        false);
+            } else {
                 Object constantVariable = ((ConstantExpressionExecutor) right).getValue();
                 if (constantVariable instanceof Integer) {
                     methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Integer", "valueOf",
                             "(I)Ljava/lang/Integer;", false);
+                    methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                    methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "longValue",
+                            "()J", false);
                 } else if (constantVariable instanceof Double) {
                     methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Double", "valueOf",
                             "(D)Ljava/lang/Double;", false);
+                    methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                    methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "longValue",
+                            "()J", false);
                 } else if (constantVariable instanceof Float) {
                     methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Float", "valueOf",
                             "(F)Ljava/lang/Float;", false);
-                } else if (constantVariable instanceof Long) {
-                    methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Long", "valueOf",
-                            "(J)Ljava/lang/Long;", false);
+                    methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                    methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "longValue",
+                            "()J", false);
                 }
             }
-            methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
-            methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "longValue", "()J",
-                    false);
+
             methodVisitor.visitVarInsn(LSTORE, 8);
             if (status == 2) {
                 methodVisitor.visitVarInsn(LLOAD, 6);
@@ -2646,30 +2877,36 @@ public class ByteCodeRegistry {
                 index = 3;
             }
 
-            if(!(left instanceof ConstantExpressionExecutor)) {
+            if (!(left instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, index);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, index);
-            }else{
+                methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "longValue", "()J",
+                        false);
+            } else {
                 Object constantVariable = ((ConstantExpressionExecutor) left).getValue();
                 if (constantVariable instanceof Integer) {
                     methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Integer", "valueOf",
                             "(I)Ljava/lang/Integer;", false);
+                    methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                    methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "longValue",
+                            "()J", false);
                 } else if (constantVariable instanceof Double) {
                     methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Double", "valueOf",
                             "(D)Ljava/lang/Double;", false);
+                    methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                    methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "longValue",
+                            "()J", false);
                 } else if (constantVariable instanceof Float) {
                     methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Float", "valueOf",
                             "(F)Ljava/lang/Float;", false);
-                } else if (constantVariable instanceof Long) {
-                    methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Long", "valueOf",
-                            "(J)Ljava/lang/Long;", false);
+                    methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                    methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "longValue",
+                            "()J", false);
                 }
             }
 
-            methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
-            methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "longValue", "()J",
-                    false);
             if (status == 2) {
                 methodVisitor.visitVarInsn(LSTORE, 6);
             } else {
@@ -2677,30 +2914,36 @@ public class ByteCodeRegistry {
             }
 
             byteCodeGenarator.execute(right, status, 0, null, status, methodVisitor, byteCodeGenarator);
-            if(!(right instanceof ConstantExpressionExecutor)) {
+            if (!(right instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, index);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, index);
-            }else{
+                methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "longValue", "()J",
+                        false);
+            } else {
                 Object constantVariable = ((ConstantExpressionExecutor) right).getValue();
                 if (constantVariable instanceof Integer) {
                     methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Integer", "valueOf",
                             "(I)Ljava/lang/Integer;", false);
+                    methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                    methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "longValue",
+                            "()J", false);
                 } else if (constantVariable instanceof Double) {
                     methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Double", "valueOf",
                             "(D)Ljava/lang/Double;", false);
+                    methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                    methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "longValue",
+                            "()J", false);
                 } else if (constantVariable instanceof Float) {
                     methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Float", "valueOf",
                             "(F)Ljava/lang/Float;", false);
-                } else if (constantVariable instanceof Long) {
-                    methodVisitor.visitMethodInsn(INVOKESTATIC, "java/lang/Long", "valueOf",
-                            "(J)Ljava/lang/Long;", false);
+                    methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
+                    methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "longValue",
+                            "()J", false);
                 }
             }
 
-            methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Number");
-            methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Number", "longValue", "()J",
-                    false);
             if (status == 2) {
                 methodVisitor.visitVarInsn(LLOAD, 6);
             } else {
@@ -2748,7 +2991,7 @@ public class ByteCodeRegistry {
             methodVisitor.visitCode();
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
-            if(!(left instanceof ConstantExpressionExecutor)){
+            if (!(left instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 2);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 2);
@@ -2758,7 +3001,7 @@ public class ByteCodeRegistry {
             }
             methodVisitor.visitVarInsn(FSTORE, 2);
             byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
-            if(!(right instanceof ConstantExpressionExecutor)) {
+            if (!(right instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 3);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 3);
@@ -2812,7 +3055,7 @@ public class ByteCodeRegistry {
             methodVisitor.visitCode();
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
-            if(!(left instanceof ConstantExpressionExecutor)) {
+            if (!(left instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 2);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 2);
@@ -2822,7 +3065,7 @@ public class ByteCodeRegistry {
             }
             methodVisitor.visitVarInsn(FSTORE, 2);
             byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
-            if(!(right instanceof ConstantExpressionExecutor)) {
+            if (!(right instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 3);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 3);
@@ -2876,7 +3119,7 @@ public class ByteCodeRegistry {
             methodVisitor.visitCode();
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
-            if(!(left instanceof ConstantExpressionExecutor)) {
+            if (!(left instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 2);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 2);
@@ -2886,7 +3129,7 @@ public class ByteCodeRegistry {
             }
             methodVisitor.visitVarInsn(FSTORE, 2);
             byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
-            if(!(right instanceof ConstantExpressionExecutor)) {
+            if (!(right instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 3);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 3);
@@ -2939,7 +3182,7 @@ public class ByteCodeRegistry {
             methodVisitor.visitCode();
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
-            if(!(left instanceof ConstantExpressionExecutor)) {
+            if (!(left instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 2);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 2);
@@ -2949,7 +3192,7 @@ public class ByteCodeRegistry {
             }
             methodVisitor.visitVarInsn(FSTORE, 2);
             byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
-            if(!(right instanceof ConstantExpressionExecutor)) {
+            if (!(right instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 3);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 3);
@@ -3002,7 +3245,7 @@ public class ByteCodeRegistry {
             methodVisitor.visitCode();
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
-            if(!(left instanceof ConstantExpressionExecutor)) {
+            if (!(left instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 2);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 2);
@@ -3012,7 +3255,7 @@ public class ByteCodeRegistry {
             }
             methodVisitor.visitVarInsn(FSTORE, 2);
             byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
-            if(!(right instanceof ConstantExpressionExecutor)) {
+            if (!(right instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 3);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 3);
@@ -3066,7 +3309,7 @@ public class ByteCodeRegistry {
             methodVisitor.visitCode();
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
-            if(!(left instanceof ConstantExpressionExecutor)) {
+            if (!(left instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 2);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 2);
@@ -3076,7 +3319,7 @@ public class ByteCodeRegistry {
             }
             methodVisitor.visitVarInsn(FSTORE, 2);
             byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
-            if(!(right instanceof ConstantExpressionExecutor)) {
+            if (!(right instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 3);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 3);
@@ -3130,7 +3373,7 @@ public class ByteCodeRegistry {
             methodVisitor.visitCode();
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
-            if(!(left instanceof ConstantExpressionExecutor)) {
+            if (!(left instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 2);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 2);
@@ -3140,7 +3383,7 @@ public class ByteCodeRegistry {
             }
             methodVisitor.visitVarInsn(FSTORE, 2);
             byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
-            if(!(right instanceof ConstantExpressionExecutor)) {
+            if (!(right instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 3);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 3);
@@ -3194,7 +3437,7 @@ public class ByteCodeRegistry {
             methodVisitor.visitCode();
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
-            if(!(left instanceof ConstantExpressionExecutor)) {
+            if (!(left instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 2);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 2);
@@ -3204,7 +3447,7 @@ public class ByteCodeRegistry {
             }
             methodVisitor.visitVarInsn(FSTORE, 2);
             byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
-            if(!(right instanceof ConstantExpressionExecutor)) {
+            if (!(right instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 3);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 3);
@@ -3258,7 +3501,7 @@ public class ByteCodeRegistry {
             methodVisitor.visitCode();
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
-            if(!(left instanceof ConstantExpressionExecutor)) {
+            if (!(left instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 2);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 2);
@@ -3268,7 +3511,7 @@ public class ByteCodeRegistry {
             }
             methodVisitor.visitVarInsn(ISTORE, 2);
             byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
-            if(!(right instanceof ConstantExpressionExecutor)) {
+            if (!(right instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 3);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 3);
@@ -3322,7 +3565,7 @@ public class ByteCodeRegistry {
             methodVisitor.visitCode();
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
-            if(!(left instanceof ConstantExpressionExecutor)) {
+            if (!(left instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 2);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 2);
@@ -3332,7 +3575,7 @@ public class ByteCodeRegistry {
             }
             methodVisitor.visitVarInsn(ISTORE, 2);
             byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
-            if(!(right instanceof ConstantExpressionExecutor)) {
+            if (!(right instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 3);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 3);
@@ -3386,7 +3629,7 @@ public class ByteCodeRegistry {
             methodVisitor.visitCode();
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
-            if(!(left instanceof ConstantExpressionExecutor)) {
+            if (!(left instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 2);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 2);
@@ -3396,7 +3639,7 @@ public class ByteCodeRegistry {
             }
             methodVisitor.visitVarInsn(LSTORE, 4);
             byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
-            if(!(right instanceof ConstantExpressionExecutor)) {
+            if (!(right instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 3);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 3);
@@ -3450,7 +3693,7 @@ public class ByteCodeRegistry {
             methodVisitor.visitCode();
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
-            if(!(left instanceof ConstantExpressionExecutor)) {
+            if (!(left instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 2);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 2);
@@ -3460,7 +3703,7 @@ public class ByteCodeRegistry {
             }
             methodVisitor.visitVarInsn(LSTORE, 4);
             byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
-            if(!(right instanceof ConstantExpressionExecutor)) {
+            if (!(right instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 3);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 3);
@@ -3514,7 +3757,7 @@ public class ByteCodeRegistry {
             methodVisitor.visitCode();
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
-            if(!(left instanceof ConstantExpressionExecutor)) {
+            if (!(left instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 2);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 2);
@@ -3524,7 +3767,7 @@ public class ByteCodeRegistry {
             }
             methodVisitor.visitVarInsn(DSTORE, 4);
             byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
-            if(!(right instanceof ConstantExpressionExecutor)) {
+            if (!(right instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 3);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 3);
@@ -3577,7 +3820,7 @@ public class ByteCodeRegistry {
             methodVisitor.visitCode();
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
-            if(!(left instanceof ConstantExpressionExecutor)) {
+            if (!(left instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 2);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 2);
@@ -3587,7 +3830,7 @@ public class ByteCodeRegistry {
             }
             methodVisitor.visitVarInsn(DSTORE, 4);
             byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
-            if(!(right instanceof ConstantExpressionExecutor)) {
+            if (!(right instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 3);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 3);
@@ -3640,7 +3883,7 @@ public class ByteCodeRegistry {
             methodVisitor.visitCode();
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
-            if(!(left instanceof ConstantExpressionExecutor)) {
+            if (!(left instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 2);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 2);
@@ -3650,7 +3893,7 @@ public class ByteCodeRegistry {
             }
             methodVisitor.visitVarInsn(ISTORE, 2);
             byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
-            if(!(right instanceof ConstantExpressionExecutor)) {
+            if (!(right instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 3);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 3);
@@ -3704,7 +3947,7 @@ public class ByteCodeRegistry {
             methodVisitor.visitCode();
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
-            if(!(left instanceof ConstantExpressionExecutor)) {
+            if (!(left instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 2);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 2);
@@ -3714,7 +3957,7 @@ public class ByteCodeRegistry {
             }
             methodVisitor.visitVarInsn(ISTORE, 2);
             byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
-            if(!(right instanceof ConstantExpressionExecutor)) {
+            if (!(right instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 3);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 3);
@@ -3768,7 +4011,7 @@ public class ByteCodeRegistry {
             methodVisitor.visitCode();
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
-            if(!(left instanceof ConstantExpressionExecutor)) {
+            if (!(left instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 2);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 2);
@@ -3778,7 +4021,7 @@ public class ByteCodeRegistry {
             }
             methodVisitor.visitVarInsn(ISTORE, 2);
             byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
-            if(!(right instanceof ConstantExpressionExecutor)) {
+            if (!(right instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 3);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 3);
@@ -3832,7 +4075,7 @@ public class ByteCodeRegistry {
             methodVisitor.visitCode();
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
-            if(!(left instanceof ConstantExpressionExecutor)) {
+            if (!(left instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 2);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 2);
@@ -3842,7 +4085,7 @@ public class ByteCodeRegistry {
             }
             methodVisitor.visitVarInsn(ISTORE, 2);
             byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
-            if(!(right instanceof ConstantExpressionExecutor)) {
+            if (!(right instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 3);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 3);
@@ -3896,7 +4139,7 @@ public class ByteCodeRegistry {
             methodVisitor.visitCode();
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
-            if(!(left instanceof ConstantExpressionExecutor)) {
+            if (!(left instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 2);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 2);
@@ -3906,7 +4149,7 @@ public class ByteCodeRegistry {
             }
             methodVisitor.visitVarInsn(LSTORE, 4);
             byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
-            if(!(right instanceof ConstantExpressionExecutor)) {
+            if (!(right instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 3);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 3);
@@ -3960,7 +4203,7 @@ public class ByteCodeRegistry {
             methodVisitor.visitCode();
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
-            if(!(left instanceof ConstantExpressionExecutor)) {
+            if (!(left instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 2);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 2);
@@ -3970,7 +4213,7 @@ public class ByteCodeRegistry {
             }
             methodVisitor.visitVarInsn(LSTORE, 4);
             byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
-            if(!(right instanceof ConstantExpressionExecutor)) {
+            if (!(right instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 3);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 3);
@@ -4024,7 +4267,7 @@ public class ByteCodeRegistry {
             methodVisitor.visitCode();
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
-            if(!(left instanceof ConstantExpressionExecutor)) {
+            if (!(left instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 2);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 2);
@@ -4034,7 +4277,7 @@ public class ByteCodeRegistry {
             }
             methodVisitor.visitVarInsn(LSTORE, 4);
             byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
-            if(!(right instanceof ConstantExpressionExecutor)) {
+            if (!(right instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 3);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 3);
@@ -4088,7 +4331,7 @@ public class ByteCodeRegistry {
             methodVisitor.visitCode();
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
-            if(!(left instanceof ConstantExpressionExecutor)) {
+            if (!(left instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 2);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 2);
@@ -4098,7 +4341,7 @@ public class ByteCodeRegistry {
             }
             methodVisitor.visitVarInsn(LSTORE, 4);
             byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
-            if(!(right instanceof ConstantExpressionExecutor)) {
+            if (!(right instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 3);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 3);
@@ -4152,7 +4395,7 @@ public class ByteCodeRegistry {
             methodVisitor.visitCode();
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
-            if(!(left instanceof ConstantExpressionExecutor)) {
+            if (!(left instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 2);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 2);
@@ -4162,7 +4405,7 @@ public class ByteCodeRegistry {
             }
             methodVisitor.visitVarInsn(LSTORE, 4);
             byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
-            if(!(right instanceof ConstantExpressionExecutor)) {
+            if (!(right instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 3);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 3);
@@ -4215,7 +4458,7 @@ public class ByteCodeRegistry {
             methodVisitor.visitCode();
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
-            if(!(left instanceof ConstantExpressionExecutor)) {
+            if (!(left instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 2);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 2);
@@ -4225,7 +4468,7 @@ public class ByteCodeRegistry {
             }
             methodVisitor.visitVarInsn(LSTORE, 4);
             byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
-            if(!(right instanceof ConstantExpressionExecutor)) {
+            if (!(right instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 3);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 3);
@@ -4340,7 +4583,7 @@ public class ByteCodeRegistry {
             methodVisitor.visitCode();
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
-            if(!(left instanceof ConstantExpressionExecutor)) {
+            if (!(left instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 2);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 2);
@@ -4350,7 +4593,7 @@ public class ByteCodeRegistry {
             }
             methodVisitor.visitVarInsn(ISTORE, 2);
             byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
-            if(!(right instanceof ConstantExpressionExecutor)) {
+            if (!(right instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 3);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 3);
@@ -4402,7 +4645,7 @@ public class ByteCodeRegistry {
             methodVisitor.visitCode();
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
-            if(!(left instanceof ConstantExpressionExecutor)) {
+            if (!(left instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 2);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 2);
@@ -4412,7 +4655,7 @@ public class ByteCodeRegistry {
             }
             methodVisitor.visitVarInsn(DSTORE, 4);
             byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
-            if(!(right instanceof ConstantExpressionExecutor)) {
+            if (!(right instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 3);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 3);
@@ -4466,7 +4709,7 @@ public class ByteCodeRegistry {
             methodVisitor.visitCode();
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
-            if(!(left instanceof ConstantExpressionExecutor)) {
+            if (!(left instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 2);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 2);
@@ -4476,7 +4719,7 @@ public class ByteCodeRegistry {
             }
             methodVisitor.visitVarInsn(DSTORE, 4);
             byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
-            if(!(right instanceof ConstantExpressionExecutor)) {
+            if (!(right instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 3);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 3);
@@ -4530,7 +4773,7 @@ public class ByteCodeRegistry {
             methodVisitor.visitCode();
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
-            if(!(left instanceof ConstantExpressionExecutor)) {
+            if (!(left instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 2);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 2);
@@ -4540,7 +4783,7 @@ public class ByteCodeRegistry {
             }
             methodVisitor.visitVarInsn(DSTORE, 4);
             byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
-            if(!(right instanceof ConstantExpressionExecutor)) {
+            if (!(right instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 3);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 3);
@@ -4594,7 +4837,7 @@ public class ByteCodeRegistry {
             methodVisitor.visitCode();
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
-            if(!(left instanceof ConstantExpressionExecutor)) {
+            if (!(left instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 2);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 2);
@@ -4604,7 +4847,7 @@ public class ByteCodeRegistry {
             }
             methodVisitor.visitVarInsn(DSTORE, 4);
             byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
-            if(!(right instanceof ConstantExpressionExecutor)) {
+            if (!(right instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 3);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 3);
@@ -4658,7 +4901,7 @@ public class ByteCodeRegistry {
             methodVisitor.visitCode();
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
-            if(!(left instanceof ConstantExpressionExecutor)) {
+            if (!(left instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 2);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 2);
@@ -4668,7 +4911,7 @@ public class ByteCodeRegistry {
             }
             methodVisitor.visitVarInsn(DSTORE, 4);
             byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
-            if(!(right instanceof ConstantExpressionExecutor)) {
+            if (!(right instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 3);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 3);
@@ -4722,7 +4965,7 @@ public class ByteCodeRegistry {
             methodVisitor.visitCode();
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
-            if(!(left instanceof ConstantExpressionExecutor)) {
+            if (!(left instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 2);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 2);
@@ -4732,7 +4975,7 @@ public class ByteCodeRegistry {
             }
             methodVisitor.visitVarInsn(DSTORE, 4);
             byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
-            if(!(right instanceof ConstantExpressionExecutor)) {
+            if (!(right instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 3);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 3);
@@ -4786,7 +5029,7 @@ public class ByteCodeRegistry {
                     .getRightExpressionExecutor();
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
-            if(!(left instanceof ConstantExpressionExecutor)) {
+            if (!(left instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 2);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 2);
@@ -4796,7 +5039,7 @@ public class ByteCodeRegistry {
             }
             methodVisitor.visitVarInsn(FSTORE, 2);
             byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
-            if(!(right instanceof ConstantExpressionExecutor)) {
+            if (!(right instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 3);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 3);
@@ -4850,7 +5093,7 @@ public class ByteCodeRegistry {
                     .getRightExpressionExecutor();
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
-            if(!(left instanceof ConstantExpressionExecutor)) {
+            if (!(left instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 2);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 2);
@@ -4860,7 +5103,7 @@ public class ByteCodeRegistry {
             }
             methodVisitor.visitVarInsn(FSTORE, 2);
             byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
-            if(!(right instanceof ConstantExpressionExecutor)) {
+            if (!(right instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 3);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 3);
@@ -4914,7 +5157,7 @@ public class ByteCodeRegistry {
                     .getRightExpressionExecutor();
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
-            if(!(left instanceof ConstantExpressionExecutor)) {
+            if (!(left instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 2);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 2);
@@ -4924,7 +5167,7 @@ public class ByteCodeRegistry {
             }
             methodVisitor.visitVarInsn(FSTORE, 2);
             byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
-            if(!(right instanceof ConstantExpressionExecutor)) {
+            if (!(right instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 3);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 3);
@@ -4978,7 +5221,7 @@ public class ByteCodeRegistry {
                     .getRightExpressionExecutor();
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
-            if(!(left instanceof ConstantExpressionExecutor)) {
+            if (!(left instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 2);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 2);
@@ -4988,7 +5231,7 @@ public class ByteCodeRegistry {
             }
             methodVisitor.visitVarInsn(FSTORE, 2);
             byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
-            if(!(right instanceof ConstantExpressionExecutor)) {
+            if (!(right instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 3);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 3);
@@ -5042,7 +5285,7 @@ public class ByteCodeRegistry {
                     .getRightExpressionExecutor();
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
-            if(!(left instanceof ConstantExpressionExecutor)) {
+            if (!(left instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 2);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 2);
@@ -5052,7 +5295,7 @@ public class ByteCodeRegistry {
             }
             methodVisitor.visitVarInsn(LSTORE, 4);
             byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
-            if(!(right instanceof ConstantExpressionExecutor)) {
+            if (!(right instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 3);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 3);
@@ -5105,7 +5348,7 @@ public class ByteCodeRegistry {
                     .getRightExpressionExecutor();
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
-            if(!(left instanceof ConstantExpressionExecutor)) {
+            if (!(left instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 2);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 2);
@@ -5115,7 +5358,7 @@ public class ByteCodeRegistry {
             }
             methodVisitor.visitVarInsn(LSTORE, 4);
             byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
-            if(!(right instanceof ConstantExpressionExecutor)) {
+            if (!(right instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 3);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 3);
@@ -5168,7 +5411,7 @@ public class ByteCodeRegistry {
                     .getRightExpressionExecutor();
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
-            if(!(left instanceof ConstantExpressionExecutor)) {
+            if (!(left instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 2);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 2);
@@ -5178,7 +5421,7 @@ public class ByteCodeRegistry {
             }
             methodVisitor.visitVarInsn(LSTORE, 4);
             byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
-            if(!(right instanceof ConstantExpressionExecutor)) {
+            if (!(right instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 3);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 3);
@@ -5232,7 +5475,7 @@ public class ByteCodeRegistry {
                     .getRightExpressionExecutor();
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
-            if(!(left instanceof ConstantExpressionExecutor)) {
+            if (!(left instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 2);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 2);
@@ -5242,7 +5485,7 @@ public class ByteCodeRegistry {
             }
             methodVisitor.visitVarInsn(LSTORE, 4);
             byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
-            if(!(right instanceof ConstantExpressionExecutor)) {
+            if (!(right instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 3);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 3);
@@ -5296,7 +5539,7 @@ public class ByteCodeRegistry {
                     .getRightExpressionExecutor();
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
-            if(!(left instanceof ConstantExpressionExecutor)) {
+            if (!(left instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 2);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 2);
@@ -5306,7 +5549,7 @@ public class ByteCodeRegistry {
             }
             methodVisitor.visitVarInsn(ISTORE, 2);
             byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
-            if(!(right instanceof ConstantExpressionExecutor)) {
+            if (!(right instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 3);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 3);
@@ -5360,7 +5603,7 @@ public class ByteCodeRegistry {
                     .getRightExpressionExecutor();
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
-            if(!(left instanceof ConstantExpressionExecutor)) {
+            if (!(left instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 2);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 2);
@@ -5370,7 +5613,7 @@ public class ByteCodeRegistry {
             }
             methodVisitor.visitVarInsn(ISTORE, 2);
             byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
-            if(!(right instanceof ConstantExpressionExecutor)) {
+            if (!(right instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 3);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 3);
@@ -5424,7 +5667,7 @@ public class ByteCodeRegistry {
                     .getRightExpressionExecutor();
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
-            if(!(left instanceof ConstantExpressionExecutor)) {
+            if (!(left instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 2);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 2);
@@ -5434,7 +5677,7 @@ public class ByteCodeRegistry {
             }
             methodVisitor.visitVarInsn(ISTORE, 2);
             byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
-            if(!(right instanceof ConstantExpressionExecutor)) {
+            if (!(right instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 3);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 3);
@@ -5488,7 +5731,7 @@ public class ByteCodeRegistry {
                     .getRightExpressionExecutor();
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
-            if(!(left instanceof ConstantExpressionExecutor)) {
+            if (!(left instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 2);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 2);
@@ -5498,7 +5741,7 @@ public class ByteCodeRegistry {
             }
             methodVisitor.visitVarInsn(ISTORE, 2);
             byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
-            if(!(right instanceof ConstantExpressionExecutor)) {
+            if (!(right instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 3);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 3);
@@ -5552,7 +5795,7 @@ public class ByteCodeRegistry {
                     .getRightExpressionExecutor();
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
-            if(!(left instanceof ConstantExpressionExecutor)) {
+            if (!(left instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 2);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 2);
@@ -5562,7 +5805,7 @@ public class ByteCodeRegistry {
             }
             methodVisitor.visitVarInsn(ISTORE, 2);
             byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
-            if(!(right instanceof ConstantExpressionExecutor)) {
+            if (!(right instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 3);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 3);
@@ -5614,7 +5857,7 @@ public class ByteCodeRegistry {
                     .getRightExpressionExecutor();
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
-            if(!(left instanceof ConstantExpressionExecutor)) {
+            if (!(left instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 2);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 2);
@@ -5624,7 +5867,7 @@ public class ByteCodeRegistry {
             }
             methodVisitor.visitVarInsn(ISTORE, 2);
             byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
-            if(!(right instanceof ConstantExpressionExecutor)) {
+            if (!(right instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 3);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 3);
@@ -5676,7 +5919,7 @@ public class ByteCodeRegistry {
                     .getRightExpressionExecutor();
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
-            if(!(left instanceof ConstantExpressionExecutor)) {
+            if (!(left instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 2);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 2);
@@ -5686,7 +5929,7 @@ public class ByteCodeRegistry {
             }
             methodVisitor.visitVarInsn(LSTORE, 4);
             byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
-            if(!(right instanceof ConstantExpressionExecutor)) {
+            if (!(right instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 3);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 3);
@@ -5740,7 +5983,7 @@ public class ByteCodeRegistry {
                     .getRightExpressionExecutor();
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
-            if(!(left instanceof ConstantExpressionExecutor)) {
+            if (!(left instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 2);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 2);
@@ -5750,7 +5993,7 @@ public class ByteCodeRegistry {
             }
             methodVisitor.visitVarInsn(LSTORE, 4);
             byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
-            if(!(right instanceof ConstantExpressionExecutor)) {
+            if (!(right instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 3);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 3);
@@ -5804,7 +6047,7 @@ public class ByteCodeRegistry {
                     .getRightExpressionExecutor();
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
-            if(!(left instanceof ConstantExpressionExecutor)) {
+            if (!(left instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 2);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 2);
@@ -5814,7 +6057,7 @@ public class ByteCodeRegistry {
             }
             methodVisitor.visitVarInsn(ISTORE, 2);
             byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
-            if(!(right instanceof ConstantExpressionExecutor)) {
+            if (!(right instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 3);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 3);
@@ -5868,7 +6111,7 @@ public class ByteCodeRegistry {
                     .getRightExpressionExecutor();
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
-            if(!(left instanceof ConstantExpressionExecutor)) {
+            if (!(left instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 2);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 2);
@@ -5878,7 +6121,7 @@ public class ByteCodeRegistry {
             }
             methodVisitor.visitVarInsn(ISTORE, 2);
             byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
-            if(!(right instanceof ConstantExpressionExecutor)) {
+            if (!(right instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 3);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 3);
@@ -5932,7 +6175,7 @@ public class ByteCodeRegistry {
                     .getRightExpressionExecutor();
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
-            if(!(left instanceof ConstantExpressionExecutor)) {
+            if (!(left instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 2);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 2);
@@ -5942,7 +6185,7 @@ public class ByteCodeRegistry {
             }
             methodVisitor.visitVarInsn(LSTORE, 4);
             byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
-            if(!(right instanceof ConstantExpressionExecutor)) {
+            if (!(right instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 3);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 3);
@@ -5996,7 +6239,7 @@ public class ByteCodeRegistry {
                     .getRightExpressionExecutor();
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
-            if(!(left instanceof ConstantExpressionExecutor)) {
+            if (!(left instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 2);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 2);
@@ -6006,7 +6249,7 @@ public class ByteCodeRegistry {
             }
             methodVisitor.visitVarInsn(LSTORE, 4);
             byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
-            if(!(right instanceof ConstantExpressionExecutor)) {
+            if (!(right instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 3);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 3);
@@ -6060,7 +6303,7 @@ public class ByteCodeRegistry {
                     .getRightExpressionExecutor();
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
-            if(!(left instanceof ConstantExpressionExecutor)) {
+            if (!(left instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 2);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 2);
@@ -6070,7 +6313,7 @@ public class ByteCodeRegistry {
             }
             methodVisitor.visitVarInsn(FSTORE, 2);
             byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
-            if(!(right instanceof ConstantExpressionExecutor)) {
+            if (!(right instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 3);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 3);
@@ -6124,7 +6367,7 @@ public class ByteCodeRegistry {
                     .getRightExpressionExecutor();
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
-            if(!(left instanceof ConstantExpressionExecutor)) {
+            if (!(left instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 2);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 2);
@@ -6134,7 +6377,7 @@ public class ByteCodeRegistry {
             }
             methodVisitor.visitVarInsn(FSTORE, 2);
             byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
-            if(!(right instanceof ConstantExpressionExecutor)) {
+            if (!(right instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 3);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 3);
@@ -6188,7 +6431,7 @@ public class ByteCodeRegistry {
                     .getRightExpressionExecutor();
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
-            if(!(left instanceof ConstantExpressionExecutor)) {
+            if (!(left instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 2);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 2);
@@ -6198,7 +6441,7 @@ public class ByteCodeRegistry {
             }
             methodVisitor.visitVarInsn(FSTORE, 2);
             byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
-            if(!(right instanceof ConstantExpressionExecutor)) {
+            if (!(right instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 3);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 3);
@@ -6251,7 +6494,7 @@ public class ByteCodeRegistry {
                     .getRightExpressionExecutor();
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
-            if(!(left instanceof ConstantExpressionExecutor)) {
+            if (!(left instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 2);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 2);
@@ -6261,7 +6504,7 @@ public class ByteCodeRegistry {
             }
             methodVisitor.visitVarInsn(FSTORE, 2);
             byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
-            if(!(right instanceof ConstantExpressionExecutor)) {
+            if (!(right instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 3);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 3);
@@ -6314,7 +6557,7 @@ public class ByteCodeRegistry {
                     .getRightExpressionExecutor();
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
-            if(!(left instanceof ConstantExpressionExecutor)) {
+            if (!(left instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 2);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 2);
@@ -6324,7 +6567,7 @@ public class ByteCodeRegistry {
             }
             methodVisitor.visitVarInsn(DSTORE, 4);
             byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
-            if(!(right instanceof ConstantExpressionExecutor)) {
+            if (!(right instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 3);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 3);
@@ -6377,7 +6620,7 @@ public class ByteCodeRegistry {
                     .getRightExpressionExecutor();
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
-            if(!(left instanceof ConstantExpressionExecutor)) {
+            if (!(left instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 2);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 2);
@@ -6387,7 +6630,7 @@ public class ByteCodeRegistry {
             }
             methodVisitor.visitVarInsn(DSTORE, 4);
             byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
-            if(!(right instanceof ConstantExpressionExecutor)) {
+            if (!(right instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 3);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 3);
@@ -6440,7 +6683,7 @@ public class ByteCodeRegistry {
                     .getRightExpressionExecutor();
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
-            if(!(left instanceof ConstantExpressionExecutor)) {
+            if (!(left instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 2);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 2);
@@ -6450,7 +6693,7 @@ public class ByteCodeRegistry {
             }
             methodVisitor.visitVarInsn(DSTORE, 4);
             byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
-            if(!(right instanceof ConstantExpressionExecutor)) {
+            if (!(right instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 3);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 3);
@@ -6504,7 +6747,7 @@ public class ByteCodeRegistry {
                     .getRightExpressionExecutor();
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
-            if(!(left instanceof ConstantExpressionExecutor)) {
+            if (!(left instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 2);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 2);
@@ -6514,7 +6757,7 @@ public class ByteCodeRegistry {
             }
             methodVisitor.visitVarInsn(DSTORE, 4);
             byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
-            if(!(right instanceof ConstantExpressionExecutor)) {
+            if (!(right instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 3);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 3);
@@ -6568,7 +6811,7 @@ public class ByteCodeRegistry {
                     .getRightExpressionExecutor();
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
-            if(!(left instanceof ConstantExpressionExecutor)) {
+            if (!(left instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 2);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 2);
@@ -6578,7 +6821,7 @@ public class ByteCodeRegistry {
             }
             methodVisitor.visitVarInsn(DSTORE, 4);
             byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
-            if(!(right instanceof ConstantExpressionExecutor)) {
+            if (!(right instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 3);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 3);
@@ -6632,7 +6875,7 @@ public class ByteCodeRegistry {
                     .getRightExpressionExecutor();
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
-            if(!(left instanceof ConstantExpressionExecutor)) {
+            if (!(left instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 2);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 2);
@@ -6642,7 +6885,7 @@ public class ByteCodeRegistry {
             }
             methodVisitor.visitVarInsn(DSTORE, 4);
             byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
-            if(!(right instanceof ConstantExpressionExecutor)) {
+            if (!(right instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 3);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 3);
@@ -6696,7 +6939,7 @@ public class ByteCodeRegistry {
                     .getRightExpressionExecutor();
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
-            if(!(left instanceof ConstantExpressionExecutor)) {
+            if (!(left instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 2);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 2);
@@ -6706,7 +6949,7 @@ public class ByteCodeRegistry {
             }
             methodVisitor.visitVarInsn(DSTORE, 4);
             byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
-            if(!(right instanceof ConstantExpressionExecutor)) {
+            if (!(right instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 3);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 3);
@@ -6760,7 +7003,7 @@ public class ByteCodeRegistry {
                     .getRightExpressionExecutor();
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
-            if(!(left instanceof ConstantExpressionExecutor)) {
+            if (!(left instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 2);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 2);
@@ -6770,7 +7013,7 @@ public class ByteCodeRegistry {
             }
             methodVisitor.visitVarInsn(DSTORE, 4);
             byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
-            if(!(right instanceof ConstantExpressionExecutor)) {
+            if (!(right instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 3);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 3);
@@ -6824,7 +7067,7 @@ public class ByteCodeRegistry {
                     .getRightExpressionExecutor();
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
-            if(!(left instanceof ConstantExpressionExecutor)) {
+            if (!(left instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 2);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 2);
@@ -6834,7 +7077,7 @@ public class ByteCodeRegistry {
             }
             methodVisitor.visitVarInsn(ISTORE, 2);
             byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
-            if(!(right instanceof ConstantExpressionExecutor)) {
+            if (!(right instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 3);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 3);
@@ -6886,7 +7129,7 @@ public class ByteCodeRegistry {
                     .getRightExpressionExecutor();
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
-            if(!(left instanceof ConstantExpressionExecutor)) {
+            if (!(left instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 2);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 2);
@@ -6896,7 +7139,7 @@ public class ByteCodeRegistry {
             }
             methodVisitor.visitVarInsn(ISTORE, 2);
             byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
-            if(!(right instanceof ConstantExpressionExecutor)) {
+            if (!(right instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 3);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 3);
@@ -6948,7 +7191,7 @@ public class ByteCodeRegistry {
                     .getRightExpressionExecutor();
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
-            if(!(left instanceof ConstantExpressionExecutor)) {
+            if (!(left instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 2);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 2);
@@ -6958,7 +7201,7 @@ public class ByteCodeRegistry {
             }
             methodVisitor.visitVarInsn(DSTORE, 4);
             byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
-            if(!(right instanceof ConstantExpressionExecutor)) {
+            if (!(right instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 3);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 3);
@@ -7011,7 +7254,7 @@ public class ByteCodeRegistry {
                     .getRightExpressionExecutor();
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
-            if(!(left instanceof ConstantExpressionExecutor)) {
+            if (!(left instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 2);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 2);
@@ -7021,7 +7264,7 @@ public class ByteCodeRegistry {
             }
             methodVisitor.visitVarInsn(DSTORE, 4);
             byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
-            if(!(right instanceof ConstantExpressionExecutor)) {
+            if (!(right instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 3);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 3);
@@ -7074,7 +7317,7 @@ public class ByteCodeRegistry {
                     .getRightExpressionExecutor();
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
-            if(!(left instanceof ConstantExpressionExecutor)) {
+            if (!(left instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 2);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 2);
@@ -7084,7 +7327,7 @@ public class ByteCodeRegistry {
             }
             methodVisitor.visitVarInsn(DSTORE, 4);
             byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
-            if(!(right instanceof ConstantExpressionExecutor)) {
+            if (!(right instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 3);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 3);
@@ -7138,7 +7381,7 @@ public class ByteCodeRegistry {
                     .getRightExpressionExecutor();
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
-            if(!(left instanceof ConstantExpressionExecutor)) {
+            if (!(left instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 2);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 2);
@@ -7148,7 +7391,7 @@ public class ByteCodeRegistry {
             }
             methodVisitor.visitVarInsn(DSTORE, 4);
             byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
-            if(!(right instanceof ConstantExpressionExecutor)) {
+            if (!(right instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 3);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 3);
@@ -7202,7 +7445,7 @@ public class ByteCodeRegistry {
                     .getRightExpressionExecutor();
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
-            if(!(left instanceof ConstantExpressionExecutor)) {
+            if (!(left instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 2);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 2);
@@ -7212,7 +7455,7 @@ public class ByteCodeRegistry {
             }
             methodVisitor.visitVarInsn(DSTORE, 4);
             byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
-            if(!(right instanceof ConstantExpressionExecutor)) {
+            if (!(right instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 3);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 3);
@@ -7266,7 +7509,7 @@ public class ByteCodeRegistry {
                     .getRightExpressionExecutor();
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
-            if(!(left instanceof ConstantExpressionExecutor)) {
+            if (!(left instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 2);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 2);
@@ -7276,7 +7519,7 @@ public class ByteCodeRegistry {
             }
             methodVisitor.visitVarInsn(DSTORE, 4);
             byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
-            if(!(right instanceof ConstantExpressionExecutor)) {
+            if (!(right instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 3);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 3);
@@ -7330,7 +7573,7 @@ public class ByteCodeRegistry {
                     .getRightExpressionExecutor();
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
-            if(!(left instanceof ConstantExpressionExecutor)) {
+            if (!(left instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 2);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 2);
@@ -7340,7 +7583,7 @@ public class ByteCodeRegistry {
             }
             methodVisitor.visitVarInsn(DSTORE, 4);
             byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
-            if(!(right instanceof ConstantExpressionExecutor)) {
+            if (!(right instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 3);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 3);
@@ -7394,7 +7637,7 @@ public class ByteCodeRegistry {
                     .getRightExpressionExecutor();
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
-            if(!(left instanceof ConstantExpressionExecutor)) {
+            if (!(left instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 2);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 2);
@@ -7404,7 +7647,7 @@ public class ByteCodeRegistry {
             }
             methodVisitor.visitVarInsn(DSTORE, 4);
             byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
-            if(!(right instanceof ConstantExpressionExecutor)) {
+            if (!(right instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 3);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 3);
@@ -7458,7 +7701,7 @@ public class ByteCodeRegistry {
                     .getRightExpressionExecutor();
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
-            if(!(left instanceof ConstantExpressionExecutor)) {
+            if (!(left instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 2);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 2);
@@ -7468,7 +7711,7 @@ public class ByteCodeRegistry {
             }
             methodVisitor.visitVarInsn(FSTORE, 2);
             byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
-            if(!(right instanceof ConstantExpressionExecutor)) {
+            if (!(right instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 3);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 3);
@@ -7522,7 +7765,7 @@ public class ByteCodeRegistry {
                     .getRightExpressionExecutor();
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
-            if(!(left instanceof ConstantExpressionExecutor)) {
+            if (!(left instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 2);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 2);
@@ -7532,7 +7775,7 @@ public class ByteCodeRegistry {
             }
             methodVisitor.visitVarInsn(FSTORE, 2);
             byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
-            if(!(right instanceof ConstantExpressionExecutor)) {
+            if (!(right instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 3);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 3);
@@ -7586,7 +7829,7 @@ public class ByteCodeRegistry {
                     .getRightExpressionExecutor();
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
-            if(!(left instanceof ConstantExpressionExecutor)) {
+            if (!(left instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 2);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 2);
@@ -7596,7 +7839,7 @@ public class ByteCodeRegistry {
             }
             methodVisitor.visitVarInsn(LSTORE, 4);
             byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
-            if(!(right instanceof ConstantExpressionExecutor)) {
+            if (!(right instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 3);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 3);
@@ -7650,7 +7893,7 @@ public class ByteCodeRegistry {
                     .getRightExpressionExecutor();
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
-            if(!(left instanceof ConstantExpressionExecutor)) {
+            if (!(left instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 2);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 2);
@@ -7660,7 +7903,7 @@ public class ByteCodeRegistry {
             }
             methodVisitor.visitVarInsn(LSTORE, 4);
             byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
-            if(!(right instanceof ConstantExpressionExecutor)) {
+            if (!(right instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 3);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 3);
@@ -7714,7 +7957,7 @@ public class ByteCodeRegistry {
                     .getRightExpressionExecutor();
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
-            if(!(left instanceof ConstantExpressionExecutor)) {
+            if (!(left instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 2);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 2);
@@ -7724,7 +7967,7 @@ public class ByteCodeRegistry {
             }
             methodVisitor.visitVarInsn(LSTORE, 4);
             byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
-            if(!(right instanceof ConstantExpressionExecutor)) {
+            if (!(right instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 3);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 3);
@@ -7778,7 +8021,7 @@ public class ByteCodeRegistry {
                     .getRightExpressionExecutor();
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
-            if(!(left instanceof ConstantExpressionExecutor)) {
+            if (!(left instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 2);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 2);
@@ -7788,7 +8031,7 @@ public class ByteCodeRegistry {
             }
             methodVisitor.visitVarInsn(LSTORE, 4);
             byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
-            if(!(right instanceof ConstantExpressionExecutor)) {
+            if (!(right instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 3);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 3);
@@ -7842,7 +8085,7 @@ public class ByteCodeRegistry {
                     .getRightExpressionExecutor();
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
-            if(!(left instanceof ConstantExpressionExecutor)) {
+            if (!(left instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 2);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 2);
@@ -7852,7 +8095,7 @@ public class ByteCodeRegistry {
             }
             methodVisitor.visitVarInsn(LSTORE, 4);
             byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
-            if(!(right instanceof ConstantExpressionExecutor)) {
+            if (!(right instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 3);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 3);
@@ -7906,7 +8149,7 @@ public class ByteCodeRegistry {
                     .getRightExpressionExecutor();
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
-            if(!(left instanceof ConstantExpressionExecutor)) {
+            if (!(left instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 2);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 2);
@@ -7916,7 +8159,7 @@ public class ByteCodeRegistry {
             }
             methodVisitor.visitVarInsn(LSTORE, 4);
             byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
-            if(!(right instanceof ConstantExpressionExecutor)) {
+            if (!(right instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 3);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 3);
@@ -7970,7 +8213,7 @@ public class ByteCodeRegistry {
                     .getRightExpressionExecutor();
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
-            if(!(left instanceof ConstantExpressionExecutor)) {
+            if (!(left instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 2);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 2);
@@ -7980,7 +8223,7 @@ public class ByteCodeRegistry {
             }
             methodVisitor.visitVarInsn(LSTORE, 4);
             byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
-            if(!(right instanceof ConstantExpressionExecutor)) {
+            if (!(right instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 3);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 3);
@@ -8033,7 +8276,7 @@ public class ByteCodeRegistry {
                     .getRightExpressionExecutor();
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
-            if(!(left instanceof ConstantExpressionExecutor)) {
+            if (!(left instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 2);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 2);
@@ -8043,7 +8286,7 @@ public class ByteCodeRegistry {
             }
             methodVisitor.visitVarInsn(LSTORE, 4);
             byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
-            if(!(right instanceof ConstantExpressionExecutor)) {
+            if (!(right instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 3);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 3);
@@ -8096,7 +8339,7 @@ public class ByteCodeRegistry {
                     .getRightExpressionExecutor();
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
-            if(!(left instanceof ConstantExpressionExecutor)) {
+            if (!(left instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 2);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 2);
@@ -8106,7 +8349,7 @@ public class ByteCodeRegistry {
             }
             methodVisitor.visitVarInsn(ISTORE, 2);
             byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
-            if(!(right instanceof ConstantExpressionExecutor)) {
+            if (!(right instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 3);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 3);
@@ -8160,7 +8403,7 @@ public class ByteCodeRegistry {
                     .getRightExpressionExecutor();
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
-            if(!(left instanceof ConstantExpressionExecutor)) {
+            if (!(left instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 2);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 2);
@@ -8170,7 +8413,7 @@ public class ByteCodeRegistry {
             }
             methodVisitor.visitVarInsn(ISTORE, 2);
             byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
-            if(!(right instanceof ConstantExpressionExecutor)) {
+            if (!(right instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 3);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 3);
@@ -8224,7 +8467,7 @@ public class ByteCodeRegistry {
                     .getRightExpressionExecutor();
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
-            if(!(left instanceof ConstantExpressionExecutor)) {
+            if (!(left instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 2);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 2);
@@ -8234,7 +8477,7 @@ public class ByteCodeRegistry {
             }
             methodVisitor.visitVarInsn(ISTORE, 2);
             byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
-            if(!(right instanceof ConstantExpressionExecutor)) {
+            if (!(right instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 3);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 3);
@@ -8288,7 +8531,7 @@ public class ByteCodeRegistry {
                     .getRightExpressionExecutor();
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
-            if(!(left instanceof ConstantExpressionExecutor)) {
+            if (!(left instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 2);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 2);
@@ -8298,7 +8541,7 @@ public class ByteCodeRegistry {
             }
             methodVisitor.visitVarInsn(ISTORE, 2);
             byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
-            if(!(right instanceof ConstantExpressionExecutor)) {
+            if (!(right instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 3);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 3);
@@ -8352,7 +8595,7 @@ public class ByteCodeRegistry {
                     .getRightExpressionExecutor();
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
-            if(!(left instanceof ConstantExpressionExecutor)) {
+            if (!(left instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 2);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 2);
@@ -8362,7 +8605,7 @@ public class ByteCodeRegistry {
             }
             methodVisitor.visitVarInsn(ISTORE, 2);
             byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
-            if(!(right instanceof ConstantExpressionExecutor)) {
+            if (!(right instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 3);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 3);
@@ -8414,7 +8657,7 @@ public class ByteCodeRegistry {
                     .getRightExpressionExecutor();
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
-            if(!(left instanceof ConstantExpressionExecutor)) {
+            if (!(left instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 2);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 2);
@@ -8424,7 +8667,7 @@ public class ByteCodeRegistry {
             }
             methodVisitor.visitVarInsn(ISTORE, 2);
             byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
-            if(!(right instanceof ConstantExpressionExecutor)) {
+            if (!(right instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 3);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 3);
@@ -8540,7 +8783,7 @@ public class ByteCodeRegistry {
                     .getRightExpressionExecutor();
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
-            if(!(left instanceof ConstantExpressionExecutor)) {
+            if (!(left instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 2);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 2);
@@ -8550,7 +8793,7 @@ public class ByteCodeRegistry {
             }
             methodVisitor.visitVarInsn(ISTORE, 2);
             byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
-            if(!(right instanceof ConstantExpressionExecutor)) {
+            if (!(right instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 3);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 3);
@@ -8604,7 +8847,7 @@ public class ByteCodeRegistry {
                     .getRightExpressionExecutor();
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
-            if(!(left instanceof ConstantExpressionExecutor)) {
+            if (!(left instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 2);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 2);
@@ -8614,7 +8857,7 @@ public class ByteCodeRegistry {
             }
             methodVisitor.visitVarInsn(FSTORE, 2);
             byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
-            if(!(right instanceof ConstantExpressionExecutor)) {
+            if (!(right instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 3);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 3);
@@ -8667,7 +8910,7 @@ public class ByteCodeRegistry {
                     .getRightExpressionExecutor();
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
-            if(!(left instanceof ConstantExpressionExecutor)) {
+            if (!(left instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 2);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 2);
@@ -8677,7 +8920,7 @@ public class ByteCodeRegistry {
             }
             methodVisitor.visitVarInsn(FSTORE, 2);
             byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
-            if(!(right instanceof ConstantExpressionExecutor)) {
+            if (!(right instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 3);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 3);
@@ -8730,7 +8973,7 @@ public class ByteCodeRegistry {
                     .getRightExpressionExecutor();
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
-            if(!(left instanceof ConstantExpressionExecutor)) {
+            if (!(left instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 2);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 2);
@@ -8740,7 +8983,7 @@ public class ByteCodeRegistry {
             }
             methodVisitor.visitVarInsn(FSTORE, 2);
             byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
-            if(!(right instanceof ConstantExpressionExecutor)) {
+            if (!(right instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 3);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 3);
@@ -8794,7 +9037,7 @@ public class ByteCodeRegistry {
                     .getRightExpressionExecutor();
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
-            if(!(left instanceof ConstantExpressionExecutor)) {
+            if (!(left instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 2);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 2);
@@ -8804,7 +9047,7 @@ public class ByteCodeRegistry {
             }
             methodVisitor.visitVarInsn(FSTORE, 2);
             byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
-            if(!(right instanceof ConstantExpressionExecutor)) {
+            if (!(right instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 3);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 3);
@@ -8858,7 +9101,7 @@ public class ByteCodeRegistry {
                     .getRightExpressionExecutor();
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
-            if(!(left instanceof ConstantExpressionExecutor)) {
+            if (!(left instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 2);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 2);
@@ -8868,7 +9111,7 @@ public class ByteCodeRegistry {
             }
             methodVisitor.visitVarInsn(FSTORE, 2);
             byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
-            if(!(right instanceof ConstantExpressionExecutor)) {
+            if (!(right instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 3);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 3);
@@ -8922,7 +9165,7 @@ public class ByteCodeRegistry {
                     .getRightExpressionExecutor();
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
-            if(!(left instanceof ConstantExpressionExecutor)) {
+            if (!(left instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 2);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 2);
@@ -8932,7 +9175,7 @@ public class ByteCodeRegistry {
             }
             methodVisitor.visitVarInsn(FSTORE, 2);
             byteCodeGenarator.execute(right, 2, 0, null, status, methodVisitor, byteCodeGenarator);
-            if(!(right instanceof ConstantExpressionExecutor)) {
+            if (!(right instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 3);
                 methodVisitor.visitJumpInsn(IFNULL, l0);
                 methodVisitor.visitVarInsn(ALOAD, 3);

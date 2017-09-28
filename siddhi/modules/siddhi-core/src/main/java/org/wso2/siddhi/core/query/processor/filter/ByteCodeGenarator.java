@@ -53,6 +53,7 @@ import org.wso2.siddhi.core.executor.math.subtract.SubtractExpressionExecutorFlo
 import org.wso2.siddhi.core.executor.math.subtract.SubtractExpressionExecutorInt;
 import org.wso2.siddhi.core.executor.math.subtract.SubtractExpressionExecutorLong;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -339,6 +340,8 @@ public class ByteCodeGenarator {
 
     private ClassWriter classWriter;
     private ByteCodeHelper byteCodeHelper;
+    protected ArrayList<ExpressionExecutor> unknownExpressionExecutors = new ArrayList<ExpressionExecutor>();
+    protected int unknownExpressionExecutorIndex = 0;
 
     /**
      * This method returns Expression executor with byte code.

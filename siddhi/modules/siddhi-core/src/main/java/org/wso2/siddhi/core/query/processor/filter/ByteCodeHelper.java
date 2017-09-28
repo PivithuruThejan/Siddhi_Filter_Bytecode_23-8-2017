@@ -18,6 +18,7 @@
 package org.wso2.siddhi.core.query.processor.filter;
 
 import org.mvel2.asm.ClassWriter;
+import org.mvel2.asm.FieldVisitor;
 import org.mvel2.asm.MethodVisitor;
 import org.wso2.siddhi.core.executor.ExpressionExecutor;
 
@@ -38,10 +39,17 @@ public class ByteCodeHelper {
      */
     public MethodVisitor start(ClassWriter classWriter) {
         MethodVisitor methodVisitor;
+        FieldVisitor fieldVisitor;
         classWriter.visit(52, ACC_PUBLIC + ACC_SUPER, "ByteCodeRegistry", null,
                 "java/lang/Object", new String[]
                         {"org/wso2/siddhi/core/executor/ExpressionExecutor"});
         classWriter.visitSource("ByteCodeRegistry.java", null);
+
+        {
+            fieldVisitor = classWriter.visitField(ACC_PROTECTED, "unknownExpressionExecutors", "Ljava/util/ArrayList;",
+                    "Ljava/util/ArrayList<Lorg/wso2/siddhi/core/executor/ExpressionExecutor;>;", null);
+            fieldVisitor.visitEnd();
+        }
 
         {
             methodVisitor = classWriter.visitMethod(ACC_PUBLIC, "<init>", "()V", null, null);

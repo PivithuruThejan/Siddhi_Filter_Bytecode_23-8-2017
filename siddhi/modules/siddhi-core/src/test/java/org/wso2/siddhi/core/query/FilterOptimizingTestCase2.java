@@ -81,7 +81,7 @@ public class FilterOptimizingTestCase2 {
         String definition = "@config(async = 'true') define stream players(playerName string,country string,TestAverage" +
                 " double,TestStrikeRate float,ODIAverage float,ODIStrikeRate float,T20Average float,T20StrikeRate float," +
                 "BattingStyle string);";
-        String query = "@info(name = 'query1') from players[(5l + TestAverage>50.0 )]" +
+        String query = "@info(name = 'query1') from players[(5.0 + TestAverage>50.0 )]" +
                 " select playerName, BattingStyle insert into sqaud;";
         SiddhiManager siddhiManager = new SiddhiManager();
         SiddhiAppRuntime siddhiAppRuntime = siddhiManager.createSiddhiAppRuntime(definition + query);
@@ -546,7 +546,7 @@ public class FilterOptimizingTestCase2 {
         String definition = "@config(async = 'true') define stream players(playerName string,country string,TestAverage" +
                 " float,TestStrikeRate float,ODIAverage float,ODIStrikeRate float,T20Average float,T20StrikeRate float," +
                 "BattingStyle string);";
-        String query = "@info(name = 'query1') from players[(60f % TestAverage>10.0 )]" +
+        String query = "@info(name = 'query1') from players[(60.0f % TestAverage>10.0 )]" +
                 " select playerName, BattingStyle insert into sqaud;";
         SiddhiManager siddhiManager = new SiddhiManager();
         SiddhiAppRuntime siddhiAppRuntime = siddhiManager.createSiddhiAppRuntime(definition + query);
@@ -616,7 +616,7 @@ public class FilterOptimizingTestCase2 {
         String definition = "@config(async = 'true') define stream players(playerName string,country string,TestAverage" +
                 " int,TestStrikeRate float,ODIAverage float,ODIStrikeRate float,T20Average float,T20StrikeRate float," +
                 "BattingStyle string);";
-        String query = "@info(name = 'query1') from players[(60 % TestAverage>10.0 )]" +
+        String query = "@info(name = 'query1') from players[(60.0 % TestAverage>10.0 )]" +
                 " select playerName, BattingStyle insert into sqaud;";
         SiddhiManager siddhiManager = new SiddhiManager();
         SiddhiAppRuntime siddhiAppRuntime = siddhiManager.createSiddhiAppRuntime(definition + query);
@@ -756,7 +756,7 @@ public class FilterOptimizingTestCase2 {
         String definition = "@config(async = 'true') define stream players(playerName string,country string,TestAverage" +
                 " double,TestStrikeRate float,ODIAverage float,ODIStrikeRate float,T20Average float,T20StrikeRate float," +
                 "BattingStyle string);";
-        String query = "@info(name = 'query1') from players[(5l * TestAverage>225.0 )]" +
+        String query = "@info(name = 'query1') from players[(5.0 * TestAverage>225.0 )]" +
                 " select playerName, BattingStyle insert into sqaud;";
         SiddhiManager siddhiManager = new SiddhiManager();
         SiddhiAppRuntime siddhiAppRuntime = siddhiManager.createSiddhiAppRuntime(definition + query);
@@ -835,7 +835,7 @@ public class FilterOptimizingTestCase2 {
         String definition = "@config(async = 'true') define stream players(playerName string,country string,TestAverage" +
                 " double,TestStrikeRate float,ODIAverage float,ODIStrikeRate float,T20Average float,T20StrikeRate float," +
                 "BattingStyle string);";
-        String query = "@info(name = 'query1') from players[( TestAverage / 0> 9.0 )]" +
+        String query = "@info(name = 'query1') from players[( TestAverage / 5.0> 9.0 )]" +
                 " select playerName, BattingStyle insert into sqaud;";
         SiddhiManager siddhiManager = new SiddhiManager();
         SiddhiAppRuntime siddhiAppRuntime = siddhiManager.createSiddhiAppRuntime(definition + query);
@@ -1142,7 +1142,7 @@ public class FilterOptimizingTestCase2 {
         String definition = "@config(async = 'true') define stream players(playerName string,country string,TestAverage" +
                 " float,TestStrikeRate float,ODIAverage float,ODIStrikeRate float,T20Average float,T20StrikeRate float," +
                 "BattingStyle string);";
-        String query = "@info(name = 'query1') from players[(5.0 + TestAverage>50.0 )]" +
+        String query = "@info(name = 'query1') from players[(5f + TestAverage>50.0 )]" +
                 " select playerName, BattingStyle insert into sqaud;";
         SiddhiManager siddhiManager = new SiddhiManager();
         SiddhiAppRuntime siddhiAppRuntime = siddhiManager.createSiddhiAppRuntime(definition + query);
@@ -1221,7 +1221,7 @@ public class FilterOptimizingTestCase2 {
         String definition = "@config(async = 'true') define stream players(playerName string,country string,TestAverage" +
                 " float,TestStrikeRate float,ODIAverage float,ODIStrikeRate float,T20Average float,T20StrikeRate float," +
                 "BattingStyle string);";
-        String query = "@info(name = 'query1') from players[(5.0 * TestAverage>225.0 )]" +
+        String query = "@info(name = 'query1') from players[(5f * TestAverage>225.0 )]" +
                 " select playerName, BattingStyle insert into sqaud;";
         SiddhiManager siddhiManager = new SiddhiManager();
         SiddhiAppRuntime siddhiAppRuntime = siddhiManager.createSiddhiAppRuntime(definition + query);
@@ -1300,7 +1300,7 @@ public class FilterOptimizingTestCase2 {
         String definition = "@config(async = 'true') define stream players(playerName string,country string,TestAverage" +
                 " int,TestStrikeRate float,ODIAverage float,ODIStrikeRate float,T20Average float,T20StrikeRate float," +
                 "BattingStyle string);";
-        String query = "@info(name = 'query1') from players[(5l + TestAverage>50.0 )]" +
+        String query = "@info(name = 'query1') from players[(5 + TestAverage>50.0 )]" +
                 " select playerName, BattingStyle insert into sqaud;";
         SiddhiManager siddhiManager = new SiddhiManager();
         SiddhiAppRuntime siddhiAppRuntime = siddhiManager.createSiddhiAppRuntime(definition + query);
