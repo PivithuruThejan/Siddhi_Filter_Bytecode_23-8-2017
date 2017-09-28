@@ -39,14 +39,15 @@ public class ByteCodeHelper {
      */
     public MethodVisitor start(ClassWriter classWriter) {
         MethodVisitor methodVisitor;
+        MethodVisitor methodVisitorToSetUnknownExpressionExecutors;
         FieldVisitor fieldVisitor;
         classWriter.visit(52, ACC_PUBLIC + ACC_SUPER, "ByteCodeRegistry", null,
-                "java/lang/Object", new String[]
-                        {"org/wso2/siddhi/core/executor/ExpressionExecutor"});
+                "java/lang/Object", new String[]{"org/wso2/siddhi/core/executor/ExpressionExecutor",
+                        "org/wso2/siddhi/core/query/processor/filter/ExtensionHelper"});
         classWriter.visitSource("ByteCodeRegistry.java", null);
 
         {
-            fieldVisitor = classWriter.visitField(ACC_PROTECTED, "unknownExpressionExecutors", "Ljava/util/ArrayList;",
+            fieldVisitor = classWriter.visitField(ACC_PRIVATE, "unknownExpressionExecutors", "Ljava/util/ArrayList;",
                     "Ljava/util/ArrayList<Lorg/wso2/siddhi/core/executor/ExpressionExecutor;>;", null);
             fieldVisitor.visitEnd();
         }
@@ -69,6 +70,20 @@ public class ByteCodeHelper {
             methodVisitor.visitVarInsn(ISTORE, 2);
             methodVisitor.visitInsn(ICONST_0);
             methodVisitor.visitVarInsn(ISTORE, 3);
+        }
+
+        {
+            methodVisitorToSetUnknownExpressionExecutors = classWriter.visitMethod(ACC_PUBLIC,
+                    "setUnknownExpressionExecutors", "(Ljava/util/ArrayList;)V",
+                    "(Ljava/util/ArrayList<Lorg/wso2/siddhi/core/executor/ExpressionExecutor;>;)V", null);
+            methodVisitorToSetUnknownExpressionExecutors.visitCode();
+            methodVisitorToSetUnknownExpressionExecutors.visitVarInsn(ALOAD, 0);
+            methodVisitorToSetUnknownExpressionExecutors.visitVarInsn(ALOAD, 1);
+            methodVisitorToSetUnknownExpressionExecutors.visitFieldInsn(PUTFIELD,
+                    "ByteCodeRegistry", "unknownExpressionExecutors", "Ljava/util/ArrayList;");
+            methodVisitorToSetUnknownExpressionExecutors.visitInsn(RETURN);
+            methodVisitorToSetUnknownExpressionExecutors.visitMaxs(2, 2);
+            methodVisitorToSetUnknownExpressionExecutors.visitEnd();
         }
 
         return methodVisitor;

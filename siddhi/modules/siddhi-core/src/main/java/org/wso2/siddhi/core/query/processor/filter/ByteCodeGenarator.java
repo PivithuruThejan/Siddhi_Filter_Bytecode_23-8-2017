@@ -359,6 +359,9 @@ public class ByteCodeGenarator {
         this.execute(conditionExecutor, 0, 0, null, 0, methodVisitor,
                 this);
         this.byteCodeHelper.end(classWriter, methodVisitor);
+        ExtensionHelper extensionHelper = (ExtensionHelper) ByteCodeGenarator.expressionExecutor;
+        extensionHelper.setUnknownExpressionExecutors(this.unknownExpressionExecutors);
+        ByteCodeGenarator.expressionExecutor = (ExpressionExecutor) extensionHelper;
         return ByteCodeGenarator.expressionExecutor;
     }
 

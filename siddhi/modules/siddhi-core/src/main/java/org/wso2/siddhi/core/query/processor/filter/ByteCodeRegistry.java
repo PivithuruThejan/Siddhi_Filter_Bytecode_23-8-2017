@@ -450,12 +450,11 @@ public class ByteCodeRegistry {
             Label l1 = new Label();
             if (!(condition instanceof ConstantExpressionExecutor)) {
                 methodVisitor.visitVarInsn(ALOAD, 2);
-                methodVisitor.visitJumpInsn(IFNONNULL, l0);
+                methodVisitor.visitJumpInsn(IFNULL, l0);
+                methodVisitor.visitVarInsn(ALOAD, 2);
                 methodVisitor.visitTypeInsn(CHECKCAST, "java/lang/Boolean");
-                methodVisitor.visitMethodInsn(INVOKEVIRTUAL, "java/lang/Boolean", "booleanValue", "()Z",
-                        false);
+                methodVisitor.visitMethodInsn(INVOKEVIRTUAL, "java/lang/Boolean", "booleanValue", "()Z", false);
             }
-
             methodVisitor.visitJumpInsn(GOTO, l1);
             methodVisitor.visitLabel(l0);
             methodVisitor.visitInsn(ICONST_0);
@@ -489,7 +488,22 @@ public class ByteCodeRegistry {
                              Label specialCase, int parentStatus,
                              MethodVisitor methodVisitor, ByteCodeGenarator byteCodeGenarator) {
             byteCodeGenarator.unknownExpressionExecutors.add(conditionExecutor);
-
+            methodVisitor.visitVarInsn(ALOAD, 0);
+            methodVisitor.visitFieldInsn(GETFIELD, "ByteCodeRegistry", "unknownExpressionExecutors",
+                    "Ljava/util/ArrayList;");
+            methodVisitor.visitLdcInsn(byteCodeGenarator.unknownExpressionExecutorIndex);
+            byteCodeGenarator.unknownExpressionExecutorIndex++;
+            methodVisitor.visitMethodInsn(INVOKEVIRTUAL, "java/util/ArrayList", "get", "(I)Ljava/lang/Object;",
+                    false);
+            methodVisitor.visitTypeInsn(CHECKCAST, "org/wso2/siddhi/core/executor/function/FunctionExecutor");
+            methodVisitor.visitVarInsn(ALOAD, 1);
+            methodVisitor.visitMethodInsn(INVOKEVIRTUAL, "org/wso2/siddhi/core/executor/function/FunctionExecutor",
+                    "execute", "(Lorg/wso2/siddhi/core/event/ComplexEvent;)Ljava/lang/Object;", false);
+            if (status == 2) {
+                methodVisitor.visitVarInsn(ASTORE, 3);
+            } else {
+                methodVisitor.visitVarInsn(ASTORE, 2);
+            }
         }
     }
 
