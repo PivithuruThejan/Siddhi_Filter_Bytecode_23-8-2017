@@ -30,8 +30,7 @@ import org.wso2.siddhi.core.executor.condition.compare.greaterthanequal.*;
 import org.wso2.siddhi.core.executor.condition.compare.lessthan.*;
 import org.wso2.siddhi.core.executor.condition.compare.lessthanequal.*;
 import org.wso2.siddhi.core.executor.condition.compare.notequal.*;
-import org.wso2.siddhi.core.executor.function.FunctionExecutor;
-import org.wso2.siddhi.core.executor.function.InstanceOfBooleanFunctionExecutor;
+import org.wso2.siddhi.core.executor.function.*;
 import org.wso2.siddhi.core.executor.math.add.AddExpressionExecutorDouble;
 import org.wso2.siddhi.core.executor.math.add.AddExpressionExecutorFloat;
 import org.wso2.siddhi.core.executor.math.add.AddExpressionExecutorInt;
@@ -334,14 +333,24 @@ public class ByteCodeGenarator {
         byteCodegenerators.put(SubtractExpressionExecutorLong.class,
                 byteCode.new PrivateSubtractExpressionExecutorLongBytecodeEmitter());
         //FunctionExecutor.
-        byteCodegenerators.put( InstanceOfBooleanFunctionExecutor.class ,
+        byteCodegenerators.put(InstanceOfBooleanFunctionExecutor.class,
+                byteCode.new PrivateFunctionExecutorBytecodeEmitter());
+        byteCodegenerators.put(InstanceOfDoubleFunctionExecutor.class,
+                byteCode.new PrivateFunctionExecutorBytecodeEmitter());
+        byteCodegenerators.put(InstanceOfFloatFunctionExecutor.class,
+                byteCode.new PrivateFunctionExecutorBytecodeEmitter());
+        byteCodegenerators.put(InstanceOfIntegerFunctionExecutor.class,
+                byteCode.new PrivateFunctionExecutorBytecodeEmitter());
+        byteCodegenerators.put(InstanceOfLongFunctionExecutor.class,
+                byteCode.new PrivateFunctionExecutorBytecodeEmitter());
+        byteCodegenerators.put(InstanceOfStringFunctionExecutor.class,
                 byteCode.new PrivateFunctionExecutorBytecodeEmitter());
     }
 
-    private ClassWriter classWriter;
-    private ByteCodeHelper byteCodeHelper;
     protected ArrayList<ExpressionExecutor> unknownExpressionExecutors = new ArrayList<ExpressionExecutor>();
     protected int unknownExpressionExecutorIndex = 0;
+    private ClassWriter classWriter;
+    private ByteCodeHelper byteCodeHelper;
 
     /**
      * This method returns Expression executor with byte code.

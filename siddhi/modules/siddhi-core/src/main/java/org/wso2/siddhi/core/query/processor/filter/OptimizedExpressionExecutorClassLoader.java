@@ -25,11 +25,11 @@ public class OptimizedExpressionExecutorClassLoader extends ClassLoader {
     /**
      * This is an overridden method.
      *
-     * @param name
-     * @param b
+     * @param name      Name of the class needs to be loaded.
+     * @param byteArray Byte array of the class.
      * @return
      */
-    public Class defineClass(String name, byte[] b) {
-        return defineClass(name, b, 0, b.length);
+    public Class defineClass(String name, byte[] byteArray) {
+        return defineClass(name, byteArray, 0, byteArray.length);
     }
 }

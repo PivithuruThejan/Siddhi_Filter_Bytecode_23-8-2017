@@ -34,8 +34,8 @@ public class ByteCodeHelper {
     /**
      * This method creates a class called "ByteCodeRegistry" using byte code.
      *
-     * @param classWriter
-     * @return
+     * @param classWriter Instance of ASM library class 'ClassWriter' that used to generate the byte-code class.
+     * @return Instance of ASM library class 'MethodVisitor' that used to generate the execute method inside byte-code class.
      */
     public MethodVisitor start(ClassWriter classWriter) {
         MethodVisitor methodVisitor;
@@ -92,8 +92,8 @@ public class ByteCodeHelper {
     /**
      * This method finishes byte code generation and creates an instance of "ByteCodeRegistry" class.
      *
-     * @param classWriter
-     * @param methodVisitor
+     * @param classWriter   Instance of ASM library class 'ClassWriter' that used to generate the byte-code class.
+     * @param methodVisitor Instance of ASM library class 'MethodVisitor' that used to generate the execute method inside byte-code class.
      * @throws IllegalAccessException
      * @throws InstantiationException
      */

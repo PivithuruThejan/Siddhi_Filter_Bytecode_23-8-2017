@@ -50,7 +50,8 @@ public class InConditionExpressionExecutor extends ConditionExpressionExecutor {
         this.compiledCondition = compiledCondition;
     }
 
-    public synchronized Boolean execute(ComplexEvent event) throws IllegalAccessException, InvocationTargetException, InstantiationException {
+    public synchronized Boolean execute(ComplexEvent event) throws IllegalAccessException, InvocationTargetException,
+            InstantiationException {
         try {
             if (isMatchingEventAStateEvent) {
                 finderStateEvent.setEvent((StateEvent) event);

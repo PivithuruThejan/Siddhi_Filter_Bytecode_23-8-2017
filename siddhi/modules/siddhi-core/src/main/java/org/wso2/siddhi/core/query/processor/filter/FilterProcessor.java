@@ -34,7 +34,7 @@ import java.lang.reflect.InvocationTargetException;
 public class FilterProcessor implements Processor {
 
     protected Processor next;
-    private boolean initialized;
+    private boolean initialized;// Variable to indicate whether byte-code generated or not.
     private ExpressionExecutor conditionExecutor;
 
     public FilterProcessor(ExpressionExecutor conditionExecutor) throws InstantiationException, IllegalAccessException {
