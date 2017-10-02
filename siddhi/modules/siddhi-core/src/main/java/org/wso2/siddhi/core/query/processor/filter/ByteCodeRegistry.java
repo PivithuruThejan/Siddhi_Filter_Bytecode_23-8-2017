@@ -617,14 +617,14 @@ public class ByteCodeRegistry {
             if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(left);
                 left = extensionWrapper;
             }
 
             if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(right);
                 right = extensionWrapper;
             }
 
@@ -747,14 +747,14 @@ public class ByteCodeRegistry {
             if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(left);
                 left = extensionWrapper;
             }
 
             if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(right);
                 right = extensionWrapper;
             }
 
@@ -879,14 +879,14 @@ public class ByteCodeRegistry {
             if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(left);
                 left = extensionWrapper;
             }
 
             if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(right);
                 right = extensionWrapper;
             }
 
@@ -1017,14 +1017,14 @@ public class ByteCodeRegistry {
             if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(left);
                 left = extensionWrapper;
             }
 
             if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(right);
                 right = extensionWrapper;
             }
 
@@ -1155,14 +1155,14 @@ public class ByteCodeRegistry {
             if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(left);
                 left = extensionWrapper;
             }
 
             if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(right);
                 right = extensionWrapper;
             }
 
@@ -1293,14 +1293,14 @@ public class ByteCodeRegistry {
             if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(left);
                 left = extensionWrapper;
             }
 
             if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(right);
                 right = extensionWrapper;
             }
 
@@ -1431,14 +1431,14 @@ public class ByteCodeRegistry {
             if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(left);
                 left = extensionWrapper;
             }
 
             if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(right);
                 right = extensionWrapper;
             }
 
@@ -1569,14 +1569,14 @@ public class ByteCodeRegistry {
             if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(left);
                 left = extensionWrapper;
             }
 
             if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(right);
                 right = extensionWrapper;
             }
 
@@ -1707,14 +1707,14 @@ public class ByteCodeRegistry {
             if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(left);
                 left = extensionWrapper;
             }
 
             if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(right);
                 right = extensionWrapper;
             }
 
@@ -1845,14 +1845,14 @@ public class ByteCodeRegistry {
             if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(left);
                 left = extensionWrapper;
             }
 
             if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(right);
                 right = extensionWrapper;
             }
 
@@ -1983,14 +1983,14 @@ public class ByteCodeRegistry {
             if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(left);
                 left = extensionWrapper;
             }
 
             if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(right);
                 right = extensionWrapper;
             }
 
@@ -2113,14 +2113,14 @@ public class ByteCodeRegistry {
             if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(left);
                 left = extensionWrapper;
             }
 
             if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(right);
                 right = extensionWrapper;
             }
 
@@ -2244,14 +2244,14 @@ public class ByteCodeRegistry {
             if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(left);
                 left = extensionWrapper;
             }
 
             if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(right);
                 right = extensionWrapper;
             }
 
@@ -2377,14 +2377,14 @@ public class ByteCodeRegistry {
             if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(left);
                 left = extensionWrapper;
             }
 
             if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(right);
                 right = extensionWrapper;
             }
 
@@ -2508,14 +2508,14 @@ public class ByteCodeRegistry {
             if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(left);
                 left = extensionWrapper;
             }
 
             if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(right);
                 right = extensionWrapper;
             }
 
@@ -2639,14 +2639,14 @@ public class ByteCodeRegistry {
             if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(left);
                 left = extensionWrapper;
             }
 
             if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(right);
                 right = extensionWrapper;
             }
 
@@ -2772,14 +2772,14 @@ public class ByteCodeRegistry {
             if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(left);
                 left = extensionWrapper;
             }
 
             if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(right);
                 right = extensionWrapper;
             }
 
@@ -2903,14 +2903,14 @@ public class ByteCodeRegistry {
             if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(left);
                 left = extensionWrapper;
             }
 
             if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(right);
                 right = extensionWrapper;
             }
 
@@ -3034,14 +3034,14 @@ public class ByteCodeRegistry {
             if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(left);
                 left = extensionWrapper;
             }
 
             if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(right);
                 right = extensionWrapper;
             }
 
@@ -3167,14 +3167,14 @@ public class ByteCodeRegistry {
             if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(left);
                 left = extensionWrapper;
             }
 
             if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(right);
                 right = extensionWrapper;
             }
 
@@ -3301,14 +3301,14 @@ public class ByteCodeRegistry {
             if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(left);
                 left = extensionWrapper;
             }
 
             if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(right);
                 right = extensionWrapper;
             }
 
@@ -3379,14 +3379,14 @@ public class ByteCodeRegistry {
             if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(left);
                 left = extensionWrapper;
             }
 
             if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(right);
                 right = extensionWrapper;
             }
 
@@ -3457,14 +3457,14 @@ public class ByteCodeRegistry {
             if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(left);
                 left = extensionWrapper;
             }
 
             if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(right);
                 right = extensionWrapper;
             }
 
@@ -3534,14 +3534,14 @@ public class ByteCodeRegistry {
             if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(left);
                 left = extensionWrapper;
             }
 
             if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(right);
                 right = extensionWrapper;
             }
 
@@ -3611,14 +3611,14 @@ public class ByteCodeRegistry {
             if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(left);
                 left = extensionWrapper;
             }
 
             if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(right);
                 right = extensionWrapper;
             }
 
@@ -3689,14 +3689,14 @@ public class ByteCodeRegistry {
             if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(left);
                 left = extensionWrapper;
             }
 
             if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(right);
                 right = extensionWrapper;
             }
 
@@ -3768,14 +3768,14 @@ public class ByteCodeRegistry {
             if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(left);
                 left = extensionWrapper;
             }
 
             if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(right);
                 right = extensionWrapper;
             }
 
@@ -3846,14 +3846,14 @@ public class ByteCodeRegistry {
             if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(left);
                 left = extensionWrapper;
             }
 
             if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(right);
                 right = extensionWrapper;
             }
 
@@ -3924,14 +3924,14 @@ public class ByteCodeRegistry {
             if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(left);
                 left = extensionWrapper;
             }
 
             if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(right);
                 right = extensionWrapper;
             }
 
@@ -4002,14 +4002,14 @@ public class ByteCodeRegistry {
             if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(left);
                 left = extensionWrapper;
             }
 
             if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(right);
                 right = extensionWrapper;
             }
 
@@ -4080,14 +4080,14 @@ public class ByteCodeRegistry {
             if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(left);
                 left = extensionWrapper;
             }
 
             if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(right);
                 right = extensionWrapper;
             }
 
@@ -4158,14 +4158,14 @@ public class ByteCodeRegistry {
             if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(left);
                 left = extensionWrapper;
             }
 
             if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(right);
                 right = extensionWrapper;
             }
 
@@ -4236,14 +4236,14 @@ public class ByteCodeRegistry {
             if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(left);
                 left = extensionWrapper;
             }
 
             if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(right);
                 right = extensionWrapper;
             }
 
@@ -4313,14 +4313,14 @@ public class ByteCodeRegistry {
             if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(left);
                 left = extensionWrapper;
             }
 
             if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(right);
                 right = extensionWrapper;
             }
 
@@ -4390,14 +4390,14 @@ public class ByteCodeRegistry {
             if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(left);
                 left = extensionWrapper;
             }
 
             if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(right);
                 right = extensionWrapper;
             }
 
@@ -4468,14 +4468,14 @@ public class ByteCodeRegistry {
             if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(left);
                 left = extensionWrapper;
             }
 
             if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(right);
                 right = extensionWrapper;
             }
 
@@ -4546,14 +4546,14 @@ public class ByteCodeRegistry {
             if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(left);
                 left = extensionWrapper;
             }
 
             if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(right);
                 right = extensionWrapper;
             }
 
@@ -4624,14 +4624,14 @@ public class ByteCodeRegistry {
             if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(left);
                 left = extensionWrapper;
             }
 
             if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(right);
                 right = extensionWrapper;
             }
 
@@ -4702,14 +4702,14 @@ public class ByteCodeRegistry {
             if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(left);
                 left = extensionWrapper;
             }
 
             if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(right);
                 right = extensionWrapper;
             }
 
@@ -4780,14 +4780,14 @@ public class ByteCodeRegistry {
             if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(left);
                 left = extensionWrapper;
             }
 
             if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(right);
                 right = extensionWrapper;
             }
 
@@ -4858,14 +4858,14 @@ public class ByteCodeRegistry {
             if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(left);
                 left = extensionWrapper;
             }
 
             if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(right);
                 right = extensionWrapper;
             }
 
@@ -4936,14 +4936,14 @@ public class ByteCodeRegistry {
             if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(left);
                 left = extensionWrapper;
             }
 
             if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(right);
                 right = extensionWrapper;
             }
 
@@ -5014,14 +5014,14 @@ public class ByteCodeRegistry {
             if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(left);
                 left = extensionWrapper;
             }
 
             if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(right);
                 right = extensionWrapper;
             }
 
@@ -5091,14 +5091,14 @@ public class ByteCodeRegistry {
             if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(left);
                 left = extensionWrapper;
             }
 
             if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(right);
                 right = extensionWrapper;
             }
 
@@ -5168,14 +5168,14 @@ public class ByteCodeRegistry {
             if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(left);
                 left = extensionWrapper;
             }
 
             if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(right);
                 right = extensionWrapper;
             }
 
@@ -5244,14 +5244,14 @@ public class ByteCodeRegistry {
             if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(left);
                 left = extensionWrapper;
             }
 
             if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(right);
                 right = extensionWrapper;
             }
 
@@ -5320,14 +5320,14 @@ public class ByteCodeRegistry {
             if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(left);
                 left = extensionWrapper;
             }
 
             if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(right);
                 right = extensionWrapper;
             }
 
@@ -5398,14 +5398,14 @@ public class ByteCodeRegistry {
             if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(left);
                 left = extensionWrapper;
             }
 
             if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(right);
                 right = extensionWrapper;
             }
 
@@ -5476,14 +5476,14 @@ public class ByteCodeRegistry {
             if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(left);
                 left = extensionWrapper;
             }
 
             if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(right);
                 right = extensionWrapper;
             }
 
@@ -5554,14 +5554,14 @@ public class ByteCodeRegistry {
             if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(left);
                 left = extensionWrapper;
             }
 
             if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(right);
                 right = extensionWrapper;
             }
 
@@ -5632,14 +5632,14 @@ public class ByteCodeRegistry {
             if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(left);
                 left = extensionWrapper;
             }
 
             if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(right);
                 right = extensionWrapper;
             }
 
@@ -5710,14 +5710,14 @@ public class ByteCodeRegistry {
             if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(left);
                 left = extensionWrapper;
             }
 
             if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(right);
                 right = extensionWrapper;
             }
 
@@ -5788,14 +5788,14 @@ public class ByteCodeRegistry {
             if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(left);
                 left = extensionWrapper;
             }
 
             if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(right);
                 right = extensionWrapper;
             }
 
@@ -5866,14 +5866,14 @@ public class ByteCodeRegistry {
             if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(left);
                 left = extensionWrapper;
             }
 
             if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(right);
                 right = extensionWrapper;
             }
 
@@ -5944,14 +5944,14 @@ public class ByteCodeRegistry {
             if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(left);
                 left = extensionWrapper;
             }
 
             if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(right);
                 right = extensionWrapper;
             }
 
@@ -6022,14 +6022,14 @@ public class ByteCodeRegistry {
             if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(left);
                 left = extensionWrapper;
             }
 
             if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(right);
                 right = extensionWrapper;
             }
 
@@ -6100,14 +6100,14 @@ public class ByteCodeRegistry {
             if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(left);
                 left = extensionWrapper;
             }
 
             if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(right);
                 right = extensionWrapper;
             }
 
@@ -6177,14 +6177,14 @@ public class ByteCodeRegistry {
             if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(left);
                 left = extensionWrapper;
             }
 
             if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(right);
                 right = extensionWrapper;
             }
 
@@ -6254,14 +6254,14 @@ public class ByteCodeRegistry {
             if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(left);
                 left = extensionWrapper;
             }
 
             if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(right);
                 right = extensionWrapper;
             }
 
@@ -6332,14 +6332,14 @@ public class ByteCodeRegistry {
             if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(left);
                 left = extensionWrapper;
             }
 
             if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(right);
                 right = extensionWrapper;
             }
 
@@ -6410,14 +6410,14 @@ public class ByteCodeRegistry {
             if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(left);
                 left = extensionWrapper;
             }
 
             if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(right);
                 right = extensionWrapper;
             }
 
@@ -6488,14 +6488,14 @@ public class ByteCodeRegistry {
             if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(left);
                 left = extensionWrapper;
             }
 
             if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(right);
                 right = extensionWrapper;
             }
 
@@ -6566,14 +6566,14 @@ public class ByteCodeRegistry {
             if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(left);
                 left = extensionWrapper;
             }
 
             if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(right);
                 right = extensionWrapper;
             }
 
@@ -6644,14 +6644,14 @@ public class ByteCodeRegistry {
             if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(left);
                 left = extensionWrapper;
             }
 
             if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(right);
                 right = extensionWrapper;
             }
 
@@ -6722,14 +6722,14 @@ public class ByteCodeRegistry {
             if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(left);
                 left = extensionWrapper;
             }
 
             if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(right);
                 right = extensionWrapper;
             }
 
@@ -6798,14 +6798,14 @@ public class ByteCodeRegistry {
             if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(left);
                 left = extensionWrapper;
             }
 
             if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(right);
                 right = extensionWrapper;
             }
 
@@ -6874,14 +6874,14 @@ public class ByteCodeRegistry {
             if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(left);
                 left = extensionWrapper;
             }
 
             if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(right);
                 right = extensionWrapper;
             }
 
@@ -6952,14 +6952,14 @@ public class ByteCodeRegistry {
             if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(left);
                 left = extensionWrapper;
             }
 
             if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(right);
                 right = extensionWrapper;
             }
 
@@ -7030,14 +7030,14 @@ public class ByteCodeRegistry {
             if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(left);
                 left = extensionWrapper;
             }
 
             if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(right);
                 right = extensionWrapper;
             }
 
@@ -7108,14 +7108,14 @@ public class ByteCodeRegistry {
             if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(left);
                 left = extensionWrapper;
             }
 
             if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(right);
                 right = extensionWrapper;
             }
 
@@ -7186,14 +7186,14 @@ public class ByteCodeRegistry {
             if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(left);
                 left = extensionWrapper;
             }
 
             if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(right);
                 right = extensionWrapper;
             }
 
@@ -7264,14 +7264,14 @@ public class ByteCodeRegistry {
             if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(left);
                 left = extensionWrapper;
             }
 
             if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(right);
                 right = extensionWrapper;
             }
 
@@ -7342,14 +7342,14 @@ public class ByteCodeRegistry {
             if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(left);
                 left = extensionWrapper;
             }
 
             if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(right);
                 right = extensionWrapper;
             }
 
@@ -7420,14 +7420,14 @@ public class ByteCodeRegistry {
             if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(left);
                 left = extensionWrapper;
             }
 
             if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(right);
                 right = extensionWrapper;
             }
 
@@ -7498,14 +7498,14 @@ public class ByteCodeRegistry {
             if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(left);
                 left = extensionWrapper;
             }
 
             if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(right);
                 right = extensionWrapper;
             }
 
@@ -7575,14 +7575,14 @@ public class ByteCodeRegistry {
             if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(left);
                 left = extensionWrapper;
             }
 
             if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(right);
                 right = extensionWrapper;
             }
 
@@ -7652,14 +7652,14 @@ public class ByteCodeRegistry {
             if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(left);
                 left = extensionWrapper;
             }
 
             if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(right);
                 right = extensionWrapper;
             }
 
@@ -7729,14 +7729,14 @@ public class ByteCodeRegistry {
             if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(left);
                 left = extensionWrapper;
             }
 
             if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(right);
                 right = extensionWrapper;
             }
 
@@ -7806,14 +7806,14 @@ public class ByteCodeRegistry {
             if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(left);
                 left = extensionWrapper;
             }
 
             if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(right);
                 right = extensionWrapper;
             }
 
@@ -7884,14 +7884,14 @@ public class ByteCodeRegistry {
             if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(left);
                 left = extensionWrapper;
             }
 
             if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(right);
                 right = extensionWrapper;
             }
 
@@ -7962,14 +7962,14 @@ public class ByteCodeRegistry {
             if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(left);
                 left = extensionWrapper;
             }
 
             if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(right);
                 right = extensionWrapper;
             }
 
@@ -8040,14 +8040,14 @@ public class ByteCodeRegistry {
             if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(left);
                 left = extensionWrapper;
             }
 
             if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(right);
                 right = extensionWrapper;
             }
 
@@ -8118,14 +8118,14 @@ public class ByteCodeRegistry {
             if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(left);
                 left = extensionWrapper;
             }
 
             if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(right);
                 right = extensionWrapper;
             }
 
@@ -8196,14 +8196,14 @@ public class ByteCodeRegistry {
             if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(left);
                 left = extensionWrapper;
             }
 
             if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(right);
                 right = extensionWrapper;
             }
 
@@ -8274,14 +8274,14 @@ public class ByteCodeRegistry {
             if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(left);
                 left = extensionWrapper;
             }
 
             if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(right);
                 right = extensionWrapper;
             }
 
@@ -8350,14 +8350,14 @@ public class ByteCodeRegistry {
             if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(left);
                 left = extensionWrapper;
             }
 
             if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(right);
                 right = extensionWrapper;
             }
 
@@ -8426,14 +8426,14 @@ public class ByteCodeRegistry {
             if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(left);
                 left = extensionWrapper;
             }
 
             if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(right);
                 right = extensionWrapper;
             }
 
@@ -8503,14 +8503,14 @@ public class ByteCodeRegistry {
             if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(left);
                 left = extensionWrapper;
             }
 
             if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(right);
                 right = extensionWrapper;
             }
 
@@ -8580,14 +8580,14 @@ public class ByteCodeRegistry {
             if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(left);
                 left = extensionWrapper;
             }
 
             if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(right);
                 right = extensionWrapper;
             }
 
@@ -8658,14 +8658,14 @@ public class ByteCodeRegistry {
             if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(left);
                 left = extensionWrapper;
             }
 
             if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(right);
                 right = extensionWrapper;
             }
 
@@ -8736,14 +8736,14 @@ public class ByteCodeRegistry {
             if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(left);
                 left = extensionWrapper;
             }
 
             if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(right);
                 right = extensionWrapper;
             }
 
@@ -8814,14 +8814,14 @@ public class ByteCodeRegistry {
             if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(left);
                 left = extensionWrapper;
             }
 
             if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(right);
                 right = extensionWrapper;
             }
 
@@ -8892,14 +8892,14 @@ public class ByteCodeRegistry {
             if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(left);
                 left = extensionWrapper;
             }
 
             if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(right);
                 right = extensionWrapper;
             }
 
@@ -8970,14 +8970,14 @@ public class ByteCodeRegistry {
             if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(left);
                 left = extensionWrapper;
             }
 
             if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(right);
                 right = extensionWrapper;
             }
 
@@ -9048,14 +9048,14 @@ public class ByteCodeRegistry {
             if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(left);
                 left = extensionWrapper;
             }
 
             if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(right);
                 right = extensionWrapper;
             }
 
@@ -9126,14 +9126,14 @@ public class ByteCodeRegistry {
             if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(left);
                 left = extensionWrapper;
             }
 
             if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(right);
                 right = extensionWrapper;
             }
 
@@ -9204,14 +9204,14 @@ public class ByteCodeRegistry {
             if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(left);
                 left = extensionWrapper;
             }
 
             if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(right);
                 right = extensionWrapper;
             }
 
@@ -9282,14 +9282,14 @@ public class ByteCodeRegistry {
             if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(left);
                 left = extensionWrapper;
             }
 
             if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(right);
                 right = extensionWrapper;
             }
 
@@ -9360,14 +9360,14 @@ public class ByteCodeRegistry {
             if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(left);
                 left = extensionWrapper;
             }
 
             if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(right);
                 right = extensionWrapper;
             }
 
@@ -9438,14 +9438,14 @@ public class ByteCodeRegistry {
             if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(left);
                 left = extensionWrapper;
             }
 
             if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(right);
                 right = extensionWrapper;
             }
 
@@ -9516,14 +9516,14 @@ public class ByteCodeRegistry {
             if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(left);
                 left = extensionWrapper;
             }
 
             if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(right);
                 right = extensionWrapper;
             }
 
@@ -9594,14 +9594,14 @@ public class ByteCodeRegistry {
             if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(left);
                 left = extensionWrapper;
             }
 
             if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(right);
                 right = extensionWrapper;
             }
 
@@ -9672,14 +9672,14 @@ public class ByteCodeRegistry {
             if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(left);
                 left = extensionWrapper;
             }
 
             if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(right);
                 right = extensionWrapper;
             }
 
@@ -9749,14 +9749,14 @@ public class ByteCodeRegistry {
             if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(left);
                 left = extensionWrapper;
             }
 
             if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(right);
                 right = extensionWrapper;
             }
 
@@ -9826,14 +9826,14 @@ public class ByteCodeRegistry {
             if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(left);
                 left = extensionWrapper;
             }
 
             if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(right);
                 right = extensionWrapper;
             }
 
@@ -9904,14 +9904,14 @@ public class ByteCodeRegistry {
             if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(left);
                 left = extensionWrapper;
             }
 
             if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(right);
                 right = extensionWrapper;
             }
 
@@ -9982,14 +9982,14 @@ public class ByteCodeRegistry {
             if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(left);
                 left = extensionWrapper;
             }
 
             if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(right);
                 right = extensionWrapper;
             }
 
@@ -10060,14 +10060,14 @@ public class ByteCodeRegistry {
             if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(left);
                 left = extensionWrapper;
             }
 
             if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(right);
                 right = extensionWrapper;
             }
 
@@ -10138,14 +10138,14 @@ public class ByteCodeRegistry {
             if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(left);
                 left = extensionWrapper;
             }
 
             if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(right);
                 right = extensionWrapper;
             }
 
@@ -10214,14 +10214,14 @@ public class ByteCodeRegistry {
             if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(left);
                 left = extensionWrapper;
             }
 
             if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(right);
                 right = extensionWrapper;
             }
 
@@ -10290,14 +10290,14 @@ public class ByteCodeRegistry {
             if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(left);
                 left = extensionWrapper;
             }
 
             if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(right);
                 right = extensionWrapper;
             }
 
@@ -10368,14 +10368,14 @@ public class ByteCodeRegistry {
             if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(left);
                 left = extensionWrapper;
             }
 
             if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(right);
                 right = extensionWrapper;
             }
 
@@ -10446,14 +10446,14 @@ public class ByteCodeRegistry {
             if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(left);
                 left = extensionWrapper;
             }
 
             if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(right);
                 right = extensionWrapper;
             }
 
@@ -10523,14 +10523,14 @@ public class ByteCodeRegistry {
             if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(left);
                 left = extensionWrapper;
             }
 
             if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(right);
                 right = extensionWrapper;
             }
 
@@ -10600,14 +10600,14 @@ public class ByteCodeRegistry {
             if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(left);
                 left = extensionWrapper;
             }
 
             if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(right);
                 right = extensionWrapper;
             }
 
@@ -10678,14 +10678,14 @@ public class ByteCodeRegistry {
             if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(left);
                 left = extensionWrapper;
             }
 
             if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(right);
                 right = extensionWrapper;
             }
 
@@ -10756,14 +10756,14 @@ public class ByteCodeRegistry {
             if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(left);
                 left = extensionWrapper;
             }
 
             if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(right);
                 right = extensionWrapper;
             }
 
@@ -10834,14 +10834,14 @@ public class ByteCodeRegistry {
             if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(left);
                 left = extensionWrapper;
             }
 
             if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(right);
                 right = extensionWrapper;
             }
 
@@ -10912,14 +10912,14 @@ public class ByteCodeRegistry {
             if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(left);
                 left = extensionWrapper;
             }
 
             if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(right);
                 right = extensionWrapper;
             }
 
@@ -10984,14 +10984,14 @@ public class ByteCodeRegistry {
             if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(left);
                 left = extensionWrapper;
             }
 
             if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
                     instanceof GroupByAggregationAttributeExecutor) {
                 ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
+                extensionWrapper.setConditionExecutor(right);
                 right = extensionWrapper;
             }
 

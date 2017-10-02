@@ -6,6 +6,9 @@ import org.wso2.siddhi.query.api.definition.Attribute;
 
 import java.lang.reflect.InvocationTargetException;
 
+/**
+ * This class maps all extensions in to single byte-code Emitter.
+ */
 public class ExtensionWrapper implements ExpressionExecutor {
 
     private ExpressionExecutor conditionExecutor;
