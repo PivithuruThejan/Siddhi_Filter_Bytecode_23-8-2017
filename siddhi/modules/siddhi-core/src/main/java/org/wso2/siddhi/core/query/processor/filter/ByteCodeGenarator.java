@@ -332,19 +332,9 @@ public class ByteCodeGenarator {
                 byteCode.new PrivateSubtractExpressionExecutorIntBytecodeEmitter());
         byteCodegenerators.put(SubtractExpressionExecutorLong.class,
                 byteCode.new PrivateSubtractExpressionExecutorLongBytecodeEmitter());
-        //FunctionExecutor.
-        byteCodegenerators.put(InstanceOfBooleanFunctionExecutor.class,
-                byteCode.new PrivateFunctionExecutorBytecodeEmitter());
-        byteCodegenerators.put(InstanceOfDoubleFunctionExecutor.class,
-                byteCode.new PrivateFunctionExecutorBytecodeEmitter());
-        byteCodegenerators.put(InstanceOfFloatFunctionExecutor.class,
-                byteCode.new PrivateFunctionExecutorBytecodeEmitter());
-        byteCodegenerators.put(InstanceOfIntegerFunctionExecutor.class,
-                byteCode.new PrivateFunctionExecutorBytecodeEmitter());
-        byteCodegenerators.put(InstanceOfLongFunctionExecutor.class,
-                byteCode.new PrivateFunctionExecutorBytecodeEmitter());
-        byteCodegenerators.put(InstanceOfStringFunctionExecutor.class,
-                byteCode.new PrivateFunctionExecutorBytecodeEmitter());
+        //Extensions.
+        byteCodegenerators.put(ExtensionWrapper.class,
+                byteCode.new PrivateExtensionBytecodeEmitter());
     }
 
     protected ArrayList<ExpressionExecutor> unknownExpressionExecutors = new ArrayList<ExpressionExecutor>();
