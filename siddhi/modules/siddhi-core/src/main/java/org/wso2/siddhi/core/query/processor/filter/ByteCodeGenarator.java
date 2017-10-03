@@ -85,6 +85,8 @@ public class ByteCodeGenarator {
                 byteCode.new PrivateIsNullStreamExpressionExecutorBytecodeEmitter());
         byteCodegenerators.put(BoolConditionExpressionExecutor.class,
                 byteCode.new PrivateBoolExpressionExecutorBytecodeEmitter());
+        byteCodegenerators.put(InConditionExpressionExecutor.class,
+                byteCode.new PrivateInConditionExpressionExecutorBytecodeEmitter());
         // Greater Than Operator.
         byteCodegenerators.put(GreaterThanCompareConditionExpressionExecutorFloatFloat.class,
                 byteCode.new PrivateGreaterThanCompareConditionExpressionExecutorFloatFloatBytecodeEmitter());
@@ -333,7 +335,7 @@ public class ByteCodeGenarator {
         byteCodegenerators.put(SubtractExpressionExecutorLong.class,
                 byteCode.new PrivateSubtractExpressionExecutorLongBytecodeEmitter());
         //Extensions.
-        byteCodegenerators.put(ExtensionWrapper.class,
+        byteCodegenerators.put(ExpressionExecutor.class,
                 byteCode.new PrivateExtensionBytecodeEmitter());
     }
 
@@ -359,7 +361,6 @@ public class ByteCodeGenarator {
                 this);
         this.byteCodeHelper.end(classWriter, methodVisitor);
         ExtensionHelper extensionHelper = (ExtensionHelper) ByteCodeGenarator.expressionExecutor;
-        System.out.println(this.unknownExpressionExecutors);
         extensionHelper.setUnknownExpressionExecutors(this.unknownExpressionExecutors);
         ByteCodeGenarator.expressionExecutor = (ExpressionExecutor) extensionHelper;
         return ByteCodeGenarator.expressionExecutor;
@@ -380,7 +381,12 @@ public class ByteCodeGenarator {
     public void execute(ExpressionExecutor conditionExecutor, int status, int parent,
                         Label specialCase, int parentStatus, MethodVisitor methodVisitor,
                         ByteCodeGenarator byteCodeGenarator) {
-        ByteCodeGenarator.byteCodegenerators.get(conditionExecutor.getClass()).generate(conditionExecutor, status, parent,
-                specialCase, parentStatus, methodVisitor, byteCodeGenarator);
+        if (ByteCodeGenarator.byteCodegenerators.containsKey(conditionExecutor.getClass())) {
+            ByteCodeGenarator.byteCodegenerators.get(conditionExecutor.getClass()).generate(conditionExecutor, status,
+                    parent, specialCase, parentStatus, methodVisitor, byteCodeGenarator);
+        } else {
+            ByteCodeGenarator.byteCodegenerators.get(ExpressionExecutor.class).generate(conditionExecutor, status,
+                    parent, specialCase, parentStatus, methodVisitor, byteCodeGenarator);
+        }
     }
 }

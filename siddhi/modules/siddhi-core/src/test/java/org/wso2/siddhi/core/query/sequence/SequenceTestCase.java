@@ -720,7 +720,7 @@ public class SequenceTestCase {
         Thread.sleep(100);
         stream1.send(new Object[]{"WSO2", 35.6f, 100});
         Thread.sleep(100);
-        stream1.send(new Object[]{57.6f, "WSO2", 100});
+        stream1.send(new Object[]{ "WSO2", 57.6f, 100});
         Thread.sleep(100);
         stream1.send(new Object[]{"IBM", 47.6f, 100});
         Thread.sleep(100);

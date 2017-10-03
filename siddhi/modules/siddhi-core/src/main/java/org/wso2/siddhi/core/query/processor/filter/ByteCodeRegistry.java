@@ -336,13 +336,6 @@ public class ByteCodeRegistry {
                              Label specialCase, int parentStatus,
                              MethodVisitor methodVisitor, ByteCodeGenarator byteCodeGenarator) {
             ExpressionExecutor condition = ((IsNullConditionExpressionExecutor) conditionExecutor).getConditionExecutor();
-            if (condition instanceof FunctionExecutor || condition instanceof AggregationAttributeExecutor || condition
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
-                condition = extensionWrapper;
-            }
-
             byteCodeGenarator.execute(condition, 1, 0, null, status, methodVisitor,
                     byteCodeGenarator);
             Label l0 = new Label();
@@ -453,13 +446,6 @@ public class ByteCodeRegistry {
                              Label specialCase, int parentStatus,
                              MethodVisitor methodVisitor, ByteCodeGenarator byteCodeGenarator) {
             ExpressionExecutor condition = ((BoolConditionExpressionExecutor) conditionExecutor).getConditionExecutor();
-            if (condition instanceof FunctionExecutor || condition instanceof AggregationAttributeExecutor || condition
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(conditionExecutor);
-                condition = extensionWrapper;
-            }
-
             byteCodeGenarator.execute(condition, 1, 0, null, status, methodVisitor,
                     byteCodeGenarator);
             Label l0 = new Label();
@@ -475,6 +461,47 @@ public class ByteCodeRegistry {
             methodVisitor.visitLabel(l0);
             methodVisitor.visitInsn(ICONST_0);
             methodVisitor.visitLabel(l1);
+            if (status == 2) {
+                methodVisitor.visitVarInsn(ISTORE, 3);
+            } else {
+                methodVisitor.visitVarInsn(ISTORE, 2);
+            }
+        }
+    }
+
+    /**
+     * This class generates byte code for InConditionExpressionExecutor.
+     */
+    class PrivateInConditionExpressionExecutorBytecodeEmitter implements ByteCodeEmitter {
+
+        /**
+         * This method overrides the interface method.
+         *
+         * @param conditionExecutor
+         * @param status
+         * @param parent
+         * @param specialCase
+         * @param parentStatus
+         * @param methodVisitor
+         * @param byteCodeGenarator
+         */
+        @Override
+        public void generate(ExpressionExecutor conditionExecutor, int status, int parent,
+                             Label specialCase, int parentStatus,
+                             MethodVisitor methodVisitor, ByteCodeGenarator byteCodeGenarator) {
+            byteCodeGenarator.unknownExpressionExecutors.add(conditionExecutor);
+            methodVisitor.visitVarInsn(ALOAD, 0);
+            methodVisitor.visitFieldInsn(GETFIELD, "ByteCodeRegistry", "unknownExpressionExecutors",
+                    "Ljava/util/ArrayList;");
+            methodVisitor.visitLdcInsn(byteCodeGenarator.unknownExpressionExecutorIndex);
+            byteCodeGenarator.unknownExpressionExecutorIndex++;
+            methodVisitor.visitMethodInsn(INVOKEVIRTUAL, "java/util/ArrayList", "get",
+                    "(I)Ljava/lang/Object;", false);
+            methodVisitor.visitTypeInsn(CHECKCAST, "org/wso2/siddhi/core/executor/condition/InConditionExpressionExecutor");
+            methodVisitor.visitVarInsn(ALOAD, 1);
+            methodVisitor.visitMethodInsn(INVOKEVIRTUAL, "org/wso2/siddhi/core/executor/condition/InConditionExpressionExecutor",
+                    "execute", "(Lorg/wso2/siddhi/core/event/ComplexEvent;)Ljava/lang/Boolean;", false);
+            methodVisitor.visitMethodInsn(INVOKEVIRTUAL, "java/lang/Boolean", "booleanValue", "()Z", false);
             if (status == 2) {
                 methodVisitor.visitVarInsn(ISTORE, 3);
             } else {
@@ -503,7 +530,7 @@ public class ByteCodeRegistry {
         public void generate(ExpressionExecutor conditionExecutor, int status, int parent,
                              Label specialCase, int parentStatus,
                              MethodVisitor methodVisitor, ByteCodeGenarator byteCodeGenarator) {
-            byteCodeGenarator.unknownExpressionExecutors.add(((ExtensionWrapper) conditionExecutor).getConditionExecutor());
+            byteCodeGenarator.unknownExpressionExecutors.add(conditionExecutor);
             methodVisitor.visitVarInsn(ALOAD, 0);
             methodVisitor.visitFieldInsn(GETFIELD, "ByteCodeRegistry", "unknownExpressionExecutors",
                     "Ljava/util/ArrayList;");
@@ -614,20 +641,6 @@ public class ByteCodeRegistry {
                              MethodVisitor methodVisitor, ByteCodeGenarator byteCodeGenarator) {
             ExpressionExecutor left = ((AddExpressionExecutorDouble) conditionExecutor).getLeftExpressionExecutor();
             ExpressionExecutor right = ((AddExpressionExecutorDouble) conditionExecutor).getRightExpressionExecutor();
-            if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(left);
-                left = extensionWrapper;
-            }
-
-            if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(right);
-                right = extensionWrapper;
-            }
-
             byteCodeGenarator.execute(left, status, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
             Label l1 = new Label();
@@ -744,20 +757,6 @@ public class ByteCodeRegistry {
                              MethodVisitor methodVisitor, ByteCodeGenarator byteCodeGenarator) {
             ExpressionExecutor left = ((SubtractExpressionExecutorDouble) conditionExecutor).getLeftExpressionExecutor();
             ExpressionExecutor right = ((SubtractExpressionExecutorDouble) conditionExecutor).getRightExpressionExecutor();
-            if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(left);
-                left = extensionWrapper;
-            }
-
-            if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(right);
-                right = extensionWrapper;
-            }
-
             byteCodeGenarator.execute(left, status, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
             Label l1 = new Label();
@@ -876,20 +875,6 @@ public class ByteCodeRegistry {
                              MethodVisitor methodVisitor, ByteCodeGenarator byteCodeGenarator) {
             ExpressionExecutor left = ((DivideExpressionExecutorDouble) conditionExecutor).getLeftExpressionExecutor();
             ExpressionExecutor right = ((DivideExpressionExecutorDouble) conditionExecutor).getRightExpressionExecutor();
-            if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(left);
-                left = extensionWrapper;
-            }
-
-            if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(right);
-                right = extensionWrapper;
-            }
-
             byteCodeGenarator.execute(left, status, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
             Label l1 = new Label();
@@ -1014,20 +999,6 @@ public class ByteCodeRegistry {
                              MethodVisitor methodVisitor, ByteCodeGenarator byteCodeGenarator) {
             ExpressionExecutor left = ((ModExpressionExecutorDouble) conditionExecutor).getLeftExpressionExecutor();
             ExpressionExecutor right = ((ModExpressionExecutorDouble) conditionExecutor).getRightExpressionExecutor();
-            if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(left);
-                left = extensionWrapper;
-            }
-
-            if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(right);
-                right = extensionWrapper;
-            }
-
             byteCodeGenarator.execute(left, status, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
             Label l1 = new Label();
@@ -1152,20 +1123,6 @@ public class ByteCodeRegistry {
                              MethodVisitor methodVisitor, ByteCodeGenarator byteCodeGenarator) {
             ExpressionExecutor left = ((DivideExpressionExecutorFloat) conditionExecutor).getLeftExpressionExecutor();
             ExpressionExecutor right = ((DivideExpressionExecutorFloat) conditionExecutor).getRightExpressionExecutor();
-            if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(left);
-                left = extensionWrapper;
-            }
-
-            if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(right);
-                right = extensionWrapper;
-            }
-
             byteCodeGenarator.execute(left, status, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
             Label l1 = new Label();
@@ -1290,20 +1247,6 @@ public class ByteCodeRegistry {
                              MethodVisitor methodVisitor, ByteCodeGenarator byteCodeGenarator) {
             ExpressionExecutor left = ((ModExpressionExecutorFloat) conditionExecutor).getLeftExpressionExecutor();
             ExpressionExecutor right = ((ModExpressionExecutorFloat) conditionExecutor).getRightExpressionExecutor();
-            if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(left);
-                left = extensionWrapper;
-            }
-
-            if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(right);
-                right = extensionWrapper;
-            }
-
             byteCodeGenarator.execute(left, status, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
             Label l1 = new Label();
@@ -1428,20 +1371,6 @@ public class ByteCodeRegistry {
                              MethodVisitor methodVisitor, ByteCodeGenarator byteCodeGenarator) {
             ExpressionExecutor left = ((DivideExpressionExecutorLong) conditionExecutor).getLeftExpressionExecutor();
             ExpressionExecutor right = ((DivideExpressionExecutorLong) conditionExecutor).getRightExpressionExecutor();
-            if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(left);
-                left = extensionWrapper;
-            }
-
-            if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(right);
-                right = extensionWrapper;
-            }
-
             byteCodeGenarator.execute(left, status, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
             Label l1 = new Label();
@@ -1566,20 +1495,6 @@ public class ByteCodeRegistry {
                              MethodVisitor methodVisitor, ByteCodeGenarator byteCodeGenarator) {
             ExpressionExecutor left = ((ModExpressionExecutorLong) conditionExecutor).getLeftExpressionExecutor();
             ExpressionExecutor right = ((ModExpressionExecutorLong) conditionExecutor).getRightExpressionExecutor();
-            if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(left);
-                left = extensionWrapper;
-            }
-
-            if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(right);
-                right = extensionWrapper;
-            }
-
             byteCodeGenarator.execute(left, status, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
             Label l1 = new Label();
@@ -1704,20 +1619,6 @@ public class ByteCodeRegistry {
                              MethodVisitor methodVisitor, ByteCodeGenarator byteCodeGenarator) {
             ExpressionExecutor left = ((DivideExpressionExecutorInt) conditionExecutor).getLeftExpressionExecutor();
             ExpressionExecutor right = ((DivideExpressionExecutorInt) conditionExecutor).getRightExpressionExecutor();
-            if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(left);
-                left = extensionWrapper;
-            }
-
-            if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(right);
-                right = extensionWrapper;
-            }
-
             byteCodeGenarator.execute(left, status, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
             Label l1 = new Label();
@@ -1842,20 +1743,6 @@ public class ByteCodeRegistry {
                              MethodVisitor methodVisitor, ByteCodeGenarator byteCodeGenarator) {
             ExpressionExecutor left = ((ModExpressionExecutorInt) conditionExecutor).getLeftExpressionExecutor();
             ExpressionExecutor right = ((ModExpressionExecutorInt) conditionExecutor).getRightExpressionExecutor();
-            if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(left);
-                left = extensionWrapper;
-            }
-
-            if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(right);
-                right = extensionWrapper;
-            }
-
             byteCodeGenarator.execute(left, status, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
             Label l1 = new Label();
@@ -1980,20 +1867,6 @@ public class ByteCodeRegistry {
                              MethodVisitor methodVisitor, ByteCodeGenarator byteCodeGenarator) {
             ExpressionExecutor left = ((MultiplyExpressionExecutorDouble) conditionExecutor).getLeftExpressionExecutor();
             ExpressionExecutor right = ((MultiplyExpressionExecutorDouble) conditionExecutor).getRightExpressionExecutor();
-            if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(left);
-                left = extensionWrapper;
-            }
-
-            if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(right);
-                right = extensionWrapper;
-            }
-
             byteCodeGenarator.execute(left, status, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
             Label l1 = new Label();
@@ -2110,20 +1983,6 @@ public class ByteCodeRegistry {
                              MethodVisitor methodVisitor, ByteCodeGenarator byteCodeGenarator) {
             ExpressionExecutor left = ((AddExpressionExecutorFloat) conditionExecutor).getLeftExpressionExecutor();
             ExpressionExecutor right = ((AddExpressionExecutorFloat) conditionExecutor).getRightExpressionExecutor();
-            if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(left);
-                left = extensionWrapper;
-            }
-
-            if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(right);
-                right = extensionWrapper;
-            }
-
             byteCodeGenarator.execute(left, status, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
             Label l1 = new Label();
@@ -2241,20 +2100,6 @@ public class ByteCodeRegistry {
                              MethodVisitor methodVisitor, ByteCodeGenarator byteCodeGenarator) {
             ExpressionExecutor left = ((SubtractExpressionExecutorFloat) conditionExecutor).getLeftExpressionExecutor();
             ExpressionExecutor right = ((SubtractExpressionExecutorFloat) conditionExecutor).getRightExpressionExecutor();
-            if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(left);
-                left = extensionWrapper;
-            }
-
-            if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(right);
-                right = extensionWrapper;
-            }
-
             byteCodeGenarator.execute(left, status, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
             Label l1 = new Label();
@@ -2374,20 +2219,6 @@ public class ByteCodeRegistry {
                              MethodVisitor methodVisitor, ByteCodeGenarator byteCodeGenarator) {
             ExpressionExecutor left = ((MultiplyExpressionExecutorFloat) conditionExecutor).getLeftExpressionExecutor();
             ExpressionExecutor right = ((MultiplyExpressionExecutorFloat) conditionExecutor).getRightExpressionExecutor();
-            if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(left);
-                left = extensionWrapper;
-            }
-
-            if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(right);
-                right = extensionWrapper;
-            }
-
             byteCodeGenarator.execute(left, status, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
             Label l1 = new Label();
@@ -2505,20 +2336,6 @@ public class ByteCodeRegistry {
                              MethodVisitor methodVisitor, ByteCodeGenarator byteCodeGenarator) {
             ExpressionExecutor left = ((AddExpressionExecutorInt) conditionExecutor).getLeftExpressionExecutor();
             ExpressionExecutor right = ((AddExpressionExecutorInt) conditionExecutor).getRightExpressionExecutor();
-            if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(left);
-                left = extensionWrapper;
-            }
-
-            if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(right);
-                right = extensionWrapper;
-            }
-
             byteCodeGenarator.execute(left, status, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
             Label l1 = new Label();
@@ -2636,20 +2453,6 @@ public class ByteCodeRegistry {
                              MethodVisitor methodVisitor, ByteCodeGenarator byteCodeGenarator) {
             ExpressionExecutor left = ((SubtractExpressionExecutorInt) conditionExecutor).getLeftExpressionExecutor();
             ExpressionExecutor right = ((SubtractExpressionExecutorInt) conditionExecutor).getRightExpressionExecutor();
-            if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(left);
-                left = extensionWrapper;
-            }
-
-            if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(right);
-                right = extensionWrapper;
-            }
-
             byteCodeGenarator.execute(left, status, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
             Label l1 = new Label();
@@ -2769,20 +2572,6 @@ public class ByteCodeRegistry {
                              MethodVisitor methodVisitor, ByteCodeGenarator byteCodeGenarator) {
             ExpressionExecutor left = ((MultiplyExpressionExecutorInt) conditionExecutor).getLeftExpressionExecutor();
             ExpressionExecutor right = ((MultiplyExpressionExecutorInt) conditionExecutor).getRightExpressionExecutor();
-            if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(left);
-                left = extensionWrapper;
-            }
-
-            if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(right);
-                right = extensionWrapper;
-            }
-
             byteCodeGenarator.execute(left, status, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
             Label l1 = new Label();
@@ -2900,20 +2689,6 @@ public class ByteCodeRegistry {
                              MethodVisitor methodVisitor, ByteCodeGenarator byteCodeGenarator) {
             ExpressionExecutor left = ((AddExpressionExecutorLong) conditionExecutor).getLeftExpressionExecutor();
             ExpressionExecutor right = ((AddExpressionExecutorLong) conditionExecutor).getRightExpressionExecutor();
-            if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(left);
-                left = extensionWrapper;
-            }
-
-            if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(right);
-                right = extensionWrapper;
-            }
-
             byteCodeGenarator.execute(left, status, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
             Label l1 = new Label();
@@ -3031,20 +2806,6 @@ public class ByteCodeRegistry {
                              MethodVisitor methodVisitor, ByteCodeGenarator byteCodeGenarator) {
             ExpressionExecutor left = ((SubtractExpressionExecutorLong) conditionExecutor).getLeftExpressionExecutor();
             ExpressionExecutor right = ((SubtractExpressionExecutorLong) conditionExecutor).getRightExpressionExecutor();
-            if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(left);
-                left = extensionWrapper;
-            }
-
-            if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(right);
-                right = extensionWrapper;
-            }
-
             byteCodeGenarator.execute(left, status, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
             Label l1 = new Label();
@@ -3164,20 +2925,6 @@ public class ByteCodeRegistry {
                              MethodVisitor methodVisitor, ByteCodeGenarator byteCodeGenarator) {
             ExpressionExecutor left = ((MultiplyExpressionExecutorLong) conditionExecutor).getLeftExpressionExecutor();
             ExpressionExecutor right = ((MultiplyExpressionExecutorLong) conditionExecutor).getRightExpressionExecutor();
-            if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(left);
-                left = extensionWrapper;
-            }
-
-            if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(right);
-                right = extensionWrapper;
-            }
-
             byteCodeGenarator.execute(left, status, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
             Label l1 = new Label();
@@ -3298,20 +3045,6 @@ public class ByteCodeRegistry {
             ExpressionExecutor right = ((GreaterThanCompareConditionExpressionExecutorFloatDouble) conditionExecutor)
                     .getRightExpressionExecutor();
             methodVisitor.visitCode();
-            if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(left);
-                left = extensionWrapper;
-            }
-
-            if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(right);
-                right = extensionWrapper;
-            }
-
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
             if (!(left instanceof ConstantExpressionExecutor)) {
@@ -3376,20 +3109,6 @@ public class ByteCodeRegistry {
             ExpressionExecutor right = ((GreaterThanEqualCompareConditionExpressionExecutorFloatDouble) conditionExecutor)
                     .getRightExpressionExecutor();
             methodVisitor.visitCode();
-            if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(left);
-                left = extensionWrapper;
-            }
-
-            if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(right);
-                right = extensionWrapper;
-            }
-
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
             if (!(left instanceof ConstantExpressionExecutor)) {
@@ -3454,20 +3173,6 @@ public class ByteCodeRegistry {
             ExpressionExecutor right = ((GreaterThanCompareConditionExpressionExecutorFloatFloat) conditionExecutor)
                     .getRightExpressionExecutor();
             methodVisitor.visitCode();
-            if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(left);
-                left = extensionWrapper;
-            }
-
-            if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(right);
-                right = extensionWrapper;
-            }
-
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
             if (!(left instanceof ConstantExpressionExecutor)) {
@@ -3531,20 +3236,6 @@ public class ByteCodeRegistry {
             ExpressionExecutor right = ((GreaterThanEqualCompareConditionExpressionExecutorFloatFloat) conditionExecutor)
                     .getRightExpressionExecutor();
             methodVisitor.visitCode();
-            if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(left);
-                left = extensionWrapper;
-            }
-
-            if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(right);
-                right = extensionWrapper;
-            }
-
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
             if (!(left instanceof ConstantExpressionExecutor)) {
@@ -3608,20 +3299,6 @@ public class ByteCodeRegistry {
             ExpressionExecutor right = ((GreaterThanCompareConditionExpressionExecutorFloatInt) conditionExecutor)
                     .getRightExpressionExecutor();
             methodVisitor.visitCode();
-            if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(left);
-                left = extensionWrapper;
-            }
-
-            if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(right);
-                right = extensionWrapper;
-            }
-
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
             if (!(left instanceof ConstantExpressionExecutor)) {
@@ -3686,20 +3363,6 @@ public class ByteCodeRegistry {
             ExpressionExecutor right = ((GreaterThanEqualCompareConditionExpressionExecutorFloatInt) conditionExecutor)
                     .getRightExpressionExecutor();
             methodVisitor.visitCode();
-            if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(left);
-                left = extensionWrapper;
-            }
-
-            if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(right);
-                right = extensionWrapper;
-            }
-
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
             if (!(left instanceof ConstantExpressionExecutor)) {
@@ -3764,21 +3427,6 @@ public class ByteCodeRegistry {
             ExpressionExecutor right = ((GreaterThanCompareConditionExpressionExecutorFloatLong) conditionExecutor)
                     .getRightExpressionExecutor();
             methodVisitor.visitCode();
-
-            if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(left);
-                left = extensionWrapper;
-            }
-
-            if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(right);
-                right = extensionWrapper;
-            }
-
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
             if (!(left instanceof ConstantExpressionExecutor)) {
@@ -3843,20 +3491,6 @@ public class ByteCodeRegistry {
             ExpressionExecutor right = ((GreaterThanEqualCompareConditionExpressionExecutorFloatLong) conditionExecutor)
                     .getRightExpressionExecutor();
             methodVisitor.visitCode();
-            if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(left);
-                left = extensionWrapper;
-            }
-
-            if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(right);
-                right = extensionWrapper;
-            }
-
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
             if (!(left instanceof ConstantExpressionExecutor)) {
@@ -3921,20 +3555,6 @@ public class ByteCodeRegistry {
             ExpressionExecutor right = ((GreaterThanCompareConditionExpressionExecutorIntFloat) conditionExecutor)
                     .getRightExpressionExecutor();
             methodVisitor.visitCode();
-            if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(left);
-                left = extensionWrapper;
-            }
-
-            if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(right);
-                right = extensionWrapper;
-            }
-
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
             if (!(left instanceof ConstantExpressionExecutor)) {
@@ -3999,20 +3619,6 @@ public class ByteCodeRegistry {
             ExpressionExecutor right = ((GreaterThanEqualCompareConditionExpressionExecutorIntFloat) conditionExecutor)
                     .getRightExpressionExecutor();
             methodVisitor.visitCode();
-            if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(left);
-                left = extensionWrapper;
-            }
-
-            if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(right);
-                right = extensionWrapper;
-            }
-
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
             if (!(left instanceof ConstantExpressionExecutor)) {
@@ -4077,20 +3683,6 @@ public class ByteCodeRegistry {
             ExpressionExecutor right = ((GreaterThanCompareConditionExpressionExecutorLongFloat) conditionExecutor)
                     .getRightExpressionExecutor();
             methodVisitor.visitCode();
-            if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(left);
-                left = extensionWrapper;
-            }
-
-            if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(right);
-                right = extensionWrapper;
-            }
-
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
             if (!(left instanceof ConstantExpressionExecutor)) {
@@ -4155,20 +3747,6 @@ public class ByteCodeRegistry {
             ExpressionExecutor right = ((GreaterThanEqualCompareConditionExpressionExecutorLongFloat) conditionExecutor)
                     .getRightExpressionExecutor();
             methodVisitor.visitCode();
-            if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(left);
-                left = extensionWrapper;
-            }
-
-            if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(right);
-                right = extensionWrapper;
-            }
-
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
             if (!(left instanceof ConstantExpressionExecutor)) {
@@ -4233,20 +3811,6 @@ public class ByteCodeRegistry {
             ExpressionExecutor right = ((GreaterThanCompareConditionExpressionExecutorDoubleDouble) conditionExecutor)
                     .getRightExpressionExecutor();
             methodVisitor.visitCode();
-            if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(left);
-                left = extensionWrapper;
-            }
-
-            if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(right);
-                right = extensionWrapper;
-            }
-
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
             if (!(left instanceof ConstantExpressionExecutor)) {
@@ -4310,20 +3874,6 @@ public class ByteCodeRegistry {
             ExpressionExecutor right = ((GreaterThanEqualCompareConditionExpressionExecutorDoubleDouble) conditionExecutor)
                     .getRightExpressionExecutor();
             methodVisitor.visitCode();
-            if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(left);
-                left = extensionWrapper;
-            }
-
-            if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(right);
-                right = extensionWrapper;
-            }
-
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
             if (!(left instanceof ConstantExpressionExecutor)) {
@@ -4387,20 +3937,6 @@ public class ByteCodeRegistry {
             ExpressionExecutor right = ((GreaterThanCompareConditionExpressionExecutorIntDouble) conditionExecutor)
                     .getRightExpressionExecutor();
             methodVisitor.visitCode();
-            if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(left);
-                left = extensionWrapper;
-            }
-
-            if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(right);
-                right = extensionWrapper;
-            }
-
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
             if (!(left instanceof ConstantExpressionExecutor)) {
@@ -4465,20 +4001,6 @@ public class ByteCodeRegistry {
             ExpressionExecutor right = ((GreaterThanEqualCompareConditionExpressionExecutorIntDouble) conditionExecutor)
                     .getRightExpressionExecutor();
             methodVisitor.visitCode();
-            if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(left);
-                left = extensionWrapper;
-            }
-
-            if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(right);
-                right = extensionWrapper;
-            }
-
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
             if (!(left instanceof ConstantExpressionExecutor)) {
@@ -4543,20 +4065,6 @@ public class ByteCodeRegistry {
             ExpressionExecutor right = ((GreaterThanCompareConditionExpressionExecutorIntLong) conditionExecutor)
                     .getRightExpressionExecutor();
             methodVisitor.visitCode();
-            if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(left);
-                left = extensionWrapper;
-            }
-
-            if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(right);
-                right = extensionWrapper;
-            }
-
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
             if (!(left instanceof ConstantExpressionExecutor)) {
@@ -4621,20 +4129,6 @@ public class ByteCodeRegistry {
             ExpressionExecutor right = ((GreaterThanEqualCompareConditionExpressionExecutorIntLong) conditionExecutor)
                     .getRightExpressionExecutor();
             methodVisitor.visitCode();
-            if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(left);
-                left = extensionWrapper;
-            }
-
-            if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(right);
-                right = extensionWrapper;
-            }
-
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
             if (!(left instanceof ConstantExpressionExecutor)) {
@@ -4699,20 +4193,6 @@ public class ByteCodeRegistry {
             ExpressionExecutor right = ((GreaterThanCompareConditionExpressionExecutorLongDouble) conditionExecutor)
                     .getRightExpressionExecutor();
             methodVisitor.visitCode();
-            if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(left);
-                left = extensionWrapper;
-            }
-
-            if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(right);
-                right = extensionWrapper;
-            }
-
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
             if (!(left instanceof ConstantExpressionExecutor)) {
@@ -4777,20 +4257,6 @@ public class ByteCodeRegistry {
             ExpressionExecutor right = ((GreaterThanEqualCompareConditionExpressionExecutorLongDouble) conditionExecutor)
                     .getRightExpressionExecutor();
             methodVisitor.visitCode();
-            if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(left);
-                left = extensionWrapper;
-            }
-
-            if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(right);
-                right = extensionWrapper;
-            }
-
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
             if (!(left instanceof ConstantExpressionExecutor)) {
@@ -4855,20 +4321,6 @@ public class ByteCodeRegistry {
             ExpressionExecutor right = ((GreaterThanCompareConditionExpressionExecutorLongInt) conditionExecutor)
                     .getRightExpressionExecutor();
             methodVisitor.visitCode();
-            if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(left);
-                left = extensionWrapper;
-            }
-
-            if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(right);
-                right = extensionWrapper;
-            }
-
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
             if (!(left instanceof ConstantExpressionExecutor)) {
@@ -4933,20 +4385,6 @@ public class ByteCodeRegistry {
             ExpressionExecutor right = ((GreaterThanEqualCompareConditionExpressionExecutorLongInt) conditionExecutor)
                     .getRightExpressionExecutor();
             methodVisitor.visitCode();
-            if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(left);
-                left = extensionWrapper;
-            }
-
-            if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(right);
-                right = extensionWrapper;
-            }
-
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
             if (!(left instanceof ConstantExpressionExecutor)) {
@@ -5011,20 +4449,6 @@ public class ByteCodeRegistry {
             ExpressionExecutor right = ((GreaterThanCompareConditionExpressionExecutorLongLong) conditionExecutor)
                     .getRightExpressionExecutor();
             methodVisitor.visitCode();
-            if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(left);
-                left = extensionWrapper;
-            }
-
-            if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(right);
-                right = extensionWrapper;
-            }
-
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
             if (!(left instanceof ConstantExpressionExecutor)) {
@@ -5088,20 +4512,6 @@ public class ByteCodeRegistry {
             ExpressionExecutor right = ((GreaterThanEqualCompareConditionExpressionExecutorLongLong) conditionExecutor)
                     .getRightExpressionExecutor();
             methodVisitor.visitCode();
-            if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(left);
-                left = extensionWrapper;
-            }
-
-            if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(right);
-                right = extensionWrapper;
-            }
-
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
             if (!(left instanceof ConstantExpressionExecutor)) {
@@ -5165,20 +4575,6 @@ public class ByteCodeRegistry {
             ExpressionExecutor right = ((GreaterThanCompareConditionExpressionExecutorIntInt) conditionExecutor)
                     .getRightExpressionExecutor();
             methodVisitor.visitCode();
-            if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(left);
-                left = extensionWrapper;
-            }
-
-            if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(right);
-                right = extensionWrapper;
-            }
-
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
             if (!(left instanceof ConstantExpressionExecutor)) {
@@ -5241,20 +4637,6 @@ public class ByteCodeRegistry {
             ExpressionExecutor right = ((GreaterThanEqualCompareConditionExpressionExecutorIntInt) conditionExecutor)
                     .getRightExpressionExecutor();
             methodVisitor.visitCode();
-            if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(left);
-                left = extensionWrapper;
-            }
-
-            if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(right);
-                right = extensionWrapper;
-            }
-
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
             if (!(left instanceof ConstantExpressionExecutor)) {
@@ -5317,20 +4699,6 @@ public class ByteCodeRegistry {
             ExpressionExecutor right = ((GreaterThanCompareConditionExpressionExecutorDoubleInt) conditionExecutor)
                     .getRightExpressionExecutor();
             methodVisitor.visitCode();
-            if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(left);
-                left = extensionWrapper;
-            }
-
-            if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(right);
-                right = extensionWrapper;
-            }
-
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
             if (!(left instanceof ConstantExpressionExecutor)) {
@@ -5395,20 +4763,6 @@ public class ByteCodeRegistry {
             ExpressionExecutor right = ((GreaterThanEqualCompareConditionExpressionExecutorDoubleInt) conditionExecutor)
                     .getRightExpressionExecutor();
             methodVisitor.visitCode();
-            if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(left);
-                left = extensionWrapper;
-            }
-
-            if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(right);
-                right = extensionWrapper;
-            }
-
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
             if (!(left instanceof ConstantExpressionExecutor)) {
@@ -5473,20 +4827,6 @@ public class ByteCodeRegistry {
             ExpressionExecutor right = ((GreaterThanCompareConditionExpressionExecutorDoubleLong) conditionExecutor)
                     .getRightExpressionExecutor();
             methodVisitor.visitCode();
-            if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(left);
-                left = extensionWrapper;
-            }
-
-            if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(right);
-                right = extensionWrapper;
-            }
-
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
             if (!(left instanceof ConstantExpressionExecutor)) {
@@ -5551,20 +4891,6 @@ public class ByteCodeRegistry {
             ExpressionExecutor right = ((GreaterThanEqualCompareConditionExpressionExecutorDoubleLong) conditionExecutor)
                     .getRightExpressionExecutor();
             methodVisitor.visitCode();
-            if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(left);
-                left = extensionWrapper;
-            }
-
-            if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(right);
-                right = extensionWrapper;
-            }
-
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
             if (!(left instanceof ConstantExpressionExecutor)) {
@@ -5629,20 +4955,6 @@ public class ByteCodeRegistry {
             ExpressionExecutor right = ((GreaterThanCompareConditionExpressionExecutorDoubleFloat) conditionExecutor)
                     .getRightExpressionExecutor();
             methodVisitor.visitCode();
-            if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(left);
-                left = extensionWrapper;
-            }
-
-            if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(right);
-                right = extensionWrapper;
-            }
-
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
             if (!(left instanceof ConstantExpressionExecutor)) {
@@ -5707,20 +5019,6 @@ public class ByteCodeRegistry {
             ExpressionExecutor right = ((GreaterThanEqualCompareConditionExpressionExecutorDoubleFloat) conditionExecutor)
                     .getRightExpressionExecutor();
             methodVisitor.visitCode();
-            if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(left);
-                left = extensionWrapper;
-            }
-
-            if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(right);
-                right = extensionWrapper;
-            }
-
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
             if (!(left instanceof ConstantExpressionExecutor)) {
@@ -5785,20 +5083,6 @@ public class ByteCodeRegistry {
                     .getLeftExpressionExecutor();
             ExpressionExecutor right = ((LessThanCompareConditionExpressionExecutorFloatDouble) conditionExecutor)
                     .getRightExpressionExecutor();
-            if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(left);
-                left = extensionWrapper;
-            }
-
-            if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(right);
-                right = extensionWrapper;
-            }
-
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
             if (!(left instanceof ConstantExpressionExecutor)) {
@@ -5863,20 +5147,6 @@ public class ByteCodeRegistry {
                     .getLeftExpressionExecutor();
             ExpressionExecutor right = ((LessThanEqualCompareConditionExpressionExecutorFloatDouble) conditionExecutor)
                     .getRightExpressionExecutor();
-            if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(left);
-                left = extensionWrapper;
-            }
-
-            if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(right);
-                right = extensionWrapper;
-            }
-
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
             if (!(left instanceof ConstantExpressionExecutor)) {
@@ -5941,20 +5211,6 @@ public class ByteCodeRegistry {
                     .getLeftExpressionExecutor();
             ExpressionExecutor right = ((LessThanCompareConditionExpressionExecutorFloatLong) conditionExecutor)
                     .getRightExpressionExecutor();
-            if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(left);
-                left = extensionWrapper;
-            }
-
-            if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(right);
-                right = extensionWrapper;
-            }
-
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
             if (!(left instanceof ConstantExpressionExecutor)) {
@@ -6019,20 +5275,6 @@ public class ByteCodeRegistry {
                     .getLeftExpressionExecutor();
             ExpressionExecutor right = ((LessThanEqualCompareConditionExpressionExecutorFloatLong) conditionExecutor)
                     .getRightExpressionExecutor();
-            if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(left);
-                left = extensionWrapper;
-            }
-
-            if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(right);
-                right = extensionWrapper;
-            }
-
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
             if (!(left instanceof ConstantExpressionExecutor)) {
@@ -6097,20 +5339,6 @@ public class ByteCodeRegistry {
                     .getLeftExpressionExecutor();
             ExpressionExecutor right = ((LessThanCompareConditionExpressionExecutorLongLong) conditionExecutor)
                     .getRightExpressionExecutor();
-            if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(left);
-                left = extensionWrapper;
-            }
-
-            if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(right);
-                right = extensionWrapper;
-            }
-
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
             if (!(left instanceof ConstantExpressionExecutor)) {
@@ -6174,20 +5402,6 @@ public class ByteCodeRegistry {
                     .getLeftExpressionExecutor();
             ExpressionExecutor right = ((LessThanEqualCompareConditionExpressionExecutorLongLong) conditionExecutor)
                     .getRightExpressionExecutor();
-            if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(left);
-                left = extensionWrapper;
-            }
-
-            if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(right);
-                right = extensionWrapper;
-            }
-
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
             if (!(left instanceof ConstantExpressionExecutor)) {
@@ -6251,20 +5465,6 @@ public class ByteCodeRegistry {
                     .getLeftExpressionExecutor();
             ExpressionExecutor right = ((LessThanCompareConditionExpressionExecutorLongDouble) conditionExecutor)
                     .getRightExpressionExecutor();
-            if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(left);
-                left = extensionWrapper;
-            }
-
-            if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(right);
-                right = extensionWrapper;
-            }
-
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
             if (!(left instanceof ConstantExpressionExecutor)) {
@@ -6329,20 +5529,6 @@ public class ByteCodeRegistry {
                     .getLeftExpressionExecutor();
             ExpressionExecutor right = ((LessThanEqualCompareConditionExpressionExecutorLongDouble) conditionExecutor)
                     .getRightExpressionExecutor();
-            if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(left);
-                left = extensionWrapper;
-            }
-
-            if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(right);
-                right = extensionWrapper;
-            }
-
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
             if (!(left instanceof ConstantExpressionExecutor)) {
@@ -6407,20 +5593,6 @@ public class ByteCodeRegistry {
                     .getLeftExpressionExecutor();
             ExpressionExecutor right = ((LessThanCompareConditionExpressionExecutorIntDouble) conditionExecutor)
                     .getRightExpressionExecutor();
-            if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(left);
-                left = extensionWrapper;
-            }
-
-            if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(right);
-                right = extensionWrapper;
-            }
-
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
             if (!(left instanceof ConstantExpressionExecutor)) {
@@ -6485,20 +5657,6 @@ public class ByteCodeRegistry {
                     .getLeftExpressionExecutor();
             ExpressionExecutor right = ((LessThanEqualCompareConditionExpressionExecutorIntDouble) conditionExecutor)
                     .getRightExpressionExecutor();
-            if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(left);
-                left = extensionWrapper;
-            }
-
-            if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(right);
-                right = extensionWrapper;
-            }
-
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
             if (!(left instanceof ConstantExpressionExecutor)) {
@@ -6563,20 +5721,6 @@ public class ByteCodeRegistry {
                     .getLeftExpressionExecutor();
             ExpressionExecutor right = ((LessThanCompareConditionExpressionExecutorIntLong) conditionExecutor)
                     .getRightExpressionExecutor();
-            if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(left);
-                left = extensionWrapper;
-            }
-
-            if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(right);
-                right = extensionWrapper;
-            }
-
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
             if (!(left instanceof ConstantExpressionExecutor)) {
@@ -6641,20 +5785,6 @@ public class ByteCodeRegistry {
                     .getLeftExpressionExecutor();
             ExpressionExecutor right = ((LessThanEqualCompareConditionExpressionExecutorIntLong) conditionExecutor)
                     .getRightExpressionExecutor();
-            if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(left);
-                left = extensionWrapper;
-            }
-
-            if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(right);
-                right = extensionWrapper;
-            }
-
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
             if (!(left instanceof ConstantExpressionExecutor)) {
@@ -6719,20 +5849,6 @@ public class ByteCodeRegistry {
                     .getLeftExpressionExecutor();
             ExpressionExecutor right = ((LessThanCompareConditionExpressionExecutorIntInt) conditionExecutor)
                     .getRightExpressionExecutor();
-            if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(left);
-                left = extensionWrapper;
-            }
-
-            if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(right);
-                right = extensionWrapper;
-            }
-
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
             if (!(left instanceof ConstantExpressionExecutor)) {
@@ -6795,20 +5911,6 @@ public class ByteCodeRegistry {
                     .getLeftExpressionExecutor();
             ExpressionExecutor right = ((LessThanEqualCompareConditionExpressionExecutorIntInt) conditionExecutor)
                     .getRightExpressionExecutor();
-            if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(left);
-                left = extensionWrapper;
-            }
-
-            if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(right);
-                right = extensionWrapper;
-            }
-
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
             if (!(left instanceof ConstantExpressionExecutor)) {
@@ -6871,20 +5973,6 @@ public class ByteCodeRegistry {
                     .getLeftExpressionExecutor();
             ExpressionExecutor right = ((LessThanCompareConditionExpressionExecutorLongInt) conditionExecutor)
                     .getRightExpressionExecutor();
-            if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(left);
-                left = extensionWrapper;
-            }
-
-            if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(right);
-                right = extensionWrapper;
-            }
-
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
             if (!(left instanceof ConstantExpressionExecutor)) {
@@ -6949,20 +6037,6 @@ public class ByteCodeRegistry {
                     .getLeftExpressionExecutor();
             ExpressionExecutor right = ((LessThanEqualCompareConditionExpressionExecutorLongInt) conditionExecutor)
                     .getRightExpressionExecutor();
-            if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(left);
-                left = extensionWrapper;
-            }
-
-            if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(right);
-                right = extensionWrapper;
-            }
-
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
             if (!(left instanceof ConstantExpressionExecutor)) {
@@ -7027,20 +6101,6 @@ public class ByteCodeRegistry {
                     .getLeftExpressionExecutor();
             ExpressionExecutor right = ((LessThanCompareConditionExpressionExecutorIntFloat) conditionExecutor)
                     .getRightExpressionExecutor();
-            if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(left);
-                left = extensionWrapper;
-            }
-
-            if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(right);
-                right = extensionWrapper;
-            }
-
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
             if (!(left instanceof ConstantExpressionExecutor)) {
@@ -7105,20 +6165,6 @@ public class ByteCodeRegistry {
                     .getLeftExpressionExecutor();
             ExpressionExecutor right = ((LessThanEqualCompareConditionExpressionExecutorIntFloat) conditionExecutor)
                     .getRightExpressionExecutor();
-            if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(left);
-                left = extensionWrapper;
-            }
-
-            if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(right);
-                right = extensionWrapper;
-            }
-
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
             if (!(left instanceof ConstantExpressionExecutor)) {
@@ -7183,20 +6229,6 @@ public class ByteCodeRegistry {
                     .getLeftExpressionExecutor();
             ExpressionExecutor right = ((LessThanCompareConditionExpressionExecutorLongFloat) conditionExecutor)
                     .getRightExpressionExecutor();
-            if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(left);
-                left = extensionWrapper;
-            }
-
-            if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(right);
-                right = extensionWrapper;
-            }
-
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
             if (!(left instanceof ConstantExpressionExecutor)) {
@@ -7261,20 +6293,6 @@ public class ByteCodeRegistry {
                     .getLeftExpressionExecutor();
             ExpressionExecutor right = ((LessThanEqualCompareConditionExpressionExecutorLongFloat) conditionExecutor)
                     .getRightExpressionExecutor();
-            if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(left);
-                left = extensionWrapper;
-            }
-
-            if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(right);
-                right = extensionWrapper;
-            }
-
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
             if (!(left instanceof ConstantExpressionExecutor)) {
@@ -7339,20 +6357,6 @@ public class ByteCodeRegistry {
                     .getLeftExpressionExecutor();
             ExpressionExecutor right = ((LessThanCompareConditionExpressionExecutorFloatInt) conditionExecutor)
                     .getRightExpressionExecutor();
-            if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(left);
-                left = extensionWrapper;
-            }
-
-            if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(right);
-                right = extensionWrapper;
-            }
-
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
             if (!(left instanceof ConstantExpressionExecutor)) {
@@ -7417,20 +6421,6 @@ public class ByteCodeRegistry {
                     .getLeftExpressionExecutor();
             ExpressionExecutor right = ((LessThanEqualCompareConditionExpressionExecutorFloatInt) conditionExecutor)
                     .getRightExpressionExecutor();
-            if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(left);
-                left = extensionWrapper;
-            }
-
-            if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(right);
-                right = extensionWrapper;
-            }
-
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
             if (!(left instanceof ConstantExpressionExecutor)) {
@@ -7495,20 +6485,6 @@ public class ByteCodeRegistry {
                     .getLeftExpressionExecutor();
             ExpressionExecutor right = ((LessThanCompareConditionExpressionExecutorFloatFloat) conditionExecutor)
                     .getRightExpressionExecutor();
-            if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(left);
-                left = extensionWrapper;
-            }
-
-            if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(right);
-                right = extensionWrapper;
-            }
-
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
             if (!(left instanceof ConstantExpressionExecutor)) {
@@ -7572,20 +6548,6 @@ public class ByteCodeRegistry {
                     .getLeftExpressionExecutor();
             ExpressionExecutor right = ((LessThanEqualCompareConditionExpressionExecutorFloatFloat) conditionExecutor)
                     .getRightExpressionExecutor();
-            if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(left);
-                left = extensionWrapper;
-            }
-
-            if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(right);
-                right = extensionWrapper;
-            }
-
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
             if (!(left instanceof ConstantExpressionExecutor)) {
@@ -7649,20 +6611,6 @@ public class ByteCodeRegistry {
                     .getLeftExpressionExecutor();
             ExpressionExecutor right = ((LessThanCompareConditionExpressionExecutorDoubleDouble) conditionExecutor)
                     .getRightExpressionExecutor();
-            if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(left);
-                left = extensionWrapper;
-            }
-
-            if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(right);
-                right = extensionWrapper;
-            }
-
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
             if (!(left instanceof ConstantExpressionExecutor)) {
@@ -7726,20 +6674,6 @@ public class ByteCodeRegistry {
                     .getLeftExpressionExecutor();
             ExpressionExecutor right = ((LessThanEqualCompareConditionExpressionExecutorDoubleDouble) conditionExecutor)
                     .getRightExpressionExecutor();
-            if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(left);
-                left = extensionWrapper;
-            }
-
-            if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(right);
-                right = extensionWrapper;
-            }
-
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
             if (!(left instanceof ConstantExpressionExecutor)) {
@@ -7803,20 +6737,6 @@ public class ByteCodeRegistry {
                     .getLeftExpressionExecutor();
             ExpressionExecutor right = ((LessThanCompareConditionExpressionExecutorDoubleLong) conditionExecutor)
                     .getRightExpressionExecutor();
-            if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(left);
-                left = extensionWrapper;
-            }
-
-            if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(right);
-                right = extensionWrapper;
-            }
-
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
             if (!(left instanceof ConstantExpressionExecutor)) {
@@ -7881,20 +6801,6 @@ public class ByteCodeRegistry {
                     .getLeftExpressionExecutor();
             ExpressionExecutor right = ((LessThanEqualCompareConditionExpressionExecutorDoubleLong) conditionExecutor)
                     .getRightExpressionExecutor();
-            if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(left);
-                left = extensionWrapper;
-            }
-
-            if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(right);
-                right = extensionWrapper;
-            }
-
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
             if (!(left instanceof ConstantExpressionExecutor)) {
@@ -7959,20 +6865,6 @@ public class ByteCodeRegistry {
                     .getLeftExpressionExecutor();
             ExpressionExecutor right = ((LessThanCompareConditionExpressionExecutorDoubleInt) conditionExecutor)
                     .getRightExpressionExecutor();
-            if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(left);
-                left = extensionWrapper;
-            }
-
-            if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(right);
-                right = extensionWrapper;
-            }
-
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
             if (!(left instanceof ConstantExpressionExecutor)) {
@@ -8037,20 +6929,6 @@ public class ByteCodeRegistry {
                     .getLeftExpressionExecutor();
             ExpressionExecutor right = ((LessThanEqualCompareConditionExpressionExecutorDoubleInt) conditionExecutor)
                     .getRightExpressionExecutor();
-            if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(left);
-                left = extensionWrapper;
-            }
-
-            if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(right);
-                right = extensionWrapper;
-            }
-
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
             if (!(left instanceof ConstantExpressionExecutor)) {
@@ -8115,20 +6993,6 @@ public class ByteCodeRegistry {
                     .getLeftExpressionExecutor();
             ExpressionExecutor right = ((LessThanCompareConditionExpressionExecutorDoubleFloat) conditionExecutor)
                     .getRightExpressionExecutor();
-            if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(left);
-                left = extensionWrapper;
-            }
-
-            if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(right);
-                right = extensionWrapper;
-            }
-
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
             if (!(left instanceof ConstantExpressionExecutor)) {
@@ -8193,20 +7057,6 @@ public class ByteCodeRegistry {
                     .getLeftExpressionExecutor();
             ExpressionExecutor right = ((LessThanEqualCompareConditionExpressionExecutorDoubleFloat) conditionExecutor)
                     .getRightExpressionExecutor();
-            if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(left);
-                left = extensionWrapper;
-            }
-
-            if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(right);
-                right = extensionWrapper;
-            }
-
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
             if (!(left instanceof ConstantExpressionExecutor)) {
@@ -8271,20 +7121,6 @@ public class ByteCodeRegistry {
                     .getLeftExpressionExecutor();
             ExpressionExecutor right = ((EqualCompareConditionExpressionExecutorBoolBool) conditionExecutor)
                     .getRightExpressionExecutor();
-            if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(left);
-                left = extensionWrapper;
-            }
-
-            if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(right);
-                right = extensionWrapper;
-            }
-
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
             if (!(left instanceof ConstantExpressionExecutor)) {
@@ -8347,20 +7183,6 @@ public class ByteCodeRegistry {
                     .getLeftExpressionExecutor();
             ExpressionExecutor right = ((NotEqualCompareConditionExpressionExecutorBoolBool) conditionExecutor)
                     .getRightExpressionExecutor();
-            if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(left);
-                left = extensionWrapper;
-            }
-
-            if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(right);
-                right = extensionWrapper;
-            }
-
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
             if (!(left instanceof ConstantExpressionExecutor)) {
@@ -8423,20 +7245,6 @@ public class ByteCodeRegistry {
                     .getLeftExpressionExecutor();
             ExpressionExecutor right = ((EqualCompareConditionExpressionExecutorDoubleDouble) conditionExecutor)
                     .getRightExpressionExecutor();
-            if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(left);
-                left = extensionWrapper;
-            }
-
-            if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(right);
-                right = extensionWrapper;
-            }
-
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
             if (!(left instanceof ConstantExpressionExecutor)) {
@@ -8500,20 +7308,6 @@ public class ByteCodeRegistry {
                     .getLeftExpressionExecutor();
             ExpressionExecutor right = ((NotEqualCompareConditionExpressionExecutorDoubleDouble) conditionExecutor)
                     .getRightExpressionExecutor();
-            if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(left);
-                left = extensionWrapper;
-            }
-
-            if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(right);
-                right = extensionWrapper;
-            }
-
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
             if (!(left instanceof ConstantExpressionExecutor)) {
@@ -8577,20 +7371,6 @@ public class ByteCodeRegistry {
                     .getLeftExpressionExecutor();
             ExpressionExecutor right = ((EqualCompareConditionExpressionExecutorDoubleFloat) conditionExecutor)
                     .getRightExpressionExecutor();
-            if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(left);
-                left = extensionWrapper;
-            }
-
-            if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(right);
-                right = extensionWrapper;
-            }
-
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
             if (!(left instanceof ConstantExpressionExecutor)) {
@@ -8655,20 +7435,6 @@ public class ByteCodeRegistry {
                     .getLeftExpressionExecutor();
             ExpressionExecutor right = ((NotEqualCompareConditionExpressionExecutorDoubleFloat) conditionExecutor)
                     .getRightExpressionExecutor();
-            if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(left);
-                left = extensionWrapper;
-            }
-
-            if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(right);
-                right = extensionWrapper;
-            }
-
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
             if (!(left instanceof ConstantExpressionExecutor)) {
@@ -8733,20 +7499,6 @@ public class ByteCodeRegistry {
                     .getLeftExpressionExecutor();
             ExpressionExecutor right = ((EqualCompareConditionExpressionExecutorDoubleInt) conditionExecutor)
                     .getRightExpressionExecutor();
-            if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(left);
-                left = extensionWrapper;
-            }
-
-            if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(right);
-                right = extensionWrapper;
-            }
-
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
             if (!(left instanceof ConstantExpressionExecutor)) {
@@ -8811,20 +7563,6 @@ public class ByteCodeRegistry {
                     .getLeftExpressionExecutor();
             ExpressionExecutor right = ((NotEqualCompareConditionExpressionExecutorDoubleInt) conditionExecutor)
                     .getRightExpressionExecutor();
-            if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(left);
-                left = extensionWrapper;
-            }
-
-            if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(right);
-                right = extensionWrapper;
-            }
-
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
             if (!(left instanceof ConstantExpressionExecutor)) {
@@ -8889,20 +7627,6 @@ public class ByteCodeRegistry {
                     .getLeftExpressionExecutor();
             ExpressionExecutor right = ((EqualCompareConditionExpressionExecutorDoubleLong) conditionExecutor)
                     .getRightExpressionExecutor();
-            if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(left);
-                left = extensionWrapper;
-            }
-
-            if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(right);
-                right = extensionWrapper;
-            }
-
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
             if (!(left instanceof ConstantExpressionExecutor)) {
@@ -8967,20 +7691,6 @@ public class ByteCodeRegistry {
                     .getLeftExpressionExecutor();
             ExpressionExecutor right = ((NotEqualCompareConditionExpressionExecutorDoubleLong) conditionExecutor)
                     .getRightExpressionExecutor();
-            if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(left);
-                left = extensionWrapper;
-            }
-
-            if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(right);
-                right = extensionWrapper;
-            }
-
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
             if (!(left instanceof ConstantExpressionExecutor)) {
@@ -9045,20 +7755,6 @@ public class ByteCodeRegistry {
                     .getLeftExpressionExecutor();
             ExpressionExecutor right = ((EqualCompareConditionExpressionExecutorFloatDouble) conditionExecutor)
                     .getRightExpressionExecutor();
-            if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(left);
-                left = extensionWrapper;
-            }
-
-            if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(right);
-                right = extensionWrapper;
-            }
-
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
             if (!(left instanceof ConstantExpressionExecutor)) {
@@ -9123,20 +7819,6 @@ public class ByteCodeRegistry {
                     .getLeftExpressionExecutor();
             ExpressionExecutor right = ((NotEqualCompareConditionExpressionExecutorFloatDouble) conditionExecutor)
                     .getRightExpressionExecutor();
-            if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(left);
-                left = extensionWrapper;
-            }
-
-            if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(right);
-                right = extensionWrapper;
-            }
-
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
             if (!(left instanceof ConstantExpressionExecutor)) {
@@ -9201,20 +7883,6 @@ public class ByteCodeRegistry {
                     .getLeftExpressionExecutor();
             ExpressionExecutor right = ((EqualCompareConditionExpressionExecutorLongDouble) conditionExecutor)
                     .getRightExpressionExecutor();
-            if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(left);
-                left = extensionWrapper;
-            }
-
-            if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(right);
-                right = extensionWrapper;
-            }
-
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
             if (!(left instanceof ConstantExpressionExecutor)) {
@@ -9279,20 +7947,6 @@ public class ByteCodeRegistry {
                     .getLeftExpressionExecutor();
             ExpressionExecutor right = ((NotEqualCompareConditionExpressionExecutorLongDouble) conditionExecutor)
                     .getRightExpressionExecutor();
-            if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(left);
-                left = extensionWrapper;
-            }
-
-            if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(right);
-                right = extensionWrapper;
-            }
-
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
             if (!(left instanceof ConstantExpressionExecutor)) {
@@ -9357,20 +8011,6 @@ public class ByteCodeRegistry {
                     .getLeftExpressionExecutor();
             ExpressionExecutor right = ((EqualCompareConditionExpressionExecutorLongFloat) conditionExecutor)
                     .getRightExpressionExecutor();
-            if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(left);
-                left = extensionWrapper;
-            }
-
-            if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(right);
-                right = extensionWrapper;
-            }
-
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
             if (!(left instanceof ConstantExpressionExecutor)) {
@@ -9435,20 +8075,6 @@ public class ByteCodeRegistry {
                     .getLeftExpressionExecutor();
             ExpressionExecutor right = ((NotEqualCompareConditionExpressionExecutorLongFloat) conditionExecutor)
                     .getRightExpressionExecutor();
-            if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(left);
-                left = extensionWrapper;
-            }
-
-            if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(right);
-                right = extensionWrapper;
-            }
-
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
             if (!(left instanceof ConstantExpressionExecutor)) {
@@ -9513,20 +8139,6 @@ public class ByteCodeRegistry {
                     .getLeftExpressionExecutor();
             ExpressionExecutor right = ((EqualCompareConditionExpressionExecutorLongInt) conditionExecutor)
                     .getRightExpressionExecutor();
-            if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(left);
-                left = extensionWrapper;
-            }
-
-            if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(right);
-                right = extensionWrapper;
-            }
-
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
             if (!(left instanceof ConstantExpressionExecutor)) {
@@ -9591,20 +8203,6 @@ public class ByteCodeRegistry {
                     .getLeftExpressionExecutor();
             ExpressionExecutor right = ((NotEqualCompareConditionExpressionExecutorLongInt) conditionExecutor)
                     .getRightExpressionExecutor();
-            if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(left);
-                left = extensionWrapper;
-            }
-
-            if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(right);
-                right = extensionWrapper;
-            }
-
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
             if (!(left instanceof ConstantExpressionExecutor)) {
@@ -9669,20 +8267,6 @@ public class ByteCodeRegistry {
                     .getLeftExpressionExecutor();
             ExpressionExecutor right = ((EqualCompareConditionExpressionExecutorLongLong) conditionExecutor)
                     .getRightExpressionExecutor();
-            if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(left);
-                left = extensionWrapper;
-            }
-
-            if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(right);
-                right = extensionWrapper;
-            }
-
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
             if (!(left instanceof ConstantExpressionExecutor)) {
@@ -9746,20 +8330,6 @@ public class ByteCodeRegistry {
                     .getLeftExpressionExecutor();
             ExpressionExecutor right = ((NotEqualCompareConditionExpressionExecutorLongLong) conditionExecutor)
                     .getRightExpressionExecutor();
-            if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(left);
-                left = extensionWrapper;
-            }
-
-            if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(right);
-                right = extensionWrapper;
-            }
-
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
             if (!(left instanceof ConstantExpressionExecutor)) {
@@ -9823,20 +8393,6 @@ public class ByteCodeRegistry {
                     .getLeftExpressionExecutor();
             ExpressionExecutor right = ((EqualCompareConditionExpressionExecutorIntDouble) conditionExecutor)
                     .getRightExpressionExecutor();
-            if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(left);
-                left = extensionWrapper;
-            }
-
-            if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(right);
-                right = extensionWrapper;
-            }
-
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
             if (!(left instanceof ConstantExpressionExecutor)) {
@@ -9901,20 +8457,6 @@ public class ByteCodeRegistry {
                     .getLeftExpressionExecutor();
             ExpressionExecutor right = ((NotEqualCompareConditionExpressionExecutorIntDouble) conditionExecutor)
                     .getRightExpressionExecutor();
-            if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(left);
-                left = extensionWrapper;
-            }
-
-            if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(right);
-                right = extensionWrapper;
-            }
-
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
             if (!(left instanceof ConstantExpressionExecutor)) {
@@ -9979,20 +8521,6 @@ public class ByteCodeRegistry {
                     .getLeftExpressionExecutor();
             ExpressionExecutor right = ((EqualCompareConditionExpressionExecutorIntFloat) conditionExecutor)
                     .getRightExpressionExecutor();
-            if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(left);
-                left = extensionWrapper;
-            }
-
-            if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(right);
-                right = extensionWrapper;
-            }
-
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
             if (!(left instanceof ConstantExpressionExecutor)) {
@@ -10057,20 +8585,6 @@ public class ByteCodeRegistry {
                     .getLeftExpressionExecutor();
             ExpressionExecutor right = ((NotEqualCompareConditionExpressionExecutorIntFloat) conditionExecutor)
                     .getRightExpressionExecutor();
-            if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(left);
-                left = extensionWrapper;
-            }
-
-            if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(right);
-                right = extensionWrapper;
-            }
-
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
             if (!(left instanceof ConstantExpressionExecutor)) {
@@ -10135,20 +8649,6 @@ public class ByteCodeRegistry {
                     .getLeftExpressionExecutor();
             ExpressionExecutor right = ((EqualCompareConditionExpressionExecutorIntInt) conditionExecutor)
                     .getRightExpressionExecutor();
-            if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(left);
-                left = extensionWrapper;
-            }
-
-            if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(right);
-                right = extensionWrapper;
-            }
-
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
             if (!(left instanceof ConstantExpressionExecutor)) {
@@ -10211,20 +8711,6 @@ public class ByteCodeRegistry {
                     .getLeftExpressionExecutor();
             ExpressionExecutor right = ((NotEqualCompareConditionExpressionExecutorIntInt) conditionExecutor)
                     .getRightExpressionExecutor();
-            if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(left);
-                left = extensionWrapper;
-            }
-
-            if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(right);
-                right = extensionWrapper;
-            }
-
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
             if (!(left instanceof ConstantExpressionExecutor)) {
@@ -10287,20 +8773,6 @@ public class ByteCodeRegistry {
                     .getLeftExpressionExecutor();
             ExpressionExecutor right = ((EqualCompareConditionExpressionExecutorIntLong) conditionExecutor)
                     .getRightExpressionExecutor();
-            if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(left);
-                left = extensionWrapper;
-            }
-
-            if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(right);
-                right = extensionWrapper;
-            }
-
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
             if (!(left instanceof ConstantExpressionExecutor)) {
@@ -10365,20 +8837,6 @@ public class ByteCodeRegistry {
                     .getLeftExpressionExecutor();
             ExpressionExecutor right = ((NotEqualCompareConditionExpressionExecutorIntLong) conditionExecutor)
                     .getRightExpressionExecutor();
-            if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(left);
-                left = extensionWrapper;
-            }
-
-            if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(right);
-                right = extensionWrapper;
-            }
-
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
             if (!(left instanceof ConstantExpressionExecutor)) {
@@ -10443,20 +8901,6 @@ public class ByteCodeRegistry {
                     .getLeftExpressionExecutor();
             ExpressionExecutor right = ((EqualCompareConditionExpressionExecutorFloatFloat) conditionExecutor)
                     .getRightExpressionExecutor();
-            if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(left);
-                left = extensionWrapper;
-            }
-
-            if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(right);
-                right = extensionWrapper;
-            }
-
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
             if (!(left instanceof ConstantExpressionExecutor)) {
@@ -10520,20 +8964,6 @@ public class ByteCodeRegistry {
                     .getLeftExpressionExecutor();
             ExpressionExecutor right = ((NotEqualCompareConditionExpressionExecutorFloatFloat) conditionExecutor)
                     .getRightExpressionExecutor();
-            if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(left);
-                left = extensionWrapper;
-            }
-
-            if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(right);
-                right = extensionWrapper;
-            }
-
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
             if (!(left instanceof ConstantExpressionExecutor)) {
@@ -10597,20 +9027,6 @@ public class ByteCodeRegistry {
                     .getLeftExpressionExecutor();
             ExpressionExecutor right = ((EqualCompareConditionExpressionExecutorFloatInt) conditionExecutor)
                     .getRightExpressionExecutor();
-            if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(left);
-                left = extensionWrapper;
-            }
-
-            if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(right);
-                right = extensionWrapper;
-            }
-
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
             if (!(left instanceof ConstantExpressionExecutor)) {
@@ -10675,20 +9091,6 @@ public class ByteCodeRegistry {
                     .getLeftExpressionExecutor();
             ExpressionExecutor right = ((NotEqualCompareConditionExpressionExecutorFloatInt) conditionExecutor)
                     .getRightExpressionExecutor();
-            if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(left);
-                left = extensionWrapper;
-            }
-
-            if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(right);
-                right = extensionWrapper;
-            }
-
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
             if (!(left instanceof ConstantExpressionExecutor)) {
@@ -10753,20 +9155,6 @@ public class ByteCodeRegistry {
                     .getLeftExpressionExecutor();
             ExpressionExecutor right = ((EqualCompareConditionExpressionExecutorFloatLong) conditionExecutor)
                     .getRightExpressionExecutor();
-            if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(left);
-                left = extensionWrapper;
-            }
-
-            if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(right);
-                right = extensionWrapper;
-            }
-
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
             if (!(left instanceof ConstantExpressionExecutor)) {
@@ -10831,20 +9219,6 @@ public class ByteCodeRegistry {
                     .getLeftExpressionExecutor();
             ExpressionExecutor right = ((NotEqualCompareConditionExpressionExecutorFloatLong) conditionExecutor)
                     .getRightExpressionExecutor();
-            if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(left);
-                left = extensionWrapper;
-            }
-
-            if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(right);
-                right = extensionWrapper;
-            }
-
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
             if (!(left instanceof ConstantExpressionExecutor)) {
@@ -10909,20 +9283,6 @@ public class ByteCodeRegistry {
                     .getLeftExpressionExecutor();
             ExpressionExecutor right = ((EqualCompareConditionExpressionExecutorStringString) conditionExecutor)
                     .getRightExpressionExecutor();
-            if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(left);
-                left = extensionWrapper;
-            }
-
-            if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(right);
-                right = extensionWrapper;
-            }
-
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
             if (!(left instanceof ConstantExpressionExecutor)) {
@@ -10981,20 +9341,6 @@ public class ByteCodeRegistry {
                     .getLeftExpressionExecutor();
             ExpressionExecutor right = ((NotEqualCompareConditionExpressionExecutorStringString) conditionExecutor)
                     .getRightExpressionExecutor();
-            if (left instanceof FunctionExecutor || left instanceof AggregationAttributeExecutor || left
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(left);
-                left = extensionWrapper;
-            }
-
-            if (right instanceof FunctionExecutor || right instanceof AggregationAttributeExecutor || right
-                    instanceof GroupByAggregationAttributeExecutor) {
-                ExtensionWrapper extensionWrapper = new ExtensionWrapper();
-                extensionWrapper.setConditionExecutor(right);
-                right = extensionWrapper;
-            }
-
             byteCodeGenarator.execute(left, 1, 0, null, status, methodVisitor, byteCodeGenarator);
             Label l0 = new Label();
             if (!(left instanceof ConstantExpressionExecutor)) {
